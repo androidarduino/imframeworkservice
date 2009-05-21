@@ -36,8 +36,8 @@ Msn::loginMsn ()
 {
   QString answer, NSServer, authTicket;
   MsnSession s ("messenger.hotmail.com:1863");
-  if(s.state()!=QAbstractSocket::ConnectedState)
-      return false;
+  if (s.state () != QAbstractSocket::ConnectedState)
+    return false;
   s.sendAndWait ("VER %d MSNP8 CVR0\r\n");
   s.sendAndWait ("CVR %d 0x0409 win 4.10 i386 MSNMSGR 5.0.0544 MSMSGS %s\r\n",
 		 m_username);
@@ -55,7 +55,9 @@ Msn::loginMsn ()
 		 m_username);
   answer = loginSession->sendAndWait ("USR %d TWN I %s\r\n", m_username);
   authTicket = loginSession->findReg ("(USR \\d+ TWN S )(\\S+)", answer, 2);
-  auth = new MsnAuth ("https://nexus.passport.com/rdr/pprdr.asp","/etc/ssl/certs/");
+  auth =
+    new MsnAuth ("https://nexus.passport.com/rdr/pprdr.asp",
+		 "/etc/ssl/certs/");
   connect (auth, SIGNAL (authCompleted (QString)), this,
 	   SLOT (loginStage2 (QString)));
   auth->authenticate (m_username, m_password, authTicket);
@@ -78,10 +80,12 @@ Msn::loginStage2 (QString ticket)
   //grab properties into a QMap object
   QString propertyName, propertyValue, property;
   QStringList properties;
-  properties << "(charset)=([^\\r\\n]+)" << "(MIME-Version): ([^\\r\\n]+)" <<
-    "(LoginTime): (\\d+)" << "(EmailEnabled): (\\d)+" <<
-    "(lang_preference): (\\d+)" << "(MSPAuth): (\\S+)" << "(ClientIP): (\\S+)"
-    << "(ClientPort): (\\S+)";
+  properties << "(charset)=([^\\r\\n]+)"
+    << "(MIME-Version): ([^\\r\\n]+)"
+    << "(LoginTime): (\\d+)"
+    << "(EmailEnabled): (\\d)+"
+    << "(lang_preference): (\\d+)"
+    << "(MSPAuth): (\\S+)" << "(ClientIP): (\\S+)" << "(ClientPort): (\\S+)";
   foreach (property, properties)
   {
     propertyValue = loginSession->findReg (property, answer, 2);
@@ -143,7 +147,7 @@ Msn::distributeCmd (QString cmd)
       if (fields > 4)
 	c->set ("group", cut[4]);
       c->set ("status", "OFF");	//set initial status to offline
-//        m_contacts<<c;
+      //        m_contacts<<c;
       //qDebug()<<"Contact populated: "<<cut[1];
     }
   if (prefix == "RNG")
@@ -258,9 +262,10 @@ Msn::requestSBSession (QString receiver)
     }
   //if there is not, request a new switch board session
   //qDebug()<<"creating new sb";
-  SwitchBoardSession *newSB =
-    new SwitchBoardSession (loginSession,
-			    (QStringList () << m_username << receiver));
+  SwitchBoardSession *newSB = new SwitchBoardSession (loginSession,
+						      (QStringList () <<
+						       m_username <<
+						       receiver));
   m_sessions.append (newSB);
   connect (newSB, SIGNAL (userTyping (QString)), this,
 	   SIGNAL (userTyping (QString)));
@@ -374,7 +379,7 @@ QList < QString > Msn::getContactsEmails (QString status)
     statuses = status.split (",");
   MsnContact *
     c;
-//qDebug()<<"Total contacts: "<<m_contacts.count();
+  //qDebug()<<"Total contacts: "<<m_contacts.count();
   foreach (QString st, statuses)
   {
     foreach (c, m_contacts)

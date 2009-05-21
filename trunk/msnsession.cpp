@@ -57,7 +57,7 @@ MsnSession::sendCommand (const char *cmd, QString p1, QString p2, QString p3, QS
   m_socket->write (question);
   m_index++;
   return m_index - 1;
-  qDebug()<<"send command finished....";
+  qDebug () << "send command finished....";
 }
 
 QString
@@ -65,9 +65,9 @@ MsnSession::getAnswer (int cmdIndex, int timeOut)	//get an answer with cmdIndex,
 {
   if (m_socket->state () != QAbstractSocket::ConnectedState)
     {
-        qDebug()<<"getting answer... not connected....";
+      qDebug () << "getting answer... not connected....";
       if (!init (sbServer, sbPort))	//try to connect again
-        return "Not Connectted to Server";
+	return "Not Connectted to Server";
     }
   QString found = "TimeOut";
   while (found == "TimeOut")
@@ -153,8 +153,8 @@ MsnSession::findReg (QString regExp, QString findIn, int whichText)
 }
 
 QString
-MsnSession::sendAndWait (const char *cmd, QString p1, QString p2, QString p3,
-			 QString p4)
+  MsnSession::sendAndWait (const char *cmd, QString p1, QString p2,
+			   QString p3, QString p4)
 {
   int retNumber;
   retNumber = sendCommand (cmd, p1, p2, p3, p4);

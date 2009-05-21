@@ -14,8 +14,8 @@ class SwitchBoardSession;
 class Msn:public QObject
 {
 Q_OBJECT public:
-  Msn ();
-  virtual ~ Msn ();
+    Msn ();
+    virtual ~ Msn ();
   void setUsernamePassword (QString username, QString password);
   void setStatus (QString status);
   void sendMsg (QString receiver, QString message);

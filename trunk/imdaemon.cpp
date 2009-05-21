@@ -40,16 +40,17 @@ IMDaemon::login ()
   msn->setUsernamePassword (settingsDlg.username->text (),
 			    settingsDlg.password->text ());
   myEmail = settingsDlg.username->text ();
-  if(!msn->loginMsn ())
-      alert("Can not connect to Server, please check your internet connection.");
+  if (!msn->loginMsn ())
+    alert
+      ("Can not connect to Server, please check your internet connection.");
 }
 
-bool IMDaemon::alert(QString msg)
+bool IMDaemon::alert (QString msg)
 {
-	if(QMessageBox::Yes==QMessageBox::question(this, "IM Framework",msg))
-		return true;
-	else
-		return false;
+  if (QMessageBox::Yes == QMessageBox::question (this, "IM Framework", msg))
+    return true;
+  else
+    return false;
 }
 
 void
