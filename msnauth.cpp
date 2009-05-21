@@ -1,15 +1,15 @@
 #include "msnauth.h"
 #include <QDebug>
-MsnAuth::MsnAuth (QString serverAndPath, QString /*certsDir*/)
+MsnAuth::MsnAuth (QString serverAndPath, QString /*certsDir */ )
 {
   m_serverAndPath = serverAndPath;
   m_authString = "";
-//  m_sck1 = new QtSslSocket (QtSslSocket::Client, 0);
-//  m_sck1->setPathToCACertDir (certsDir);
-//  m_sck2 = new QtSslSocket (QtSslSocket::Client, 0);
-//  m_sck2->setPathToCACertDir (certsDir);
-  m_sck1=new QSslSocket(this);
-  m_sck2=new QSslSocket(this);
+  //  m_sck1 = new QtSslSocket (QtSslSocket::Client, 0);
+  //  m_sck1->setPathToCACertDir (certsDir);
+  //  m_sck2 = new QtSslSocket (QtSslSocket::Client, 0);
+  //  m_sck2->setPathToCACertDir (certsDir);
+  m_sck1 = new QSslSocket (this);
+  m_sck2 = new QSslSocket (this);
   //qDebug()<<"authentication object initialized";
 }
 

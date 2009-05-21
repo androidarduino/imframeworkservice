@@ -9,8 +9,8 @@ class Msn;
 class SwitchBoardSession:public QObject
 {
 Q_OBJECT public:
-  SwitchBoardSession (QStringList oldHistory, QString username, QString invitationCmd);	//init a session from an invitation
-  SwitchBoardSession (MsnSession * loginSession, QStringList receivers);
+    SwitchBoardSession (QStringList oldHistory, QString username, QString invitationCmd);	//init a session from an invitation
+    SwitchBoardSession (MsnSession * loginSession, QStringList receivers);
   bool inviteToThisSession (QString email);
   void sendMessage (QString receiver, QString message);
   bool talkingTo (QString email);

@@ -7,7 +7,7 @@
 class MsnAuth:public QObject
 {
 Q_OBJECT public:
-  MsnAuth (QString serverAndPath, QString certsPath);
+    MsnAuth (QString serverAndPath, QString certsPath);
   void authenticate (QString username, QString password, QString ticket);
   private slots:void loginServerArrived (const QHttpResponseHeader &
 					 response);

@@ -8,7 +8,7 @@
 class IMChannel:public QObject
 {
 Q_OBJECT public:
-  IMChannel ();			//constructor
+    IMChannel ();		//constructor
   void initChannel (QString commandFormat == defaultCommandFormat);	//init by inviting others
 private:
     QStringList chooseContacts ();	//popup a dialog to choose who to involve in the channel conversation
