@@ -42,7 +42,7 @@ MsnSession::init (QString server, int port)
 int
 MsnSession::sendCommand (const char *cmd, QString p1, QString p2, QString p3, QString p4)	//send a command to the server, put %x in the cmd to be replaced by the command index and p1, p2...
 {
-  //qDebug()<<m_index;
+  qDebug()<<cmd;
   char cmdBuffer[2000];
   sprintf (cmdBuffer, cmd, m_index, qPrintable (p1), qPrintable (p2),
 	   qPrintable (p3), qPrintable (p4));
@@ -60,8 +60,7 @@ MsnSession::sendCommand (const char *cmd, QString p1, QString p2, QString p3, QS
   qDebug () << "send command finished....";
 }
 
-QString
-MsnSession::getAnswer (int cmdIndex, int timeOut)	//get an answer with cmdIndex, if not found, wait for it. if the answer doesn't arrive until timeout, return "TimeOut"
+QString MsnSession::getAnswer (int cmdIndex, int timeOut)	//get an answer with cmdIndex, if not found, wait for it. if the answer doesn't arrive until timeout, return "TimeOut"
 {
   if (m_socket->state () != QAbstractSocket::ConnectedState)
     {
@@ -75,7 +74,8 @@ MsnSession::getAnswer (int cmdIndex, int timeOut)	//get an answer with cmdIndex,
       QString ans;
       foreach (ans, m_answers)
       {
-	if (ans.split (" ").at (1).toInt () == cmdIndex)
+        if(findReg("[A-Z]{3} (\\d+ )", ans, 1).toInt() ==cmdIndex)
+//	if (ans.split (" ").at (1).toInt () == cmdIndex)
 	  {
 	    found = ans;
 	  }
@@ -158,5 +158,5 @@ QString
 {
   int retNumber;
   retNumber = sendCommand (cmd, p1, p2, p3, p4);
-  return getAnswer (retNumber, 100);
+  return getAnswer(retNumber, 100);
 }

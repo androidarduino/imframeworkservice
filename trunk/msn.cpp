@@ -20,8 +20,7 @@ Msn::Msn ()
   statusConverter["HDN"] = "Hidden";
 }
 
-void
-Msn::setUsernamePassword (QString username, QString password)
+void Msn::setUsernamePassword (QString username, QString password)
 {
   m_username = username;
   m_password = password;
@@ -31,41 +30,33 @@ Msn::~Msn ()
 {
 }
 
-bool
-Msn::loginMsn ()
+bool Msn::loginMsn ()
 {
   QString answer, NSServer, authTicket;
   MsnSession s ("messenger.hotmail.com:1863");
   if (s.state () != QAbstractSocket::ConnectedState)
     return false;
-  s.sendAndWait ("VER %d MSNP8 CVR0\r\n");
-  s.sendAndWait ("CVR %d 0x0409 win 4.10 i386 MSNMSGR 5.0.0544 MSMSGS %s\r\n",
-		 m_username);
+  s.sendAndWait ("VER %d MSNP13 CVR0\r\n");
+  s.sendAndWait ("CVR %d 0x0409 winnt 5.1 i386 MSNMSGR 8.0.0566 MSMSGS %s\r\n", m_username);
   answer = s.sendAndWait ("USR %d TWN I %s\r\n", m_username);
   NSServer = s.findReg ("(XFR \\d+ NS) (\\S+)", answer, 2);
 
   loginSession = new MsnSession (NSServer);
-  connect (loginSession, SIGNAL (incomingMsg (QString)), this,
-	   SLOT (distributeCmd (QString)));
-  connect (loginSession, SIGNAL (disconnected ()), this,
-	   SLOT (connectionLost ()));
-  loginSession->sendAndWait ("VER %d MSNP8 CVR0\r\n");
-  loginSession->
-    sendAndWait ("CVR %d 0x0409 win 4.10 i386 MSNMSGR 5.0.0544 MSMSGS %s\r\n",
-		 m_username);
+  connect (loginSession, SIGNAL (incomingMsg (QString)), this, SLOT (distributeCmd (QString)));
+  connect (loginSession, SIGNAL (disconnected ()), this, SLOT (connectionLost ()));
+  loginSession->sendAndWait ("VER %d MSNP13 CVR0\r\n");
+  loginSession->sendAndWait ("CVR %d 0x0409 winnt 5.1 i386 MSNMSGR 8.0.0566 MSMSGS %s\r\n", m_username);
   answer = loginSession->sendAndWait ("USR %d TWN I %s\r\n", m_username);
-  authTicket = loginSession->findReg ("(USR \\d+ TWN S )(\\S+)", answer, 2);
-  auth =
-    new MsnAuth ("https://nexus.passport.com/rdr/pprdr.asp",
-		 "/etc/ssl/certs/");
-  connect (auth, SIGNAL (authCompleted (QString)), this,
-	   SLOT (loginStage2 (QString)));
-  auth->authenticate (m_username, m_password, authTicket);
+  authTicket=loginSession->findReg ("(lc=1033\\S+)", answer, 1);
+  authTicket="?"+authTicket.replace(",",";");
+  authTicket=QString(QByteArray::fromPercentEncoding(authTicket.toAscii()));
+  auth = new MsnAuth(m_username, m_password, authTicket);
+  connect (auth, SIGNAL (authCompleted (QString)), this, SLOT (loginStage2 (QString)));
+  auth->authenticate();
   return true;
 }
 
-void
-Msn::connectionLost ()
+void Msn::connectionLost ()
 {
   qDebug () << "Connection has been closed by server";
   //loginMsn ();
@@ -92,9 +83,9 @@ Msn::loginStage2 (QString ticket)
     propertyName = loginSession->findReg (property, answer, 1);
     profile.insert (propertyName, propertyValue);
   }
-  //qDebug()<<profile;
-  loginSession->sendAndWait ("SYN %d 0\r\n");
-  loginSession->sendAndWait ("CHG %d NLN\r\n");	//set init status here and next line
+  //in msnp13, must retrive via soap
+  //loginSession->sendAndWait ("SYN %d 0\r\n");
+  //loginSession->sendAndWait ("CHG %d NLN\r\n");	//set init status here and next line
   emit loginFinish ();
 }
 
@@ -102,15 +93,14 @@ void
 Msn::replyChallenge (QString incomingMsg)
 {
   QString seed = loginSession->findReg ("CHL 0 (\\d+)", incomingMsg, 1);
-  QString clientId = "PROD0038W!61ZTF9";
-  QString clientCode = "VT6PX?UQTM4WM%YR";	//magic code
+  QString clientId = "PROD01065C%ZFN6F";
+  QString clientCode = "O4BG@C7BWLYQX?5G";	//magic code
   QString tmp = seed + clientCode;	//conjunct two strings
   tmp = MD5 (tmp).toString ();	//return md5 digest
   loginSession->sendCommand ("QRY %d %s 32\r\n%s", clientId, tmp);
 }
 
-void
-Msn::setStatus (QString status)
+void Msn::setStatus (QString status)
 {
   loginSession->sendAndWait ("CHG %d %s\r\n", statusConverter[status]);	//internal use class, so no strict check required
 }
@@ -120,8 +110,7 @@ QMap < QString, QString > Msn::getProfile (MsnContact /*contact */ )
   return profile;
 }
 
-void
-Msn::distributeCmd (QString cmd)
+void Msn::distributeCmd (QString cmd)
 {
   //qDebug()<<"Receive command: "<<cmd;
   QStringList cut = cmd.split (" ");
@@ -186,8 +175,7 @@ Msn::distributeCmd (QString cmd)
     replyChallenge (cmd);
 }
 
-MsnContact *
-Msn::findContact (QString type, QString value)
+MsnContact *Msn::findContact (QString type, QString value)
 {
   MsnContact *m;
   foreach (m, m_contacts)

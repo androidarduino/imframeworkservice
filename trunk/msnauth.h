@@ -1,24 +1,22 @@
 #ifndef MSNAUTH_H
 #define MSNAUTH_H
-#include <qtopiacomm/QtopiaHttp>
-#include <QSslSocket>
+#include <QHttp>
 #include <unistd.h>
+#include <QFile>
 
 class MsnAuth:public QObject
 {
-Q_OBJECT public:
-    MsnAuth (QString serverAndPath, QString certsPath);
-  void authenticate (QString username, QString password, QString ticket);
-  private slots:void loginServerArrived (const QHttpResponseHeader &
-					 response);
-  void authInfoArrived (const QHttpResponseHeader & response);
-    signals:void authCompleted (QString authenticationString);
-private:
-    QSslSocket * m_sck1;
-  QSslSocket *m_sck2;
-  QtopiaHttp *http1;
-  QtopiaHttp *http2;
-  QString m_ticket, m_username, m_password, m_authString, m_serverAndPath;
+Q_OBJECT
+    public:
+        MsnAuth(QString userName, QString password, QString ticket);
+        void authenticate();
+    private slots:
+        void reply(int id, bool error);
+    signals:
+        void authCompleted (QString authenticationString);
+    private:
+        QHttp https;
+        QString m_ticket, m_username, m_password, m_authString;
 };
 
 #endif

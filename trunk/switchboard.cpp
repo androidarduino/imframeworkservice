@@ -1,7 +1,6 @@
 #include "switchboard.h"
 #include "mime.h"
 #include <QDebug>
-#include "emotions.h"
 
 SwitchBoardSession::SwitchBoardSession (QStringList oldHistory,
 					QString username,
@@ -286,9 +285,7 @@ void SwitchBoardSession::addHistory (QString sender, QString fromNick,
   fromNick = QUrl::fromPercentEncoding (fromNick.toUtf8 ());
   fromNick = toShort (fromNick, 20);
   s = s.arg (fromNick).arg (msg.replace ("\r\n", "<br>"));
-  //add emtion rich texts
-  QString emotionText, emotionPicture;
-  QStringList emotions = Emotions::loadEmotions ();
+  /*//add emtion rich texts
   for (int i = 0; i < emotions.count (); i += 2)
     {
       emotionText = emotions[i];
@@ -298,6 +295,7 @@ void SwitchBoardSession::addHistory (QString sender, QString fromNick,
       s.replace (emotionText.toUpper (),
 		 "<img src=\":/pics/" + emotionPicture + "\">");
     }
+    */
   m_history << s;
   qDebug () << "message added to history: " << s;
   emit msgReceived (s, sender, this);
