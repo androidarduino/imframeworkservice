@@ -19,13 +19,15 @@
 **
 ****************************************************************************/
 
-#include "imdaemon.h"
+#include "msn.h"
 #include <QApplication>
 
 int
 main (int argc, char **argv)
 {
   QApplication app (argc, argv);
-  IMDaemon *daemon = new IMDaemon ();
+  Msn msn;
+  msn.setUsernamePassword("robot_liuzheng@hotmail.com","123456");
+  msn.loginMsn();
   app.exec ();
 }

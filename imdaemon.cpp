@@ -1,24 +1,18 @@
 #include "imdaemon.h"
-#include <QtopiaApplication>
+#include <QApplication>
 #include <QDebug>
 #include <QCopChannel>
 
 IMDaemon::IMDaemon (QWidget *, Qt::WFlags &)
 {
   settingsDlg.setupUi (this);
-  //show wait screen
-  waitScreen = new QWaitWidget (this);
-  //do i need to setup a ui here?
   msn = new Msn ();
-  //keep it running even hidden
-  QtopiaApplication::instance ()->registerRunningTask ("imdaemon");
-  //connect msn signals to this
   connect (msn,
 	   SIGNAL (rawMsgReceived (QString, QString, SwitchBoardSession *)),
 	   this, SLOT (msgReceived (QString, QString, SwitchBoardSession *)));
   connect (msn, SIGNAL (loginFinish ()), this, SLOT (readyToGo ()));
   connect (settingsDlg.login, SIGNAL (clicked ()), this, SLOT (login ()));
-  //connect slots to IPC pool
+/*  //connect slots to IPC pool
   QtopiaIpcAdaptor *adaptor = new QtopiaIpcAdaptor ("QPE/IMFramework");
   QtopiaIpcAdaptor::connect (adaptor, MESSAGE (invite (QString, QString)),
 			     this, SLOT (invite (QString, QString)));
@@ -31,6 +25,7 @@ IMDaemon::IMDaemon (QWidget *, Qt::WFlags &)
   QtopiaIpcAdaptor::connect (this, SIGNAL (ready (QString)), adaptor,
 			     MESSAGE (ready (QString)));
   //load icon resource
+  */
 }
 
 void
@@ -56,7 +51,6 @@ bool IMDaemon::alert (QString msg)
 void
 IMDaemon::readyToGo ()
 {
-  waitScreen->hide ();
   settingsDlg.status->setText ("Online");
   settingsDlg.statusIcon->setPixmap (*(new QPixmap (":/pics/online.png")));
 }
@@ -96,9 +90,9 @@ IMDaemon::msgReceived (QString message, QString sender, SwitchBoardSession *)
       qDebug () << ".......................launching: " << program <<
 	participants << attachedMessage;
       //now launch the application
-      QtopiaIpcAdaptor *adaptor =
+/*      QtopiaIpcAdaptor *adaptor =
 	new QtopiaIpcAdaptor ("QPE/Application/" + program);
-      adaptor->send (MESSAGE (raise ()));
+      adaptor->send (MESSAGE (raise ()));*/
       partiesBank[program] = participants;
       return;
     }

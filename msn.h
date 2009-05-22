@@ -9,6 +9,7 @@
 #include <QMap>
 #include <QStringList>
 #include <QList>
+#include <QUrl>
 class SwitchBoardSession;
 
 class Msn:public QObject
@@ -23,14 +24,14 @@ Q_OBJECT public:
   void removeContact (QString contact);
   void blockContact (QString contact);
   void unblockContact (QString contact);
-    QMap < QString, QString > getProfile (MsnContact contact);
-    QList < MsnContact * >getContacts (QString status);
-    QList < QString > getContactsEmails (QString status);
-    QList < SwitchBoardSession * >m_sessions;	//active sessions
+  QMap < QString, QString > getProfile (MsnContact contact);
+  QList < MsnContact * >getContacts (QString status);
+  QList < QString > getContactsEmails (QString status);
+  QList < SwitchBoardSession * >m_sessions;	//active sessions
   SwitchBoardSession *requestSBSession (QString receiver);
   MsnContact *findContact (QString type, QString value);
 
-    signals:void msgReceived (QString message, QString sender,
+  signals:void msgReceived (QString message, QString sender,
 			      SwitchBoardSession * session);
   void rawMsgReceived (QString message, QString sender,
 		       SwitchBoardSession * session);

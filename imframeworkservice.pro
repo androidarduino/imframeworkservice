@@ -6,6 +6,7 @@ TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
 INCLUDEPATH += .
+QT += network
 
 UI_DIR=./tmpdata
 MOC_DIR=./tmpdata
@@ -13,9 +14,7 @@ OBJECTS_DIR=./tmpdata
 RCC_DIR=./tmpdata
 
 # Input
-HEADERS += imchannel.h \
-           imdaemon.h \
-           md5.h \
+HEADERS += md5.h \
            mime.h \
            msn.h \
            msnauth.h \
@@ -23,9 +22,7 @@ HEADERS += imchannel.h \
            msnsession.h \
            switchboard.h
 FORMS += settings.ui
-SOURCES += imchannel.cpp \
-           imdaemon.cpp \
-           main.cpp \
+SOURCES += main.cpp \
            md5.cpp \
            msn.cpp \
            msnauth.cpp \

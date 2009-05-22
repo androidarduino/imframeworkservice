@@ -4,7 +4,6 @@
 #include "ui_settings.h"
 #include <QDialog>
 #include <QList>
-#include <QWaitWidget>
 #include <QMap>
 
 class IMDaemon:public QWidget
@@ -16,8 +15,6 @@ Q_OBJECT public:
   void ready (QString participants);
 private:
     Msn * msn;
-  QtopiaIpcAdaptor *adaptor;
-  QWaitWidget *waitScreen;
     QMap < QString, QString > partiesBank;	//for caching the parties
   void launchApplication (QString applicationName);	//use qcop QPE/Application/tictactoe "raise()" to call
     Ui::IMSettings settingsDlg;
