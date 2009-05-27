@@ -68,6 +68,7 @@ Msn::loginStage2 (QString ticket)
   QString answer;
   //qDebug()<<"Authenticate with ticket......................\n"<<ticket;
   answer = loginSession->sendAndWait ("USR %d TWN S %s\r\n", ticket);
+  /*qDebug()<<answer;
   //grab properties into a QMap object
   QString propertyName, propertyValue, property;
   QStringList properties;
@@ -86,11 +87,15 @@ Msn::loginStage2 (QString ticket)
   //in msnp13, must retrive via soap
   //loginSession->sendAndWait ("SYN %d 0\r\n");
   //loginSession->sendAndWait ("CHG %d NLN\r\n");	//set init status here and next line
+  */
+  //qDebug()<<loginSession->mspAuth;
+  //TODO: now populate in the contact list using soap
+  MsnContactList* list=new MsnContactList(ticket.mid(2).replace("&p=", ";MSPProf="));
+  list->requestMembershipList();
   emit loginFinish ();
 }
 
-void
-Msn::replyChallenge (QString incomingMsg)
+void Msn::replyChallenge (QString incomingMsg)
 {
   QString seed = loginSession->findReg ("CHL 0 (\\d+)", incomingMsg, 1);
   QString clientId = "PROD01065C%ZFN6F";
@@ -317,9 +322,7 @@ void
 Msn::addContact (QString contact, QString group = "0")
 {
   unblockContact (contact);
-  loginSession->sendAndWait ("ADD %d FL %s %s %s\r\n", contact, contact,
-			     group);
-
+  loginSession->sendAndWait ("ADD %d FL %s %s %s\r\n", contact, contact, group);
 }
 
 void

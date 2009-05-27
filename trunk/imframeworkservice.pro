@@ -7,6 +7,7 @@ TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
 QT += network
+QT += xml
 
 UI_DIR=./tmpdata
 MOC_DIR=./tmpdata
@@ -19,6 +20,7 @@ HEADERS += md5.h \
            msn.h \
            msnauth.h \
            msncontact.h \
+           contactlist.h \
            msnsession.h \
            switchboard.h
 FORMS += settings.ui
@@ -27,5 +29,6 @@ SOURCES += main.cpp \
            msn.cpp \
            msnauth.cpp \
            msnsession.cpp \
+           contactlist.cpp \
            switchboard.cpp
 RESOURCES += msn.qrc

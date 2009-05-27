@@ -56,8 +56,8 @@ MsnSession::sendCommand (const char *cmd, QString p1, QString p2, QString p3, QS
     }
   m_socket->write (question);
   m_index++;
-  return m_index - 1;
   qDebug () << "send command finished....";
+  return m_index - 1;
 }
 
 QString MsnSession::getAnswer (int cmdIndex, int timeOut)	//get an answer with cmdIndex, if not found, wait for it. if the answer doesn't arrive until timeout, return "TimeOut"
@@ -94,7 +94,7 @@ MsnSession::received ()
   QString answer = QString::fromUtf8 (a.constData ());
   QString tmp = answer.left (3);
   bool isPayloadCmd;
-  if (tmp == "MSG" | tmp == "NOT" | tmp == "PAG" | tmp == "QRY")
+  if((tmp == "MSG") | (tmp == "NOT") | (tmp == "PAG") | (tmp == "QRY"))
     isPayloadCmd = true;
   else
     isPayloadCmd = false;
@@ -119,7 +119,7 @@ MsnSession::received ()
     qDebug () << "<< " << o.replace ("\r\n", "\\r\\n");
     //if the cmd is a payload cmd, join it with its payload
     tmp = cmd.left (3);
-    if (tmp == "MSG" | tmp == "NOT" | tmp == "PAG" | tmp == "QRY")
+    if ((tmp == "MSG") | (tmp == "NOT") | (tmp == "PAG") |(tmp == "QRY"))
       {
 	int pos = cmd.lastIndexOf (" ");
 	pos++;
@@ -140,6 +140,7 @@ MsnSession::received ()
 	emit incomingMsg (cmd);
       }
     //qDebug()<<"countdown:"<<countDown;
+    mspAuth=findReg("MSPAuth: (\\S+)", answer, 1);
   }
 }
 
