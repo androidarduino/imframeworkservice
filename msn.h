@@ -4,6 +4,7 @@
 #include "msnauth.h"
 #include "msnsession.h"
 #include "msncontact.h"
+#include "contactlist.h"
 #include "switchboard.h"
 #include <QString>
 #include <QMap>
