@@ -59,7 +59,7 @@ void MsnContactList::gotMembershipList(int id, bool error)
 
 void MsnContactList::gotAddressBook(int id, bool error)
 {
-    qDebug()<<"got addressbook: ";//<<id<<error<<http2.errorString();
+    qDebug()<<"got addressbook: "<<id<<error<<http2.errorString();
     //qDebug()<<http2.readAll();
     if(http2.readAll()=="")
         return;

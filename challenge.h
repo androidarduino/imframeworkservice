@@ -3,12 +3,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <openssl/md5.h>
-#define BUFSIZE 256
+#include <QString>
+#include "md5.h"
 
 class MsnChallenge
 {
     private:
+        QString productID;
+        QString productKey;
         int isBigEndian(void)
         {
             short int word = 0x0100;
@@ -25,12 +27,17 @@ class MsnChallenge
             return(tmp);
         }
     public:
-        void calculateChallenge(char *input, char *output)
+        MsnChallenge(QString pId, QString pKey)
         {
-            char *productID = "PROD01065C%ZFN6F",
-                 *productKey  = "O4BG@C7BWLYQX?5G",
-                 *hexChars   = "0123456789abcdef",
-                 buf[BUFSIZE];
+        productID = pId;
+        productKey  = pKey;
+        }
+        QString calculateChallenge(QString input)
+        {
+            char output[33];
+            const int bufferSize=256;
+            char hexChars[]   = "0123456789abcdef";
+            char buf[bufferSize];
             unsigned char md5Hash[16], *newHash;
             unsigned int *md5Parts, *chlStringParts, newHashParts[5];
             long long nHigh=0, nLow=0;
@@ -38,8 +45,11 @@ class MsnChallenge
             /* Determine our endianess */
             bigEndian = isBigEndian();
             /* Create the MD5 hash */
-            snprintf(buf, BUFSIZE-1, "%s%s", input, productKey);
-            MD5((unsigned char *)buf, strlen(buf), md5Hash);
+            //snprintf(buf, bufferSize-1, "%s%s", input, productKey);
+            strcpy(buf, (input+productKey).toAscii().constData());
+            //MD5((unsigned char *)buf, strlen(buf), md5Hash);
+            Md5 m(input+productKey);
+            memcpy(md5Hash, (const char*)m.digest(), 16);
             /* Split it into four integers */
             md5Parts = (unsigned int *)md5Hash;
             for(i=0; i<4; i++)
@@ -47,30 +57,30 @@ class MsnChallenge
                 /* check for endianess */
                 if(bigEndian)
                     md5Parts[i] = swapInt(md5Parts[i]);
-
                 /* & each integer with 0x7FFFFFFF          */
                 /* and save one unmodified array for later */
                 newHashParts[i] = md5Parts[i];
                 md5Parts[i] &= 0x7FFFFFFF;
             }
             /* make a new string and pad with '0' */
-            snprintf(buf, BUFSIZE-5, "%s%s", input, productID);
+            //snprintf(buf, bufferSize-5, "%s%s", input, productID);
+            strcpy(buf, (input+productID).toAscii().constData());
             i = strlen(buf);
             memset(&buf[i], '0', 8 - (i % 8));
             buf[i + (8 - (i % 8))]='\0';
             /* split into integers */
             chlStringParts = (unsigned int *)buf;
             /* this is magic */
-            for (i=0; i<(strlen(buf)/4)-1; i+=2)
+            int len=strlen(buf)/4-1;
+            for (i=0; i<len; i+=2)
             {
                 long long temp;
-
                 if(bigEndian)
                 {
                     chlStringParts[i]   = swapInt(chlStringParts[i]);
                     chlStringParts[i+1] = swapInt(chlStringParts[i+1]);
                 }
-                temp=(md5Parts[0] * (((0x0E79A9C1 * (long long)chlStringParts[i]) % 0x7FFFFFFF)+nHigh) + md5Parts[1])%0x7FFFFFFF;
+                temp=(md5Parts[0] * (((0x0E79A9C1*(long long)chlStringParts[i]) % 0x7FFFFFFF)+nHigh) + md5Parts[1])%0x7FFFFFFF;
                 nHigh=(md5Parts[2] * (((long long)chlStringParts[i+1]+temp) % 0x7FFFFFFF) + md5Parts[3]) % 0x7FFFFFFF;
                 nLow=nLow + nHigh + temp;
             }
@@ -92,14 +102,7 @@ class MsnChallenge
                 output[(i*2)+1]=hexChars[newHash[i]&0xF];
             }
             output[32]='\0';
+            return QString(output);
         }
 };
-/*
-   int main()
-   {
-   char chl_result[32];
-   MSN_handle_chl("13038318816579321232", chl_result);
-   printf("Results: %s\n", chl_result);
-   return 0;
-   }*/
 #endif
