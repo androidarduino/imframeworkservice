@@ -119,10 +119,9 @@ void Msn::replyChallenge (QString incomingMsg)
     QString clientCode = "O4BG@C7BWLYQX?5G";	//magic code
 //    QString tmp = seed + clientCode;	//conjunct two strings
 //    tmp = MD5 (tmp).toString ();	//return md5 digest
-    char result[256];
-    MsnChallenge c;
-    c.calculateChallenge(seed.toAscii().data(),result);
-    loginSession->sendCommand ("QRY %d %s 32\r\n%s", clientId, QString(result));
+    MsnChallenge c(clientId, clientCode);
+    QString result=c.calculateChallenge(seed.toAscii().data());
+    loginSession->sendCommand ("QRY %d %s 32\r\n%s", clientId, result);
 }
 
 void Msn::setStatus (QString status)

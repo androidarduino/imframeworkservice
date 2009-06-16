@@ -1,6 +1,6 @@
 #include "md5.h"
 
-/* Constants for MD5Transform routine. */
+/* Constants for Md5Transform routine. */
 #define S11 7
 #define S12 12
 #define S13 17
@@ -18,7 +18,7 @@
 #define S43 15
 #define S44 21
 
-/* F, G, H and I are basic MD5 functions.
+/* F, G, H and I are basic Md5 functions.
 */
 #define F(x, y, z) (((x) & (y)) | ((~x) & (z)))
 #define G(x, y, z) (((x) & (z)) | ((y) & (~z)))
@@ -41,29 +41,29 @@ Rotation is separate from addition to prevent recomputation.
 #define II(a, b, c, d, x, s, ac) {(a) += I ((b), (c), (d)) + (x) + ac; (a) = ROTATE_LEFT ((a), (s));(a) += (b);}
 
 const byte
-MD5::PADDING[64] = { 0x80 };
+Md5::PADDING[64] = { 0x80 };
 const char
-  MD5::HEX[16] =
+  Md5::HEX[16] =
   { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
   'd', 'e', 'f'
 };
 
 
 /* Default construct. */
-MD5::MD5 ()
+Md5::Md5 ()
 {
   reset ();
 }
 
-/* Construct a MD5 object with a input buffer. */
-MD5::MD5 (const void *input, size_t length)
+/* Construct a Md5 object with a input buffer. */
+Md5::Md5 (const void *input, size_t length)
 {
   reset ();
   update (input, length);
 }
 
-/* Construct a MD5 object with a string. */
-MD5::MD5 (const QString & str)
+/* Construct a Md5 object with a string. */
+Md5::Md5 (const QString & str)
 {
   reset ();
   update (str);
@@ -71,7 +71,7 @@ MD5::MD5 (const QString & str)
 
 /* Return the message-digest */
 const byte *
-MD5::digest ()
+Md5::digest ()
 {
   if (!_finished)
     {
@@ -84,7 +84,7 @@ MD5::digest ()
 
 /* Reset the calculate state */
 void
-MD5::reset ()
+Md5::reset ()
 {
   _finished = false;
 
@@ -100,24 +100,24 @@ MD5::reset ()
 
 /* Updating the context with a input buffer. */
 void
-MD5::update (const void *input, size_t length)
+Md5::update (const void *input, size_t length)
 {
   update ((const byte *) input, length);
 }
 
 /* Updating the context with a string. */
 void
-MD5::update (const QString & str)
+Md5::update (const QString & str)
 {
   update ((const byte *) str.toAscii ().constData (), str.length ());
 }
 
-/* MD5 block update operation. Continues an MD5 message-digest
+/* Md5 block update operation. Continues an Md5 message-digest
 operation, processing another message block, and updating the
 context.
 */
 void
-MD5::update (const byte * input, size_t length)
+Md5::update (const byte * input, size_t length)
 {
   ulong i, index, partLen;
   _finished = false;
@@ -150,11 +150,11 @@ MD5::update (const byte * input, size_t length)
 }
 
 
-/* MD5 finalization. Ends an MD5 message-_digest operation, writing the
+/* Md5 finalization. Ends an Md5 message-_digest operation, writing the
 the message _digest and zeroizing the context.
 */
 void
-MD5::final ()
+Md5::final ()
 {
   byte bits[8];
   ulong oldState[4];
@@ -184,9 +184,9 @@ MD5::final ()
   memcpy (_count, oldCount, 8);
 }
 
-/* MD5 basic transformation. Transforms _state based on block. */
+/* Md5 basic transformation. Transforms _state based on block. */
 void
-MD5::transform (const byte block[64])
+Md5::transform (const byte block[64])
 {
   ulong a = _state[0], b = _state[1], c = _state[2], d = _state[3], x[16];
   decode (block, x, 64);
@@ -272,7 +272,7 @@ MD5::transform (const byte block[64])
 a multiple of 4.
 */
 void
-MD5::encode (const ulong * input, byte * output, size_t length)
+Md5::encode (const ulong * input, byte * output, size_t length)
 {
   for (size_t i = 0, j = 0; j < length; i++, j += 4)
     {
@@ -288,7 +288,7 @@ MD5::encode (const ulong * input, byte * output, size_t length)
 a multiple of 4.
 */
 void
-MD5::decode (const byte * input, ulong * output, size_t length)
+Md5::decode (const byte * input, ulong * output, size_t length)
 {
   for (size_t i = 0, j = 0; j < length; i++, j += 4)
     {
@@ -300,7 +300,7 @@ MD5::decode (const byte * input, ulong * output, size_t length)
 
 /* Convert byte array to hex string. */
 QString
-MD5::bytesToHexString (const byte * input, size_t length)
+Md5::bytesToHexString (const byte * input, size_t length)
 {
   QString str;
   for (size_t i = 0; i < length; i++)
@@ -315,8 +315,7 @@ MD5::bytesToHexString (const byte * input, size_t length)
 
 
 /* Convert digest to string value */
-QString
-MD5::toString ()
+QString Md5::toString ()
 {
   return bytesToHexString (digest (), 16);
 }
