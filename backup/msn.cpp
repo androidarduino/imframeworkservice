@@ -93,36 +93,27 @@ Msn::loginStage2 (QString ticket)
     buddyList=new MsnContactList(ticket.mid(2).replace("&p=", ";MSPProf="));
     connect(buddyList,SIGNAL(gotBuddyList()),this,SLOT(loginStage3())); 
     buddyList->requestMembershipList();
-    buddyList->requestAddressBook();
 }
 
 void Msn::loginStage3()
 {
-    qDebug()<<"stage 3 started";
     //BLP
-    loginSession->sendAndWait("BLP %d BL\r\n");
+    loginSession->sendCommand("BLP %d BL\r\n");
     //ADL
     QString ml=buddyList->ml();
-    loginSession->sendAndWait("ADL %d %s\r\n%s",QString::number(ml.length()),ml);
-    //PRP (if the address is not verified, rpr will return 715 7.
-    //loginSession->sendAndWait("PRP %d MFN %s\r\n", QUrl::toPercentEncoding("vrcats@gmail.com"));
-    //CHG
-    loginSession->sendAndWait("CHG %d NLN %s\r\n", "1073791084");
-    emit loginFinish();
+    loginSession->sendCommand("ADL %d %d\r\n%s",QString::number(ml.length()),ml);
+    //PRP
+    loginSession->sendCommand("PRP %d MFN %s\r\n", "vrcats");
 }
 
 void Msn::replyChallenge (QString incomingMsg)
 {
-    qDebug()<<"challenge received: "<<incomingMsg;
     QString seed = loginSession->findReg ("CHL 0 (\\d+)", incomingMsg, 1);
     QString clientId = "PROD01065C%ZFN6F";
     QString clientCode = "O4BG@C7BWLYQX?5G";	//magic code
-//    QString tmp = seed + clientCode;	//conjunct two strings
-//    tmp = MD5 (tmp).toString ();	//return md5 digest
-    char result[256];
-    MsnChallenge c;
-    c.calculateChallenge(seed.toAscii().data(),result);
-    loginSession->sendCommand ("QRY %d %s 32\r\n%s", clientId, QString(result));
+    QString tmp = seed + clientCode;	//conjunct two strings
+    tmp = MD5 (tmp).toString ();	//return md5 digest
+    loginSession->sendCommand ("QRY %d %s 32\r\n%s", clientId, tmp);
 }
 
 void Msn::setStatus (QString status)

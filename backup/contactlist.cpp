@@ -23,20 +23,17 @@ bool MsnContactList::requestMembershipList()
 
 void MsnContactList::dataArrived(bool)// error)
 {
-    //qDebug()<<"data arrived: "<<http1.error()<<http1.readAll()<<http1.lastResponse().toString();
+    qDebug()<<"data arrived: "<<http1.error()<<http1.readAll()<<http1.lastResponse().toString();
 }
 
 bool MsnContactList::requestAddressBook()
 {
     QString soap=loadSoapRequestFile("addressbook.xml");
-    http2.setHost("contacts.msn.com");
     header2.setRequest("POST","/abservice/abservice.asmx");
-    header2.setContentType("text/xml; charset=utf-8");
     header2.addValue("SOAPAction","http://www.msn.com/webservices/AddressBook/ABFindAll");
-    header2.addValue("Cookie", QString("MSPAuth=%1").arg(m_mspAuth));
-    header2.setValue("Host", "contacts.msn.com");
-    header2.setValue("Content-Length", QString("%1").arg(soap.toUtf8().length()));
-    connect(&http2, SIGNAL(requestFinished(int, bool)), this, SLOT(gotAddressBook(int, bool)));
+    header2.setContentType("text/xml; charset=utf-8");
+    header2.setValue("Content-Length", QString(soap.toUtf8().length()));
+    http2.setHost("contacts.msn.com");
     http2.request(header2, soap.toUtf8());
     return true;
 }
@@ -59,14 +56,11 @@ void MsnContactList::gotMembershipList(int id, bool error)
 
 void MsnContactList::gotAddressBook(int id, bool error)
 {
-    qDebug()<<"got addressbook: ";//<<id<<error<<http2.errorString();
-    //qDebug()<<http2.readAll();
-    if(http2.readAll()=="")
-        return;
-    emit gotBuddyList();
+    qDebug()<<"got addressbook: "<<id<<error<<http1.errorString();
+    qDebug()<<http2.readAll();
 }
 
 QString MsnContactList::ml()
 {
-    return "<ml l=\"1\"><d n=\"hotmail.com\"><c n=\"robot_liuzheng\" l=\"3\" t=\"1\" /></d></ml>";
+    return "<ml l=""1""><d n=""hotmail.com""><c n=""robot_liuzheng"" l=""3"" t=""1"" /></d></ml>";
 }

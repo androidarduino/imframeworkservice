@@ -5,7 +5,6 @@
 #include <QPair>
 #include "msnsession.h"
 #include "msn.h"
-
 class Msn;
 class SwitchBoardSession:public QObject
 {
