@@ -8,7 +8,6 @@ DEPENDPATH += .
 INCLUDEPATH += .
 QT += network
 QT += xml
-LIBS += -lcrypto
 
 UI_DIR=./tmpdata
 MOC_DIR=./tmpdata
@@ -23,7 +22,6 @@ HEADERS += md5.h \
            msncontact.h \
            contactlist.h \
            msnsession.h \
-           challenge.h \
            switchboard.h
 FORMS += settings.ui
 SOURCES += main.cpp \

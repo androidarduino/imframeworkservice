@@ -42,7 +42,7 @@ MsnSession::init (QString server, int port)
 int
 MsnSession::sendCommand (const char *cmd, QString p1, QString p2, QString p3, QString p4)	//send a command to the server, put %x in the cmd to be replaced by the command index and p1, p2...
 {
-  //qDebug()<<cmd;
+  qDebug()<<cmd;
   char cmdBuffer[2000];
   sprintf (cmdBuffer, cmd, m_index, qPrintable (p1), qPrintable (p2),
 	   qPrintable (p3), qPrintable (p4));
@@ -87,17 +87,18 @@ QString MsnSession::getAnswer (int cmdIndex, int timeOut)	//get an answer with c
   return found;
 }
 
-void MsnSession::received ()
+void
+MsnSession::received ()
 {
   QByteArray a = m_socket->readAll ();
   QString answer = QString::fromUtf8 (a.constData ());
   QString tmp = answer.left (3);
   bool isPayloadCmd;
-  if((tmp == "MSG") | (tmp == "NOT") | (tmp == "PAG") | (tmp == "QRY") | (tmp =="UBX"))
+  if((tmp == "MSG") | (tmp == "NOT") | (tmp == "PAG") | (tmp == "QRY"))
     isPayloadCmd = true;
   else
     isPayloadCmd = false;
-  while ((!isPayloadCmd) && (a.right (2) != "\r\n"))	//if the command does not end with \r\n, that means it is incomplete, wait for a second for the rest part of the command to arrive.
+  while ((!isPayloadCmd) && (a.right (2) != "\r\n"))	//if the command does not end with \r\n, that means it is incomplete, wait for a second for the rest part of the command to arrive TODO: this is not tested yet.
     {
       if (m_socket->state () != QAbstractSocket::ConnectedState)
 	{

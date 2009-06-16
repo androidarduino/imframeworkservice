@@ -1,7 +1,6 @@
 #ifndef MSN_H
 #define MSN_H
 #include "md5.h"
-#include "challenge.h"
 #include "msnauth.h"
 #include "msnsession.h"
 #include "msncontact.h"
