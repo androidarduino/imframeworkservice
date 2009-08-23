@@ -27,7 +27,7 @@ main (int argc, char **argv)
 {
   QApplication app (argc, argv);
   Msn msn;
-  msn.setUsernamePassword("vrcats@gmail.com", argv[1]);
+  msn.setUsernamePassword("vrcats@gmail.com", "annie92");
   msn.loginMsn();
-  app.exec ();
+  return app.exec ();
 }

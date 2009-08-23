@@ -8,7 +8,7 @@ DEPENDPATH += .
 INCLUDEPATH += .
 QT += network
 QT += xml
-LIBS += -lcrypto
+CONFIG += console
 
 UI_DIR=./tmpdata
 MOC_DIR=./tmpdata
