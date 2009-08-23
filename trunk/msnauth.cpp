@@ -17,6 +17,7 @@ void MsnAuth::authenticate()
     file.open(QIODevice::ReadOnly | QIODevice::Text);
     QString data=file.readAll();
     file.close();
+    qDebug()<<m_ticket;
     data.replace("msnp13_auth_ticket", m_ticket);
     data.replace("msnp13_auth_username", m_username);
     data.replace("msnp13_auth_password", m_password);
