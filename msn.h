@@ -55,6 +55,7 @@ class Msn:public QObject
 
     private:
         QString m_username, m_password;
+        int skipBytes;
         MsnContactList* buddyList;
         MsnSession *loginSession;
         MsnAuth *auth;

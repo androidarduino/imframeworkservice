@@ -21,6 +21,8 @@ class MsnContactList: public QObject
         QHttpRequestHeader header1, header2;
         QString loadSoapRequestFile(QString fileName);
         QString m_mspAuth;
+        void parse(QString& content);
+        QMap<QString, QString> buddies;
     private slots:
         void gotMembershipList(int id, bool error);
         void gotAddressBook(int id, bool error);

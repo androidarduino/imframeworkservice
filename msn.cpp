@@ -18,6 +18,7 @@ Msn::Msn ()
     statusConverter["PHN"] = "OnThePhone";
     statusConverter["LUN"] = "OutToLunch";
     statusConverter["HDN"] = "Hidden";
+    skipBytes=0;
 }
 
 void Msn::setUsernamePassword (QString username, QString password)
@@ -91,7 +92,7 @@ Msn::loginStage2 (QString ticket)
     //qDebug()<<loginSession->mspAuth;
     //TODO: now populate in the contact list using soap
     buddyList=new MsnContactList(ticket.mid(2).replace("&p=", ";MSPProf="));
-    connect(buddyList,SIGNAL(gotBuddyList()),this,SLOT(loginStage3())); 
+    connect(buddyList,SIGNAL(gotBuddyList()),this,SLOT(loginStage3()));
     buddyList->requestMembershipList();
     buddyList->requestAddressBook();
 }
@@ -136,7 +137,16 @@ QMap < QString, QString > Msn::getProfile (MsnContact /*contact */ )
 
 void Msn::distributeCmd (QString cmd)
 {
-    //qDebug()<<"Receive command: "<<cmd;
+    qDebug()<<"Receive command: "<<cmd;
+    if(skipBytes!=0)
+    {
+        cmd=QByteArray::fromPercentEncoding(cmd.toUtf8());
+        cmd=cmd.right(cmd.length()-skipBytes);
+        cmd=cmd.toUtf8();
+        qDebug()<<cmd.length()<<skipBytes<<"after skipping: "<<cmd;
+        skipBytes=0;
+    }
+
     QStringList cut = cmd.split (" ");
     if (cut[0] == cmd)
         return;
@@ -145,6 +155,11 @@ void Msn::distributeCmd (QString cmd)
     {
         //LSG groupid groupname
         m_contact_groups.insert (cut[1], cut[2].toInt ());
+    }
+    if(prefix == "UBX")
+    {
+        skipBytes=cut[2].toInt();
+        qDebug()<<"going to skip: "<<skipBytes;
     }
     if (prefix == "LST")
     {
