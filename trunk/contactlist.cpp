@@ -60,13 +60,53 @@ void MsnContactList::gotMembershipList(int id, bool error)
 void MsnContactList::gotAddressBook(int id, bool error)
 {
     qDebug()<<"got addressbook: "<<id<<error<<http2.errorString();
-    //qDebug()<<http2.readAll();
-    if(http2.readAll()=="")
+    QString content=http2.readAll();
+    if(content=="")
         return;
+    parse(content);
     emit gotBuddyList();
 }
 
 QString MsnContactList::ml()
 {
-    return "<ml l=\"1\"><d n=\"hotmail.com\"><c n=\"robot_liuzheng\" l=\"3\" t=\"1\" /></d></ml>";
+    QString t="<ml l=\"1\">";
+    QString prevDomain="";
+    foreach(QString e, buddies.keys())
+    {
+        QStringList l=e.split("@");
+        QString domain=l[1];
+        QString contact=l[0];
+        //add domain, if the same, ignore
+        if(domain!=prevDomain)
+        {
+            if(prevDomain!="")
+                t+="</d>";
+            t+=QString("<d n=\"%1\">").arg(domain);
+        }
+        //add contact name
+        t+=QString("<c n=\"%1\" l=\"3\" t=\"1\" />").arg(contact);
+        //if not the same, close domain
+        prevDomain=domain;
+    }
+    t+="</d></ml>";
+    qDebug()<<t;
+    return t;
+    //return "<ml l=\"1\"><d n=\"hotmail.com\"><c n=\"robot_liuzheng\" l=\"3\" t=\"1\" /></d></ml>";
 }
+
+void MsnContactList::parse(QString& content)
+{
+    buddies.clear();
+    QDomDocument doc;
+    doc.setContent(content);
+    QDomNodeList list=doc.elementsByTagName("passportName");
+    //TODO: temporarily solution, populate all information later
+    for(int n=0;n<list.count();n++)
+    {
+        buddies[list.at(n).toElement().text()]="good";
+        qDebug()<<list.at(n).toElement().text();
+    }
+}
+
+
+
