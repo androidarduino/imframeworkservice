@@ -71,28 +71,66 @@ void IRCClient::gotChannelList(QString& msg)
     if(rx.indexIn(msg)==-1)
         return;
     QString cn=rx.cap(3);
-    //now we keep it as simple as possible. in the future it should record the title of channels and head counts as well.
-    if(!d_channels.contains(cn))
-        d_channels<<cn;
+    //add channel to list
+    bool exist=false;
+    foreach(IRCChannel c, d_channels)
+        if(c.d_name==cn)
+            exist=true;
+    if(!exist)
+    {
+        IRCChannel* channel=new IRCChannel();
+        channel->d_name=cn;
+        d_channels<<*channel;
+    }
     qDebug()<<"--- got channel list, updating channels ";
 }
-void IRCClient::gotUserNames(QString& )
+void IRCClient::gotUserNames(QString& msg)
 {
-    return;
+    QRegExp rx(":(.+) 353 (.*) ([+=@]) (#.+) :(.*)");
+    if(rx.indexIn(msg)==-1)
+        return;
+    QString channel=rx.cap(4);
+    QStringList users=rx.cap(5).split(" ");
+    //add user to channel
+    foreach(IRCChannel c, d_channels)
+        if(c.d_name==channel)
+            foreach(QString user, users)
+                if(!c.d_users.contains(user))
+                    c.d_users<<user;
+    qDebug()<<"--- got user list, updating channel users ";
+   return;
 }
-void IRCClient::gotNotification(QString& )
+void IRCClient::gotNotification(QString& msg)
 {
-    return;
+    QRegExp rx(":(.+) NOTICE (.+) :(.*)");
+    if(rx.indexIn(msg)==-1)
+        return;
+    emit(notification(rx.cap(3)));
+    qDebug()<<"--- got notification, emitting notify signal ";
 }
-void IRCClient::gotInvitation(QString& )
+void IRCClient::gotInvitation(QString& msg)
 {
-    return;
+    QRegExp rx(":(.+)!~(.+) INVITE (.+) :(#.+)");
+    if(rx.indexIn(msg)==-1)
+        return;
+    emit(invitation(rx.cap(1), rx.cap(4)));
+    sendCommand("join "+rx.cap(4));
+    qDebug()<<"--- got invitation, emitting invite signal ";
 }
-void IRCClient::gotMessageOfTheDay(QString& )
+void IRCClient::gotMessageOfTheDay(QString& msg)
 {
-    return;
+    QRegExp rx(":(.+) 372 (.+) :(.*)");
+    if(rx.indexIn(msg)==-1)
+        return;
+    if(!d_motd.contains(rx.cap(3)))
+            d_motd<<rx.cap(3);
+    qDebug()<<"--- got message of the day, updating ";
 }
-void IRCClient::gotJoin(QString& )
+void IRCClient::gotJoin(QString& msg)
 {
-    return;
+    QRegExp rx(":(.+)!~(.+) JOIN :(#.+)");
+    if(rx.indexIn(msg)==-1)
+        return;
+    emit(join(rx.cap(1), rx.cap(3), rx.cap(2)));
+    qDebug()<<"--- got join notification, emitting join signal ";
 }

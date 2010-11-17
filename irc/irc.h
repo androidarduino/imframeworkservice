@@ -29,7 +29,7 @@ list reply:
 
 names reply:
     ":(.+) 353 (.*) ([+=@]) (#.+) :(.*)"
-//:irc.troll.no 353 vrcats = #chinese :vrcats chayin_ julia_w7 ling lqi Jing jiang z35liu chayin 
+//:irc.troll.no 353 vrcats = #chinese :vrcats chayin_ julia_w7 ling lqi Jing jiang z35liu chayin
 //:irc.troll.no 366 vrcats #chinese :End of NAMES list.
 
 receive message:
@@ -46,6 +46,10 @@ away reply:
     ":(.+) 306 (.+) :(.*)"
 //:irc.troll.no 306 vrcats :You have been marked as being away
 
+invitation:
+    ":(.+)!~(.+) INVITE (.+) :(#.+)"
+//:z35liu!~z35liu@172.30.136.110 INVITE vrcats :#chinese
+
 invite reply:
     ":(.+) 341 (.+) (.+) (#.+)"
 //:irc.troll.no 341 vrcats z35liu #vrcats
@@ -56,7 +60,13 @@ join message:
 
 };
 */
-
+class IRCChannel
+{
+    public:
+        IRCChannel(){}
+        QStringList d_users;
+        QString d_name;
+};
 
 class IRCClient: public QObject
 {
@@ -73,11 +83,11 @@ class IRCClient: public QObject
         void disconnect();
     signals:
         void message(QString from, QString fromURI, QString receiver, QString msg);
-        void notification(QString& from, QString& msg);
-        void invitation(QString& from, QString& toChannel);
+        void notification(QString msg);
+        void invitation(QString from, QString toChannel);
         void connected();
         void ping(QString& ping);
-        void join(QString& username, QString& channel, QString& uri);
+        void join(QString username, QString channel, QString uri);
         void disconnected();
     private slots:
         void msgArrived();
@@ -101,7 +111,8 @@ class IRCClient: public QObject
         QString d_userName, d_realName, d_password;
         int d_userMode;
         QString d_status;
-        QStringList d_channels;
+        QList<IRCChannel> d_channels;
+        QStringList d_motd;
 };
 
 
