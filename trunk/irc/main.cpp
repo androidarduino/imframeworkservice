@@ -7,6 +7,7 @@ int main(int argc, char** argv)
     IRCClient client("irc.nokia.troll.no", 6667);
     client.d_userName="vrcats";
     client.connect();
+    client.join("#chinese");
     return app.exec();
 }
 

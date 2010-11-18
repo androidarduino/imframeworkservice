@@ -35,6 +35,13 @@ void IRCClient::connect()
     d_socket.connectToHost(d_server, d_port);
 }
 
+void IRCClient::connect(QString& server, int port)
+{
+    d_server=server;
+    d_port=port;
+    d_socket.connectToHost(d_server, d_port);
+}
+
 void IRCClient::sendCommand(QString cmd)
 {
     QByteArray command=cmd.toUtf8();
@@ -80,6 +87,8 @@ void IRCClient::gotChannelList(QString& msg)
     {
         IRCChannel* channel=new IRCChannel();
         channel->d_name=cn;
+        channel->d_headCount=rx.cap(4).toInt();
+        channel->d_description=rx.cap(5);
         d_channels<<*channel;
     }
     qDebug()<<"--- got channel list, updating channels ";
@@ -133,4 +142,41 @@ void IRCClient::gotJoin(QString& msg)
         return;
     emit(join(rx.cap(1), rx.cap(3), rx.cap(2)));
     qDebug()<<"--- got join notification, emitting join signal ";
+}
+
+QStringList IRCClient::channels()
+{
+    QStringList l;
+    foreach(IRCChannel c, d_channels)
+        l<<c.d_name;
+    return l;
+}
+
+QStringList IRCClient::users(QString& channel)
+{
+    QStringList l;
+    foreach(IRCChannel c, d_channels)
+        if(c.d_name==channel)
+            l<<c.d_users;
+    return l;
+}
+
+void IRCClient::join(QString channel)
+{
+    sendCommand("join " + channel);
+}
+
+void IRCClient::send(QString channelOrUser, QString msg)
+{
+    sendCommand(QString("privmsg %1 :%2").arg(channelOrUser).arg(msg));
+}
+
+void IRCClient::away(QString autoReplyMessage)
+{
+    sendCommand("away :"+autoReplyMessage);
+}
+
+void IRCClient::disconnect()
+{
+    sendCommand("quit");
 }
