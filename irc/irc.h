@@ -64,8 +64,9 @@ class IRCChannel
 {
     public:
         IRCChannel(){}
+        QString d_name, d_description;
+        int d_headCount;
         QStringList d_users;
-        QString d_name;
 };
 
 class IRCClient: public QObject
@@ -77,9 +78,9 @@ class IRCClient: public QObject
         void connect();
         QStringList channels();
         QStringList users(QString& channel);
-        void join(QString& channel);
-        void send(QString& channelOrUser);
-        void away(QString& autoReplyMessage);
+        void join(QString channel);
+        void send(QString channelOrUser, QString msg);
+        void away(QString autoReplyMessage);
         void disconnect();
     signals:
         void message(QString from, QString fromURI, QString receiver, QString msg);
