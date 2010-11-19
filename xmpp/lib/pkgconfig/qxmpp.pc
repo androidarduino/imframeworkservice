@@ -1,0 +1,13 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${prefix}/lib/
+includedir=${prefix}/include
+qt_config=include_source_dir lex yacc warn_on uic resources qt warn_on release incremental link_prl exceptions no_mocdepend release stl qt_no_framework staticlib create_pc create_prl no_install_prl static staticlib moc thread
+
+Name: Qxmpp
+Description: Qxmpp Library
+Version: 0.2.0
+Libs: -L${libdir} -lqxmpp 
+Libs.private: -L/usr/lib  -lQtXml -lQtGui -lQtNetwork -lQtCore -lpthread   
+Cflags:  -I${includedir}
+

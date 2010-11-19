@@ -1,0 +1,112 @@
+Trying 208.68.163.220...
+Connected to jabber.org.
+Escape character is '^]'.
+
+<?xml version="1.0"?>
+<stream:stream xmlns:stream="http://etherx.jabber.org/streams" xmlns="jabber:client" to="jabber.org">
+
+<?xml version='1.0'?><stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' from='jabber.org' id='61f0409bc9daa0b8'>
+
+
+
+
+
+<iq type="set" id="auth_2" to="jabber.org" >
+<query xmlns="jabber:iq:auth">
+<username>vrcats</username>
+<password>*******</password>
+<resource>Work</resource>
+</query>
+</iq>
+
+<iq type='result' id='auth_2'/>
+
+
+
+
+
+<iq from='vrcats@jabber.org/Work' type='get' id='roster_1'>
+<query xmlns='jabber:iq:roster'/>
+</iq>
+
+<iq to='vrcats@jabber.org/Work' type='result' id='roster_1'>
+<query xmlns='jabber:iq:roster' ver='6'>
+<item jid='vrcats@gmail.com' subscription='both'>
+<group>Buddies</group>
+</item>
+</query>
+</iq>
+
+
+
+
+
+<presence>
+<show> yeah~ </show>
+<status> in the toilet </status>
+</presence>
+
+<presence from='vrcats@jabber.org/Meebo' to='vrcats@jabber.org/Work'>
+<priority>1</priority>
+<c xmlns='http://jabber.org/protocol/caps' node='http://pidgin.im/' hash='sha-1' ver='dsFqTAx22JgqQwYlGUJ2u8ATMyY='/>
+<x xmlns='vcard-temp:x:update'/>
+<delay xmlns='urn:xmpp:delay' stamp='2010-11-18T22:57:50Z' from='jabber.org'/>
+</presence>
+<presence from='vrcats@jabber.org/Work' to='vrcats@jabber.org/Work'>
+<show> yeah~ </show>
+<status> in the toilet </status>
+</presence>
+<presence from='vrcats@gmail.com/gmail.535D9D8E' to='vrcats@jabber.org/Work'>
+<priority>24</priority>
+<caps:c node="http://mail.google.com/xmpp/client/caps" ver="1.1" ext="pmuc-v1 sms-v1 vavinvite-v1" xmlns:caps="http://jabber.org/protocol/caps"/>
+<status/>
+<x xmlns="vcard-temp:x:update">
+<photo>7d5466015cac8284df17640de1c71c4074147c01</photo>
+</x>
+</presence>
+<presence from='vrcats@gmail.com/Meebo38FD2A45' to='vrcats@jabber.org/Work'>
+<priority>1</priority>
+<c node="http://pidgin.im/" hash="sha-1" ver="8JLP04uVBCfOcfgcjoG/QFuq48Y=" xmlns="http://jabber.org/protocol/caps"/>
+<x xmlns="vcard-temp:x:update">
+<photo>7d5466015cac8284df17640de1c71c4074147c01</photo>
+</x>
+</presence>
+
+
+
+
+
+<message to="vrcats@gmail.com" >
+<subject>test subject</subject>
+<body>test body</body>
+</message>
+
+
+
+
+
+<message from='vrcats@gmail.com/gmail.535D9D8E' to='vrcats@jabber.org/Work' type='chat' id='3E166302ADEAF3A6_1'>
+<body>what are you doing?</body>
+<met:google-mail-signature xmlns:met="google:metadata">tkq_7jSQK6_6ebM0QHytj7Byvqg</met:google-mail-signature>
+<cha:active xmlns:cha="http://jabber.org/protocol/chatstates"/>
+<nos:x value="disabled" xmlns:nos="google:nosave"/>
+<arc:record otr="false" xmlns:arc="http://jabber.org/protocol/archive"/>
+</message>
+
+<message from='vrcats@gmail.com/Meebo38FD2A45' to='vrcats@jabber.org/Work' type='chat' id='purple40feffba'>
+<body>this is from meebo</body>
+<html xmlns="http://jabber.org/protocol/xhtml-im"><body xmlns="http://www.w3.org/1999/xhtml">
+<p><span style="font-size: small;"><span style="color: #000000;"><span style="font-family: Arial;">this is from meebo</span></span></span></p>
+</body></html>
+<nick xmlns="http://jabber.org/protocol/nick">vrcats@gmail.com</nick>
+<nos:x value="disabled" xmlns:nos="google:nosave"/>
+<arc:record otr="false" xmlns:arc="http://jabber.org/protocol/archive"/>
+</message>
+
+
+
+
+
+</stream:stream>
+
+</stream:stream>Connection closed by foreign host.
