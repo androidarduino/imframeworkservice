@@ -1,13 +1,16 @@
 #include "irc.h"
 
+using namespace irc;
+
 IRCClient::IRCClient(QString server, int port)
 {
-    QObject::connect(&d_socket, SIGNAL(connected()), this, SIGNAL(connected()));
+//    QObject::connect(&d_socket, SIGNAL(connected()), this, SIGNAL(connected()));
     QObject::connect(&d_socket, SIGNAL(connected()), this, SLOT(login()));
     QObject::connect(&d_socket, SIGNAL(disconnected()), this, SIGNAL(disconnected()));
     QObject::connect(&d_socket, SIGNAL(readyRead()), this, SLOT(msgArrived()));
     d_server=server;
     d_port=port;
+    d_connected=false;
 }
 
 void IRCClient::msgArrived()
@@ -28,6 +31,7 @@ void IRCClient::msgArrived()
         gotJoin(data);
     }
     while(data!="");
+    pendCommand("");//send queued command
 }
 
 void IRCClient::connect()
@@ -51,8 +55,8 @@ void IRCClient::sendCommand(QString cmd)
 
 void IRCClient::login()
 {
-    sendCommand("user vrcats 0 * zhengliu");
-    sendCommand("nick vrcats");
+    sendCommand(QString("user %1 0 * %2").arg(d_userName).arg(d_realName));
+    sendCommand(QString("nick %1").arg(d_userName));
     sendCommand("list");
 }
 
@@ -133,6 +137,8 @@ void IRCClient::gotMessageOfTheDay(QString& msg)
         return;
     if(!d_motd.contains(rx.cap(3)))
             d_motd<<rx.cap(3);
+    d_connected=true;
+    emit(connected());
     qDebug()<<"--- got message of the day, updating ";
 }
 void IRCClient::gotJoin(QString& msg)
@@ -140,6 +146,11 @@ void IRCClient::gotJoin(QString& msg)
     QRegExp rx(":(.+)!~(.+) JOIN :(#.+)");
     if(rx.indexIn(msg)==-1)
         return;
+    //add this user to the channel
+    foreach(IRCChannel c, d_channels)
+        if(c.d_name==rx.cap(3))
+            if(!c.d_users.contains(rx.cap(1)))
+                c.d_users<<rx.cap(1);
     emit(join(rx.cap(1), rx.cap(3), rx.cap(2)));
     qDebug()<<"--- got join notification, emitting join signal ";
 }
@@ -163,20 +174,38 @@ QStringList IRCClient::users(QString& channel)
 
 void IRCClient::join(QString channel)
 {
-    sendCommand("join " + channel);
+    pendCommand("join " + channel);
 }
 
 void IRCClient::send(QString channelOrUser, QString msg)
 {
-    sendCommand(QString("privmsg %1 :%2").arg(channelOrUser).arg(msg));
+    pendCommand(QString("privmsg %1 :%2").arg(channelOrUser).arg(msg));
 }
 
 void IRCClient::away(QString autoReplyMessage)
 {
-    sendCommand("away :"+autoReplyMessage);
+    pendCommand("away :"+autoReplyMessage);
 }
 
 void IRCClient::disconnect()
 {
-    sendCommand("quit");
+    pendCommand("quit");
+}
+
+void IRCClient::pendCommand(QString command)
+{
+    if(isConnected())
+    {
+        foreach(QString c, d_commands)
+            sendCommand(c);
+        d_commands.clear();
+    }
+    else
+        if(command!="")
+            d_commands<<command;
+}
+
+bool IRCClient::isConnected()
+{
+    return d_connected;
 }

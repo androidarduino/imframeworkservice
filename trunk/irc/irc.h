@@ -60,6 +60,9 @@ join message:
 
 };
 */
+namespace irc
+{
+
 class IRCChannel
 {
     public:
@@ -82,6 +85,7 @@ class IRCClient: public QObject
         void send(QString channelOrUser, QString msg);
         void away(QString autoReplyMessage);
         void disconnect();
+        bool isConnected();
     signals:
         void message(QString from, QString fromURI, QString receiver, QString msg);
         void notification(QString msg);
@@ -103,10 +107,13 @@ class IRCClient: public QObject
         void gotMessageOfTheDay(QString& msg);
         void gotJoin(QString& msg);
         void sendCommand(QString cmd);
+        void pendCommand(QString cmd);
     private:
         QTcpSocket d_socket;
         QString d_server;
         int d_port;
+        QStringList d_commands;
+        bool d_connected;
     public:
         bool d_autoReconnect;
         QString d_userName, d_realName, d_password;
@@ -116,5 +123,5 @@ class IRCClient: public QObject
         QStringList d_motd;
 };
 
-
+}
 #endif
