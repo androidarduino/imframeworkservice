@@ -21,7 +21,7 @@ void IRCClient::msgArrived()
         data=QString(d_socket.readLine(5000));
         qDebug()<<"<<"<<data;
         //dispatch commands
-        gotPing(data);
+        gotPing(data); 
         gotMsg(data);
         gotChannelList(data);
         gotUserNames(data);
