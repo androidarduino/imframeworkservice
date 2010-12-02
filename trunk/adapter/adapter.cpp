@@ -52,6 +52,7 @@ IRCIMClient::~IRCIMClient()
 void IRCIMClient::login()
 {
     client->connect();
+    qDebug()<<"logging in...";
     QStringList channels=d_groups.split(",");
     foreach(QString channel, channels)
         client->join(channel);
