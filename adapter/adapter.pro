@@ -9,6 +9,8 @@ INCLUDEPATH += .
 
 QT += network xml 
 
+CONFIG += console
+
 # Input
 HEADERS += adapter.h \
            improtocols.h \
