@@ -4,7 +4,7 @@
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
-    IMAccount account;
+    /*IMAccount account;
     account.accountName="irc";
     account.type="irc";
     account.userName="vrcatsliu";
@@ -15,5 +15,7 @@ int main(int argc, char** argv)
     account.memo="";
     IRCIMClient client(account);
     client.login();
+    */
+    IMService service;
     return app.exec();
 }
