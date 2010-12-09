@@ -17,5 +17,6 @@ HEADERS += adapter.h \
            ../irc/irc.h
 SOURCES += main.cpp \
            adapter.cpp \
-           ../irc/irc.cpp
+           ../irc/irc.cpp\
+           service.cpp
 

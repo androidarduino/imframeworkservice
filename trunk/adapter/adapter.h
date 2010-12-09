@@ -20,13 +20,15 @@ class IMAccount//helper class to store one IM account
     When creating IMService object, it will load available accounts,
     create clients for each account, and bind them together.
     This is a singletone class, all programs should be using the same instance.
-   */
+*/
 
 class IMService: public QObject
 {
     Q_OBJECT
     public:
         IMService();//constructor
+        void start();//start and login all clients
+        void stop();//stop, logout all clients
         void sendMsg(QString target, QString message, IMClient* client=0);//send a message to "target"
         QString presence(QString uri);//query whether a user is online
         QStringList friends(IMClient* client=0);//list all friends
@@ -36,8 +38,7 @@ class IMService: public QObject
         void gotMsg(QString from, QString message, IMClient* client);//received a message from "from"
     private:
         QList<IMClient*> d_clients;//all available IM clients
-        QList<IMAccount*> d_accounts;//account list
-        void loadAccounts();//load all accounts from setting file
+        QList<IMAccount> d_accounts;//account list
 };
 
 /* This is a virtual class that represents a IM channel, eg. a MSN client, an IRC client, or a XMPP client.

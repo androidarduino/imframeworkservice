@@ -1,9 +1,5 @@
 #include "adapter.h"
 
-IMService::IMService()
-{
-
-}
 
 IMService::~IMService()
 {

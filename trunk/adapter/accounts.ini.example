@@ -1,0 +1,27 @@
+[Accounts]
+allAccounts="msn, irc, jabber"
+[jabber]
+type="xmpp"
+username=""
+password=""
+server="jabber.org"
+port="5222"
+group="brisbane, queensland"
+memo="jabber.org account"
+[irc]
+type="irc"
+username="vrcats.liu"
+password=""
+server="irc.nokia.troll.no"
+port="6667"
+group="chinese, vrcats"
+memo="internal nokia account"
+[msn]
+type="msn"
+username="robot_liuzheng@hotmail.com"
+password=""
+server="messenger.hotmail.com"
+port="1863"
+group=""
+memo="msn messenger account"
+
