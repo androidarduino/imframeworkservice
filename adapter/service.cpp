@@ -36,13 +36,22 @@ void IMService::start()
 {
     //create a client for each account
     //login all accounts
-    foreach(IMAccount& account, d_accounts)
+    foreach(IMAccount account, d_accounts)
     {
-        IMClient* client=new IMClient(account);
+        IMClient* client=0;
+        //check type and create client accordingly
+        if(account.type.toLower()=="irc")
+            client=new IRCIMClient(account);
+//        if(account.type.toLower()=="xmpp")
+//            client=new XMPPIMClient(account);
+//        if(account.type.toLower()=="msn")
+//            client=new MSNIMClient(account);
+        if(client==0)
+            continue;
         client->login();
         d_clients<<client;
     }
-    //TODO: setup socket service for interfaces
+    //TODO: setup socket service for interface classes access
 }
 
 void IMService::stop()
@@ -53,3 +62,11 @@ void IMService::stop()
         client->logout();
     d_clients.clear();
 }
+
+long IMService::sendMsg(QString target, QString message, IMClient* client=0)
+{
+    //search all the client accounts for best delivery method
+    //send out the message to target, returns a receipt number
+}
+
+

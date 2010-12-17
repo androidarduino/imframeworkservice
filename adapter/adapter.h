@@ -29,13 +29,13 @@ class IMService: public QObject
         IMService();//constructor
         void start();//start and login all clients
         void stop();//stop, logout all clients
-        void sendMsg(QString target, QString message, IMClient* client=0);//send a message to "target"
+        long sendMsg(QString target, QString message, IMClient* client=0);//send a message to "target"
         QString presence(QString uri);//query whether a user is online
         QStringList friends(IMClient* client=0);//list all friends
         QList<IMClient*>& clients();//list all available clients
         ~IMService();//destructor
     signals:
-        void gotMsg(QString from, QString message, IMClient* client);//received a message from "from"
+        void gotMsg(QString from, QString message, long answerTo, IMClient* client);//received a message from "from"
     private:
         QList<IMClient*> d_clients;//all available IM clients
         QList<IMAccount> d_accounts;//account list
