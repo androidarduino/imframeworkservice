@@ -63,10 +63,10 @@ void IMService::stop()
     d_clients.clear();
 }
 
-long IMService::sendMsg(QString target, QString message, IMClient* client=0)
+long IMService::sendMsg(QString target, QString message, IMClient* client)
 {
     //search all the client accounts for best delivery method
     //send out the message to target, returns a receipt number
 }
 
-
+ 
