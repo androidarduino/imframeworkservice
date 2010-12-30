@@ -9,26 +9,68 @@
 namespace IMFramework
 {
 
-class Presence
+class Presence:public QObject
+/*
+    retrieve the presence of buddies
+    query the presence and status of one buddy
+    subscribe to the presence change of a group of people
+*/
 {
+    QOBJECT
+    public:
+        Presence();
 
 };
 
-class Messenger
+class Messenger:public QObject
+/*
+    send a single message
+    receive messages from others
+    receive replies from others regarding sent message
+*/
 {
-
+    QOBJECT
+    public:
+        Messenger();
+        long long send(QVariant msg, Group receiver="");
+        void linkTo(QString receiver);
+    public signals:
+        void received(QVariant msg, Group from, long long replyTo);
 };
 
-class SyncAble
+class SyncAble:public QObject
+/*
+    subscribe to a buddy or a group
+    auto or manual update to synchronize
+    broadcast changes to subscribers
+*/
 {
-
+    QOBJECT
+    public:
+        SyncAble();
+        void linkTo(Group syncWith);
+        virtual void toString();
+        virtual void fromString();
+        void pull(Group fromSrc="");
+        void push(Group toDest="");
+    public signals:
+        void updated();
 };
 
-class Query
+class Query:public QObject
+/*
+    send a query with preferable reply format
+    receive replies
+*/
 {
-
+    QOBJECT
+    public:
+        Query();
+        void linkTo(Group server);
+        long long query(QVariant query, QString preferableFormat);
+    public signals:
+        void results(QVariant result, long long answerTo);
 };
-
 }
 
 #endif
