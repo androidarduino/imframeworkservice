@@ -45,15 +45,15 @@ class SyncAble:public QObject
     broadcast changes to subscribers
 */
 {
-    QOBJECT
+    Q_OBJECT
     public:
         SyncAble();
         void linkTo(Group syncWith);
-        virtual void toString();
+        virtual QString toString();
         virtual void fromString();
         void pull(Group fromSrc="");
         void push(Group toDest="");
-    public signals:
+    public signal:
         void updated();
 };
 
