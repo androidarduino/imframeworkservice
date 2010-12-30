@@ -22,6 +22,8 @@ class QuerySender: public QObject
         QuerySender();
         void linkTo(Group server);
         void query(QString sqlQuery, QString format="");
+    public signals:
+        void getAnswer(Group from, QVariant results);
 };
 
 //this class answers the question with preferred format
