@@ -14,31 +14,42 @@ class IMAccount//helper class to store one IM account
         QString accountName, type, userName, password, server, port, groups, memo;
 };
 
-
 /*
     This is a container for all available im clients.
     When creating IMService object, it will load available accounts,
     create clients for each account, and bind them together.
     This is a singletone class, all programs should be using the same instance.
 */
-
 class IMService: public QObject
 {
     Q_OBJECT
     public:
         IMService();//constructor
+    //self raising members:
         void start();//start and login all clients
         void stop();//stop, logout all clients
+    //communication members:
         long sendMsg(QString target, QString message, IMClient* client=0);//send a message to "target"
         QString presence(QString uri);//query whether a user is online
         QStringList friends(IMClient* client=0);//list all friends
-        QList<IMClient*>& clients();//list all available clients
         ~IMService();//destructor
     signals:
         void gotMsg(QString from, QString message, long answerTo, IMClient* client);//received a message from "from"
+    private slots:
+        void receivedMsg(QString from, QString message);//function to process received message
+    //resource management members:
+    private:
+        int d_listenPort;//socket port to listen on
+        void registerResource(QString resourceName);//app register a resource
+        void unregisterResource(QString resourceName);//app unregister a resource
+        bool sendMessageToResource(QString resourceName, QString from, QVariant message);//send a message to a registered resource
+        void receivedMessageFromResource(QString resourceName, QString to, QVariant message);//got a message from a registered resource, forward it to the destination
+    //account and client management members
     private:
         QList<IMClient*> d_clients;//all available IM clients
         QList<IMAccount> d_accounts;//account list
+    public:
+        QList<IMClient*>& clients();//list all available clients
 };
 
 /* This is a virtual class that represents a IM channel, eg. a MSN client, an IRC client, or a XMPP client.
@@ -103,7 +114,7 @@ class IRCIMClient: public IMClient
     private slots:
         void gotIRCMessage(QString from, QString fromURI, QString receiver, QString msg);
 };
-/*
+
 class XMPPIMClient: public IMClient
 {
     Q_OBJECT
@@ -112,13 +123,17 @@ class XMPPIMClient: public IMClient
         void sendMsg(QString target, QString message);//send a message to "target"
         QStringList getPresence();//retrieve online friends and their status
         ~XMPPIMClient();//destructor
+        void login();//login
+        void logout();//logout
     signals:
         void connected();//client connected
         void disconnected();//client disconnected
         void gotMsg(QString from, QString message);//client got a message
         void error(QString errorMsg);//client encountered an error
     private:
-};*/
-
+        QXmppClient* client;
+    private slots:
+        void gotXmppMessage(const QXmppMessage& message);
+};
 
 #endif

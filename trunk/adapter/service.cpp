@@ -42,8 +42,8 @@ void IMService::start()
         //check type and create client accordingly
         if(account.type.toLower()=="irc")
             client=new IRCIMClient(account);
-//        if(account.type.toLower()=="xmpp")
-//            client=new XMPPIMClient(account);
+        if(account.type.toLower()=="xmpp")
+            client=new XMPPIMClient(account);
 //        if(account.type.toLower()=="msn")
 //            client=new MSNIMClient(account);
         if(client==0)
@@ -67,6 +67,36 @@ long IMService::sendMsg(QString target, QString message, IMClient* client)
 {
     //search all the client accounts for best delivery method
     //send out the message to target, returns a receipt number
+    return 0;
 }
 
- 
+void IMService::receivedMsg(QString from, QString message)
+{
+    /*
+    In this function, the incoming message from various backend will be processed.
+    The message will get dispatched, distilling the target resource, and sent to
+    the resource consequently.
+     */
+}
+
+QString IMService::presence(QString uri)
+{
+    return "";
+}
+
+QStringList IMService::friends(IMClient* client)
+{
+    //client==0 means all clients
+    return QStringList();
+}
+
+QList<IMClient*>& IMService::clients()
+{
+    return d_clients;
+}
+
+IMService::~IMService()
+{
+    foreach(IMClient* client, d_clients)
+        delete client;
+}
