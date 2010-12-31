@@ -5,7 +5,8 @@
 TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
-INCLUDEPATH += .
+INCLUDEPATH += . ../xmpp/src
+LIBS += -L../xmpp/lib -lqxmpp
 
 QT += network xml 
 
@@ -17,6 +18,6 @@ HEADERS += adapter.h \
            ../irc/irc.h
 SOURCES += main.cpp \
            adapter.cpp \
-           ../irc/irc.cpp\
+           ../irc/irc.cpp \
            service.cpp
 

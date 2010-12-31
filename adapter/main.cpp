@@ -17,5 +17,6 @@ int main(int argc, char** argv)
     client.login();
     */
     IMService service;
+    service.start();
     return app.exec();
 }
