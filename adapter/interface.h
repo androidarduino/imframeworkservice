@@ -1,6 +1,7 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
+#include "adapter.h"
 /*
     In this file a set of interface classes were defined.
     These interface classes provide developer the ability of communicating to other parties easily and freely.
@@ -16,10 +17,14 @@ class Presence:public QObject
     subscribe to the presence change of a group of people
 */
 {
-    QOBJECT
+    Q_OBJECT
     public:
-        Presence();
-
+        Presence();//constructor
+        QString getPresence(QString buddy);//query buddy's status
+        void monitor(QString buddy, bool subscribe=true);//monitor or unmonitor a buddy's presence
+        QStringList allOnline();//get all online buddies
+    signals:
+        void presenceChanged(QString buddy, QString status);//emit when monitored buddy status change, or new buddy comes online
 };
 
 class Messenger:public QObject
@@ -29,16 +34,17 @@ class Messenger:public QObject
     receive replies from others regarding sent message
 */
 {
-    QOBJECT
+    Q_OBJECT
     public:
-        Messenger();
-        long long send(QVariant msg, Group receiver="");
-        void linkTo(QString receiver);
-    public signals:
-        void received(QVariant msg, Group from, long long replyTo);
+        Messenger();//constructor
+        void subscribe(QString receiver);//link to a group of people, by default the msg will be sent to the group of people
+        long long send(QVariant msg, QString receiver="");//send msg to a single receiver
+        long long send(QVariant msg, QStringList receiver);//send msg to a group of people
+    signals:
+        void get(QVariant msg, QString from, long long replyTo);
 };
 
-class SyncAble:public QObject
+class Synchronizor:public QObject
 /*
     subscribe to a buddy or a group
     auto or manual update to synchronize
@@ -47,14 +53,12 @@ class SyncAble:public QObject
 {
     Q_OBJECT
     public:
-        SyncAble();
-        void linkTo(Group syncWith);
-        virtual QString toString();
-        virtual void fromString();
-        void pull(Group fromSrc="");
-        void push(Group toDest="");
-    public signal:
-        void updated();
+        Synchronizor();//constructor
+        void subscribe(QStringList syncWith);//subscribe to a group of people
+        void pull(QStringList fromSrc="");//get update from subscriptions
+        void push(QStringList toDest="");//push chagne to subscriptions
+    signals:
+        void updated();//notify there is a change
 };
 
 class Query:public QObject
@@ -63,13 +67,13 @@ class Query:public QObject
     receive replies
 */
 {
-    QOBJECT
+    Q_OBJECT
     public:
         Query();
-        void linkTo(Group server);
-        long long query(QVariant query, QString preferableFormat);
-    public signals:
-        void results(QVariant result, long long answerTo);
+        void subscribe(QStringList servers);//query to a group of servers
+        long long ask(QVariant query, QString preferableFormat);//send a query to all servers
+    signals:
+        void reply(QVariant result, long long answerTo, QString fromServer);//emit when got reply from servers
 };
 }
 
