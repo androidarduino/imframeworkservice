@@ -66,6 +66,7 @@ class IMClient: public QObject
     Q_OBJECT
     public:
         IMClient(IMAccount& account);//constructor
+        bool canDo(QString serviceType);//query whether the client has the ability to do something
         virtual void login()=0;//login to account
         virtual void logout()=0;//logout from account
         virtual void sendMsg(QString target, QString message)=0;//send a message to "target"

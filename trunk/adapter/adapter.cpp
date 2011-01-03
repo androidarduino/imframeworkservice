@@ -16,6 +16,11 @@ IMClient::~IMClient()
 
 }
 
+bool IMClient::canDo(QString serviceType)
+{
+    return false;
+}
+
 IRCIMClient::IRCIMClient(IMAccount& account):IMClient(account)
 {
     client=new IRCClient(d_server, d_port.toInt());
