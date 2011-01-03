@@ -6,6 +6,11 @@
 #include "improtocols.h"
 using namespace irc;
 
+/* at this stage we skip the communications between service and interfaces to simplify the project.
+  when all the functions work properly, we sill consider to add a soap interface between them,
+  so that other application developers and non-c++ developers can make use of our service
+  */
+
 class IMClient;
 
 class IMAccount//helper class to store one IM account

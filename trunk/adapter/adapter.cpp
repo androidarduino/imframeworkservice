@@ -1,11 +1,5 @@
 #include "adapter.h"
 
-
-IMService::~IMService()
-{
-
-}
-
 IMClient::IMClient(IMAccount& account)
 {
     d_accountName=account.accountName;
