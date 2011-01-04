@@ -9,6 +9,9 @@ IMClient::IMClient(IMAccount& account)
     d_port=account.port;
     d_groups=account.groups;
     d_memo=account.memo;
+    connect(this, SIGNAL(connected()), this, SLOT(update()));
+    connect(this, SIGNAL(disconnected()), this, SLOT(offline()));
+    available=false;
 }
 
 IMClient::~IMClient()
@@ -16,9 +19,22 @@ IMClient::~IMClient()
 
 }
 
-bool IMClient::canDo(QString serviceType)
+void IMClient::offline()
 {
-    return false;
+    available=false;
+    onlineBuddies.clear();
+}
+
+void IMClient::update()
+{
+    available=true;
+    onlineBuddies=getPresence();
+    emit updated();
+}
+
+bool IMClient::canDo(QString )
+{
+    return false;//for each concrete class, provide according abilities
 }
 
 IRCIMClient::IRCIMClient(IMAccount& account):IMClient(account)

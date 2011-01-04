@@ -30,6 +30,7 @@ IMService::IMService()
         //add them to the list
         d_accounts<<a;
     }
+    d_id=0;
 }
 
 void IMService::start()
@@ -63,11 +64,45 @@ void IMService::stop()
     d_clients.clear();
 }
 
-long IMService::sendMsg(QString target, QString message, IMClient* client)
+long long IMService::sendMsg(QString target, QString message, IMClient* client)
 {
     //search all the client accounts for best delivery method
     //send out the message to target, returns a receipt number
-    return 0;
+    IMClient* c;
+    if(client==0)
+        foreach(c, d_clients)
+            if(c->onlineBuddies.contains(target))
+                break;
+    else
+        c=client;
+    QString msg="%1:%2";
+    msg=msg.arg(++d_id).arg(message);
+    if(c==0)
+        return -1;
+    c->sendMsg(target, msg);
+    return d_id;
+}
+
+long long IMService::sendMsg(QStringList targets, QString message, IMClient* client)
+{
+    //search all the client accounts for best delivery method
+    //send out the message to target, returns a receipt number
+    d_id++;
+    foreach(QString target, targets)
+    {
+        IMClient* c;
+        if(client==0)
+            foreach(c, d_clients)
+                if(c->onlineBuddies.contains(target))
+                    break;
+        else
+            c=client;
+        QString msg="%1:%2";
+        msg=msg.arg(d_id).arg(message);
+        if(c!=0)
+            c->sendMsg(target, msg);
+    }
+    return d_id;
 }
 
 void IMService::receivedMsg(QString from, QString message)
@@ -81,13 +116,20 @@ void IMService::receivedMsg(QString from, QString message)
 
 QString IMService::presence(QString uri)
 {
+    //TODO: provide more details for the presence
+    foreach(IMClient* c, d_clients)
+        if(c->onlineBuddies.contains(uri))
+            return "Online";
     return "";
 }
 
 QStringList IMService::friends(IMClient* client)
 {
     //client==0 means all clients
-    return QStringList();
+    QStringList f;
+    foreach(IMClient* c, d_clients)
+        f<<c->getPresence();
+    return f;
 }
 
 QList<IMClient*>& IMService::clients()
