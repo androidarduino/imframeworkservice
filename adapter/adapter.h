@@ -34,7 +34,8 @@ class IMService: public QObject
         void start();//start and login all clients
         void stop();//stop, logout all clients
     //communication members:
-        long sendMsg(QString target, QString message, IMClient* client=0);//send a message to "target"
+        long long sendMsg(QString target, QString message, IMClient* client=0);//send a message to "target"
+        long long sendMsg(QStringList targets, QString message, IMClient* client=0);//send a message to "target"
         QString presence(QString uri);//query whether a user is online
         QStringList friends(IMClient* client=0);//list all friends
         ~IMService();//destructor
@@ -53,6 +54,7 @@ class IMService: public QObject
     private:
         QList<IMClient*> d_clients;//all available IM clients
         QList<IMAccount> d_accounts;//account list
+        long long d_id;
     public:
         QList<IMClient*>& clients();//list all available clients
 };
@@ -77,8 +79,15 @@ class IMClient: public QObject
         void disconnected();//client disconnected
         void gotMsg(QString from, QString message);//client got a message
         void error(QString errorMsg);//client encountered an error
+        void updated();
     protected:
         QString d_accountName, d_userName, d_password, d_server, d_port, d_groups, d_memo;
+    private slots:
+        void update();
+        void offline();
+    public:
+        QStringList onlineBuddies;
+        bool available;
 };
 
 /* Adpator classes for various supported client types. All virtual functions must be implemented.
