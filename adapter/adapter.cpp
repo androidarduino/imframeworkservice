@@ -52,6 +52,7 @@ IRCIMClient::IRCIMClient(IMAccount& account):IMClient(account)
 XMPPIMClient::XMPPIMClient(IMAccount& account):IMClient(account)
 {
     client=new QXmppClient();
+    //QXmppLogger::getLogger()->setLoggingType(QXmppLogger::StdoutLogging);
     //connect the signals and slots
     QObject::connect(client, SIGNAL(connected()), this, SIGNAL(connected()));
     QObject::connect(client, SIGNAL(disconnected()), this, SIGNAL(disconnected()));

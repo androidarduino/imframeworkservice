@@ -1,7 +1,7 @@
 #ifndef EXAM1_H
 #define EXAM1_H
 
-//#include "../../interface.h"
+#include "../../interface.h"
 #include <QApplication>
 #include <QtGui>
 #include <QString>
@@ -21,5 +21,7 @@ class VRIM
     public:
         VRIM();
         void run();
+    private:
+        IMFramework::Messenger messenger;
 };
 #endif

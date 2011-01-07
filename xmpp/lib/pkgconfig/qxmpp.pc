@@ -1,4 +1,4 @@
-prefix=/usr
+prefix=/home/z35liu/qtsdk/qt
 exec_prefix=${prefix}
 libdir=${prefix}/lib/
 includedir=${prefix}/include
@@ -8,6 +8,6 @@ Name: Qxmpp
 Description: Qxmpp Library
 Version: 0.2.0
 Libs: -L${libdir} -lqxmpp 
-Libs.private: -L/usr/lib  -lQtXml -lQtGui -lQtNetwork -lQtCore -lpthread   
+Libs.private: -L/home/z35liu/qtsdk/qt/lib  -lQtXml -L/home/z35liu/qtsdk/qt/lib -lQtGui -L/usr/X11R6/lib64 -lQtNetwork -lQtCore -lpthread   
 Cflags:  -I${includedir}
 

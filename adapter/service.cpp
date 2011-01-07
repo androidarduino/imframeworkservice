@@ -51,6 +51,7 @@ void IMService::start()
             continue;
         client->login();
         d_clients<<client;
+        connect(client, SIGNAL(gotMsg(QString, QString)), this, SLOT(receivedMsg(QString, QString)));
     }
     //TODO: setup socket service for interface classes access
 }
@@ -112,6 +113,7 @@ void IMService::receivedMsg(QString from, QString message)
     The message will get dispatched, distilling the target resource, and sent to
     the resource consequently.
      */
+     qDebug()<<"got message from: "<<from<<":" <<message;
 }
 
 QString IMService::presence(QString uri)
@@ -125,6 +127,8 @@ QString IMService::presence(QString uri)
 
 QStringList IMService::friends(IMClient* client)
 {
+    if(client!=0)
+        return c->getPresence();
     //client==0 means all clients
     QStringList f;
     foreach(IMClient* c, d_clients)
