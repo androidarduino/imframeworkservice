@@ -40,7 +40,7 @@ class IMService: public QObject
         QStringList friends(IMClient* client=0);//list all friends
         ~IMService();//destructor
     signals:
-        void gotMsg(QString from, QString message, long answerTo, IMClient* client);//received a message from "from"
+        void gotMsg(QString from, QString message, long long answerTo, IMClient* client);//received a message from "from"
     private slots:
         void receivedMsg(QString from, QString message);//function to process received message
     //resource management members:

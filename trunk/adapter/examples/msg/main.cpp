@@ -16,7 +16,17 @@ void VRIM::run()
         QString cmd;
         cmd=cmd.fromStdString(s);
         //if it is a send command, send the message: ":vrcats@vrcats.com/vrcats.com.Exam1 test message for you"
-        //QRegExp rx("");
+        QRegExp rx(":([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})(?:[/]?([^ ]*)) (.*)");
+        if(rx.indexOf(cmd)!=-1)
+        {
+            QString dest=rx.cap(1);
+            QString app=rx.cap(2);
+            QString msg=rx.cap(3);
+            if(app=="")
+                app="vrcat.com/Exam1";
+            msg=QString(":%1 %2").arg(app).arg(msg);
+            messenger.send(msg, dest);
+        }
         //if it is a list command, list available
         cmd=cmd.toLower();
         if(cmd=="/list")

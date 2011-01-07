@@ -21,5 +21,4 @@ SOURCES += main.cpp \
            adapter.cpp \
            ../irc/irc.cpp \
            service.cpp \
-           interface.cpp \
-    ../interface.cpp
+           interface.cpp 

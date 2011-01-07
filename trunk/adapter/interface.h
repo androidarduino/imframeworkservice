@@ -10,7 +10,33 @@
 namespace IMFramework
 {
 
-class Presence:public QObject
+class IMInterface: public QObject
+{
+    Q_OBJECT
+    public:
+        IMInterface();//constructor
+        virtual ~IMInterface();//destructor
+    protected:
+        static IMService* d_service;
+};
+
+IMInterface::d_service=0;
+
+IMInterface::IMInterface()
+{
+    if(d_service==0)
+    {
+        d_service=new IMService();
+        d_service->start();
+    }
+}
+
+IMInterface::~IMInterface()
+{
+
+}
+
+class Presence:public IMInterface
 /*
     retrieve the presence of buddies
     query the presence and status of one buddy
@@ -27,7 +53,7 @@ class Presence:public QObject
         void presenceChanged(QString buddy, QString status);//emit when monitored buddy status change, or new buddy comes online
 };
 
-class Messenger:public QObject
+class Messenger:public IMInterface
 /*
     send a single message
     receive messages from others
@@ -41,10 +67,48 @@ class Messenger:public QObject
         long long send(QVariant msg, QString receiver="");//send msg to a single receiver
         long long send(QVariant msg, QStringList receiver);//send msg to a group of people
     signals:
-        void get(QVariant msg, QString from, long long replyTo);
+        void get(QString msg, QString from, long long replyTo);
+    private slots:
+        void gotMsg(QVariant msg, QString from, long long replyTo, IMClient* client);
+    protected:
+        QStringList d_subscribers;
 };
 
-class Synchronizor:public QObject
+Messenger::Messenger()
+{
+    connect(d_service, SIGNAL(gotMsg(QString, QString, long long, IMClient*)), this, SLOT(gotMsg(QString, QString, long
+    long,
+    IMClient*)));
+}
+
+Messenger::gotMsg(QString from, QString msg, long long replyTo, IMClient* client)
+{
+    emit get(from, msg, replyTo);
+}
+
+void Messenger::subscribe(QString receiver)
+{
+    subscribers<<receiver;
+}
+
+long long send(QVariant msg, QString receiver="")
+{
+    if(receiver=="")
+    {
+        return d_service.sendMsg(d_subscribers, msg.toString());
+    }
+    return d_service.sendMsg(receiver, msg.toString());
+}
+
+long long send(QVariant msg, QStringList receiver)
+{
+    return d_service.sendMsg(d_subscribers, msg.toString());
+}
+
+
+
+
+class Synchronizor:public IMInterface
 /*
     subscribe to a buddy or a group
     auto or manual update to synchronize
@@ -55,13 +119,13 @@ class Synchronizor:public QObject
     public:
         Synchronizor();//constructor
         void subscribe(QStringList syncWith);//subscribe to a group of people
-        void pull(QStringList fromSrc="");//get update from subscriptions
-        void push(QStringList toDest="");//push chagne to subscriptions
+        void pull(QStringList fromSrc=QStringList());//get update from subscriptions
+        void push(QStringList toDest=QStringList());//push chagne to subscriptions
     signals:
         void updated();//notify there is a change
 };
 
-class Query:public QObject
+class Query:public IMInterface
 /*
     send a query with preferable reply format
     receive replies
