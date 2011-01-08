@@ -25,7 +25,8 @@ class VRIM: public QLineEdit
         void get(QString msg, QString from, long long replyTo);
     private:
         IMFramework::Messenger* messenger;
-        QLineEdit dest;
+        IMFramework::Presence* presence;
+        QComboBox dest;
         QTextEdit incoming;
 };
 #endif

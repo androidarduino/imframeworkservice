@@ -22,9 +22,9 @@ void VRIM::get(QString from, QString msg, long long replyTo)
 
 void VRIM::keyPressEvent(QKeyEvent* event)
 {
-    if(event->key()==16777220)
+    if(event->key()==16777220)//enter
     {
-        QString destination=dest.text();
+        QString destination=dest.currentText();
         QString message=text();
         QString msg=QString(":%1 %2").arg("").arg(message);
         messenger->send(msg, destination);
@@ -32,6 +32,12 @@ void VRIM::keyPressEvent(QKeyEvent* event)
         incoming.append(QString("\r\n%1: %2").arg("me").arg(msg));
         clear();       
     }
+    if(event->key()==16777268)//F5
+    {
+        dest.clear();
+        dest.addItems(presence->allOnline());
+    }
+
     QLineEdit::keyPressEvent(event);
 }
 

@@ -37,6 +37,7 @@ class Presence:public IMInterface
         QStringList allOnline();//get all online buddies
     signals:
         void presenceChanged(QString buddy, QString status);//emit when monitored buddy status change, or new buddy comes online
+        void updated();//when there is a general change
 };
 
 class Messenger:public IMInterface

@@ -211,11 +211,15 @@ QStringList IRCClient::users(QString channel)
             l<<c->d_users;
             qDebug()<<"channel and users:"<<c->d_name<<c->d_users;
         }
+        foreach(QString s, l)
+            s+="@"+d_server;
         return l;
     }
     foreach(IRCChannel* c, d_channels)
         if(c->d_name==channel)
             l<<c->d_users;
+    foreach(QString s, l)
+        s+="@"+d_server;
     return l;
 }
 
