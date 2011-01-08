@@ -1,7 +1,7 @@
 #ifndef EXAM1_H
 #define EXAM1_H
 
-#include "../../interface.h"
+#include "interface.h"
 #include <QApplication>
 #include <QtGui>
 #include <QString>
@@ -14,14 +14,18 @@
     In this example, we implemented a cross protocol messenger, with which you can send/receive message.
     The interface part is skipped.
    */
-class VRIM
-: public QObject
+class VRIM: public QLineEdit
 {
     Q_OBJECT
     public:
         VRIM();
-        void run();
+    protected:
+        void keyPressEvent(QKeyEvent* event);
+    private slots:
+        void get(QString msg, QString from, long long replyTo);
     private:
-        IMFramework::Messenger messenger;
+        IMFramework::Messenger* messenger;
+        QLineEdit dest;
+        QTextEdit incoming;
 };
 #endif

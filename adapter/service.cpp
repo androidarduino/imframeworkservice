@@ -65,41 +65,48 @@ void IMService::stop()
     d_clients.clear();
 }
 
-long long IMService::sendMsg(QString target, QString message, IMClient* client)
+long long IMService::sendMsg(QString target, QString app, QString message, IMClient* client)
 {
+    qDebug()<<"service sending: "<<target<<app<<message;
     //search all the client accounts for best delivery method
     //send out the message to target, returns a receipt number
-    IMClient* c;
+    IMClient* c=0;
     if(client==0)
         foreach(c, d_clients)
-            if(c->onlineBuddies.contains(target))
+        {
+            c->update();
+            qDebug()<<c->getPresence();
+            if(c->getPresence().contains(target))
                 break;
+        }
     else
         c=client;
-    QString msg="%1:%2";
-    msg=msg.arg(++d_id).arg(message);
+    QString msg="%1:%2 %3";
+    msg=msg.arg(++d_id).arg(app).arg(message);
     if(c==0)
         return -1;
+    qDebug()<<"sending over:"<<c->name();
     c->sendMsg(target, msg);
     return d_id;
 }
 
-long long IMService::sendMsg(QStringList targets, QString message, IMClient* client)
+long long IMService::sendMsg(QStringList targets, QString app, QString message, IMClient* client)
 {
     //search all the client accounts for best delivery method
     //send out the message to target, returns a receipt number
+    qDebug()<<"service sending: "<<targets<<app<<message;
     d_id++;
     foreach(QString target, targets)
     {
-        IMClient* c;
+        IMClient* c=0;
         if(client==0)
             foreach(c, d_clients)
                 if(c->onlineBuddies.contains(target))
                     break;
         else
             c=client;
-        QString msg="%1:%2";
-        msg=msg.arg(d_id).arg(message);
+        QString msg="%1:%2 %3";
+        msg=msg.arg(d_id).arg(app).arg(message);
         if(c!=0)
             c->sendMsg(target, msg);
     }
@@ -114,6 +121,10 @@ void IMService::receivedMsg(QString from, QString message)
     the resource consequently.
      */
      qDebug()<<"got message from: "<<from<<":" <<message;
+     //create a regular expression for "msg_id:target msg" and capture the parameters to target, msg
+     //temporarily simply emit a message to all clients
+     //in the long term, individual msg should be sent to their target application only through socket protocol
+     emit gotMsg(from, "application", message, 999);
 }
 
 QString IMService::presence(QString uri)
@@ -128,7 +139,7 @@ QString IMService::presence(QString uri)
 QStringList IMService::friends(IMClient* client)
 {
     if(client!=0)
-        return c->getPresence();
+        return client->getPresence();
     //client==0 means all clients
     QStringList f;
     foreach(IMClient* c, d_clients)
