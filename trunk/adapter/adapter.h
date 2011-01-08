@@ -41,6 +41,7 @@ class IMService: public QObject
         ~IMService();//destructor
     signals:
         void gotMsg(QString from, QString dest, QString message, long long answerTo);//received a message from "from"
+        void updated();
     private slots:
         void receivedMsg(QString from, QString message);//function to process received message
     //resource management members:
@@ -74,6 +75,7 @@ class IMClient: public QObject
         virtual void sendMsg(QString target, QString message)=0;//send a message to "target"
         virtual QStringList getPresence()=0;//retrieve online friends and their status
         QString name(){return d_accountName;}
+        virtual bool hasUser(QString user);
         virtual ~IMClient();//destructor
     signals:
         void connected();//client connected
@@ -121,6 +123,7 @@ class IRCIMClient: public IMClient
         ~IRCIMClient();//destructor
         void login();//login
         void logout();//logout
+        bool hasUser(QString user);//check whether he is in this client
     signals:
         void connected();//client connected
         void disconnected();//client disconnected

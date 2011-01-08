@@ -62,7 +62,7 @@ long long Messenger::send(QVariant msg, QStringList receiver)
 
 Presence::Presence()
 {
-    
+    connect(d_service, SIGNAL(updated()), this, SIGNAL(updated()));
 }
 
 QString Presence::getPresence(QString buddy)

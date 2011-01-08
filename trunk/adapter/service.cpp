@@ -52,6 +52,7 @@ void IMService::start()
         client->login();
         d_clients<<client;
         connect(client, SIGNAL(gotMsg(QString, QString)), this, SLOT(receivedMsg(QString, QString)));
+        connect(client, SIGNAL(updated()), this, SIGNAL(updated()));
     }
     //TODO: setup socket service for interface classes access
 }
@@ -75,8 +76,7 @@ long long IMService::sendMsg(QString target, QString app, QString message, IMCli
         foreach(c, d_clients)
         {
             c->update();
-            qDebug()<<c->getPresence();
-            if(c->getPresence().contains(target))
+            if(c->hasUser(target))
                 break;
         }
     else

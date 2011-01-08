@@ -19,6 +19,11 @@ IMClient::~IMClient()
 
 }
 
+bool IMClient::hasUser(QString user)
+{
+    return getPresence().contains(user);
+}
+
 void IMClient::offline()
 {
     available=false;
@@ -90,6 +95,18 @@ XMPPIMClient::~XMPPIMClient()
     //disconnect the signals and slots?
 }
 
+bool IRCIMClient::hasUser(QString user)
+{
+    QStringList parts=user.split("@");
+    QString userName=parts[0];
+    if(parts.count()==1)
+        return getPresence().contains(userName);
+    QString server=parts[1];
+    if(server!=d_server)
+        return false;
+    return getPresence().contains(userName);
+}
+
 void IRCIMClient::login()
 {
     client->connect();
@@ -105,7 +122,6 @@ void XMPPIMClient::login()
     qDebug()<<"logging in XMPP...";
 }
 
-
 void IRCIMClient::logout()
 {
     client->disconnect();
@@ -117,7 +133,10 @@ void XMPPIMClient::logout()
 }
 
 void IRCIMClient::sendMsg(QString target, QString message)
-{
+{    
+    int pos=target.indexOf("@");
+    if(pos!=-1)
+        target=target.left(pos);
     client->send(target, message);
 }
 
@@ -133,8 +152,15 @@ QStringList IRCIMClient::getPresence()
 
 QStringList XMPPIMClient::getPresence()
 {
-    client->rosterManager().getRosterBareJids();
-    return QStringList();
+    QStringList all=client->rosterManager().getRosterBareJids();
+    QStringList online;
+    foreach(QString j, all)
+    {
+        QMap< QString, QXmppPresence > map=client->rosterManager().getAllPresencesForBareJid (j);
+        if(!map.empty())
+            online<<j;
+    }
+    return online;
 }
 
 
