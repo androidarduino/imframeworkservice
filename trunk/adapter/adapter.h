@@ -34,13 +34,13 @@ class IMService: public QObject
         void start();//start and login all clients
         void stop();//stop, logout all clients
     //communication members:
-        long long sendMsg(QString target, QString message, IMClient* client=0);//send a message to "target"
-        long long sendMsg(QStringList targets, QString message, IMClient* client=0);//send a message to "target"
+        long long sendMsg(QString target, QString app, QString message, IMClient* client=0);//send a message to "target"
+        long long sendMsg(QStringList targets, QString app,  QString message, IMClient* client=0);//send a message to "target"
         QString presence(QString uri);//query whether a user is online
         QStringList friends(IMClient* client=0);//list all friends
         ~IMService();//destructor
     signals:
-        void gotMsg(QString from, QString message, long long answerTo, IMClient* client);//received a message from "from"
+        void gotMsg(QString from, QString dest, QString message, long long answerTo);//received a message from "from"
     private slots:
         void receivedMsg(QString from, QString message);//function to process received message
     //resource management members:
@@ -73,6 +73,7 @@ class IMClient: public QObject
         virtual void logout()=0;//logout from account
         virtual void sendMsg(QString target, QString message)=0;//send a message to "target"
         virtual QStringList getPresence()=0;//retrieve online friends and their status
+        QString name(){return d_accountName;}
         virtual ~IMClient();//destructor
     signals:
         void connected();//client connected
@@ -83,11 +84,12 @@ class IMClient: public QObject
     protected:
         QString d_accountName, d_userName, d_password, d_server, d_port, d_groups, d_memo;
     private slots:
-        void update();
         void offline();
     public:
         QStringList onlineBuddies;
         bool available;
+    public slots:
+        void update();
 };
 
 /* Adpator classes for various supported client types. All virtual functions must be implemented.
@@ -128,6 +130,7 @@ class IRCIMClient: public IMClient
         irc::IRCClient* client;
     private slots:
         void gotIRCMessage(QString from, QString fromURI, QString receiver, QString msg);
+        void update();
 };
 
 class XMPPIMClient: public IMClient

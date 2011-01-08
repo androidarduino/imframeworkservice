@@ -32,6 +32,7 @@ void IRCClient::msgArrived()
     }
     while(data!="");
     pendCommand("");//send queued command
+    d_connected=true;
 }
 
 void IRCClient::connect()
@@ -57,7 +58,7 @@ void IRCClient::login()
 {
     sendCommand(QString("user %1 0 * %2").arg(d_userName).arg(d_realName));
     sendCommand(QString("nick %1").arg(d_userName));
-    sendCommand("list");
+    //sendCommand("list");
 }
 
 void IRCClient::gotPing(QString& msg)
@@ -84,8 +85,8 @@ void IRCClient::gotChannelList(QString& msg)
     QString cn=rx.cap(3);
     //add channel to list
     bool exist=false;
-    foreach(IRCChannel c, d_channels)
-        if(c.d_name==cn)
+    foreach(IRCChannel* c, d_channels)
+        if(c->d_name==cn)
             exist=true;
     if(!exist)
     {
@@ -93,7 +94,7 @@ void IRCClient::gotChannelList(QString& msg)
         channel->d_name=cn;
         channel->d_headCount=rx.cap(4).toInt();
         channel->d_description=rx.cap(5);
-        d_channels<<*channel;
+        d_channels<<channel;
     }
     qDebug()<<"--- got channel list, updating channels ";
 }
@@ -105,12 +106,28 @@ void IRCClient::gotUserNames(QString& msg)
     QString channel=rx.cap(4);
     QStringList users=rx.cap(5).split(" ");
     //add user to channel
-    foreach(IRCChannel c, d_channels)
-        if(c.d_name==channel)
+    bool found=false;
+    foreach(IRCChannel* c, d_channels)
+        if(c->d_name==channel)
+        {
+            found=true;
             foreach(QString user, users)
-                if(!c.d_users.contains(user))
-                    c.d_users<<user;
+                if(!c->d_users.contains(user))
+                    c->d_users<<user;
+        }
+    qDebug()<<found;
+    if(!found)
+    {
+        IRCChannel* newChannel=new IRCChannel();
+        newChannel->d_name=channel;
+        d_channels<<newChannel;
+        newChannel->d_users<<users;
+        qDebug()<<"adding user to channel: "<<users<<channel<<newChannel->d_users;
+        foreach(IRCChannel* c, d_channels)
+            qDebug()<<c->d_name<<c->d_users;
+    } 
     qDebug()<<"--- got user list, updating channel users ";
+    emit updated();
    return;
 }
 void IRCClient::gotNotification(QString& msg)
@@ -147,28 +164,58 @@ void IRCClient::gotJoin(QString& msg)
     if(rx.indexIn(msg)==-1)
         return;
     //add this user to the channel
-    foreach(IRCChannel c, d_channels)
-        if(c.d_name==rx.cap(3))
-            if(!c.d_users.contains(rx.cap(1)))
-                c.d_users<<rx.cap(1);
+    bool found=false;
+    foreach(IRCChannel* c, d_channels)
+    {
+        if(c->d_name==rx.cap(3))
+        {
+            if(!c->d_users.contains(rx.cap(1)))
+            {
+                c->d_users<<rx.cap(1);
+                c->d_headCount++;
+            }
+            found=true;
+        }
+    }
+    //if the channel is not there yet, add it
+    if(!found)
+    {
+        IRCChannel* channel=new IRCChannel();
+        channel->d_name=rx.cap(3);
+        d_channels<<channel;
+        channel->d_users<<rx.cap(1);
+        qDebug()<<"adding user to channel: "<<rx.cap(1)<<channel->d_name;
+    } 
     emit(join(rx.cap(1), rx.cap(3), rx.cap(2)));
+    emit updated();
     qDebug()<<"--- got join notification, emitting join signal ";
+    d_connected=true;
 }
 
 QStringList IRCClient::channels()
 {
     QStringList l;
-    foreach(IRCChannel c, d_channels)
-        l<<c.d_name;
+    foreach(IRCChannel* c, d_channels)
+        l<<c->d_name;
     return l;
 }
 
-QStringList IRCClient::users(QString& channel)
+QStringList IRCClient::users(QString channel)
 {
     QStringList l;
-    foreach(IRCChannel c, d_channels)
-        if(c.d_name==channel)
-            l<<c.d_users;
+    qDebug()<<"ircclient::users() called:"<<d_channels.count();
+    if(channel=="")
+    {
+        foreach(IRCChannel* c, d_channels)
+        {
+            l<<c->d_users;
+            qDebug()<<"channel and users:"<<c->d_name<<c->d_users;
+        }
+        return l;
+    }
+    foreach(IRCChannel* c, d_channels)
+        if(c->d_name==channel)
+            l<<c->d_users;
     return l;
 }
 
@@ -194,11 +241,13 @@ void IRCClient::disconnect()
 
 void IRCClient::pendCommand(QString command)
 {
+    qDebug()<<"pending command"<<command<<isConnected();
     if(isConnected())
     {
         foreach(QString c, d_commands)
             sendCommand(c);
         d_commands.clear();
+        sendCommand(command);
     }
     else
         if(command!="")

@@ -47,6 +47,7 @@ IRCIMClient::IRCIMClient(IMAccount& account):IMClient(account)
     QObject::connect(client, SIGNAL(connected()), this, SIGNAL(connected()));
     QObject::connect(client, SIGNAL(disconnected()), this, SIGNAL(disconnected()));
     QObject::connect(client, SIGNAL(message(QString, QString, QString, QString)), this, SLOT(gotIRCMessage(QString, QString, QString, QString)));
+    QObject::connect(client, SIGNAL(updated()), this, SLOT(update()));
 }
 
 XMPPIMClient::XMPPIMClient(IMAccount& account):IMClient(account)
@@ -57,6 +58,13 @@ XMPPIMClient::XMPPIMClient(IMAccount& account):IMClient(account)
     QObject::connect(client, SIGNAL(connected()), this, SIGNAL(connected()));
     QObject::connect(client, SIGNAL(disconnected()), this, SIGNAL(disconnected()));
     QObject::connect(client, SIGNAL(messageReceived(const QXmppMessage &)), this, SLOT(gotXmppMessage(const QXmppMessage &)));
+}
+
+void IRCIMClient::update()
+{
+    onlineBuddies=client->users();
+    qDebug()<<"IRC Client updated, online users:"<<onlineBuddies;
+    emit updated();
 }
 
 void IRCIMClient::gotIRCMessage(QString from, QString /*fromURI*/, QString /*receiver*/, QString msg)
@@ -120,15 +128,7 @@ void XMPPIMClient::sendMsg(QString target, QString message)
 
 QStringList IRCIMClient::getPresence()
 {
-    QStringList channels=client->channels();
-    QStringList ret;
-    foreach(QString channel, channels)
-    {
-        ret<<client->users(channel);
-    }
-    foreach(QString r, ret)
-        r+=":Online";//there is no querable status on IRC, so we mark everyone "Online".
-    return ret;
+    return client->users();
 }
 
 QStringList XMPPIMClient::getPresence()

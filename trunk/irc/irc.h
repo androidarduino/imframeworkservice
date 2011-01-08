@@ -80,7 +80,7 @@ class IRCClient: public QObject
         void connect(QString& server, int port);
         void connect();
         QStringList channels();
-        QStringList users(QString& channel);
+        QStringList users(QString channel="");
         void join(QString channel);
         void send(QString channelOrUser, QString msg);
         void away(QString autoReplyMessage);
@@ -94,6 +94,7 @@ class IRCClient: public QObject
         void ping(QString& ping);
         void join(QString username, QString channel, QString uri);
         void disconnected();
+        void updated();
     private slots:
         void msgArrived();
         void login();
@@ -119,7 +120,7 @@ class IRCClient: public QObject
         QString d_userName, d_realName, d_password;
         int d_userMode;
         QString d_status;
-        QList<IRCChannel> d_channels;
+        QList<IRCChannel*> d_channels;
         QStringList d_motd;
 };
 

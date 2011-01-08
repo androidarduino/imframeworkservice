@@ -14,27 +14,13 @@ class IMInterface: public QObject
 {
     Q_OBJECT
     public:
-        IMInterface();//constructor
+        IMInterface(QString type="");//constructor
+        void setResourceType(QString type);//constructor
         virtual ~IMInterface();//destructor
     protected:
         static IMService* d_service;
+        QString d_resourceType;
 };
-
-IMInterface::d_service=0;
-
-IMInterface::IMInterface()
-{
-    if(d_service==0)
-    {
-        d_service=new IMService();
-        d_service->start();
-    }
-}
-
-IMInterface::~IMInterface()
-{
-
-}
 
 class Presence:public IMInterface
 /*
@@ -62,51 +48,17 @@ class Messenger:public IMInterface
 {
     Q_OBJECT
     public:
-        Messenger();//constructor
+        Messenger(QString type="");//constructor
         void subscribe(QString receiver);//link to a group of people, by default the msg will be sent to the group of people
         long long send(QVariant msg, QString receiver="");//send msg to a single receiver
         long long send(QVariant msg, QStringList receiver);//send msg to a group of people
     signals:
         void get(QString msg, QString from, long long replyTo);
     private slots:
-        void gotMsg(QVariant msg, QString from, long long replyTo, IMClient* client);
+        void gotMsg(QString from, QString dest, QString msg, long long replyTo);
     protected:
         QStringList d_subscribers;
 };
-
-Messenger::Messenger()
-{
-    connect(d_service, SIGNAL(gotMsg(QString, QString, long long, IMClient*)), this, SLOT(gotMsg(QString, QString, long
-    long,
-    IMClient*)));
-}
-
-Messenger::gotMsg(QString from, QString msg, long long replyTo, IMClient* client)
-{
-    emit get(from, msg, replyTo);
-}
-
-void Messenger::subscribe(QString receiver)
-{
-    subscribers<<receiver;
-}
-
-long long send(QVariant msg, QString receiver="")
-{
-    if(receiver=="")
-    {
-        return d_service.sendMsg(d_subscribers, msg.toString());
-    }
-    return d_service.sendMsg(receiver, msg.toString());
-}
-
-long long send(QVariant msg, QStringList receiver)
-{
-    return d_service.sendMsg(d_subscribers, msg.toString());
-}
-
-
-
 
 class Synchronizor:public IMInterface
 /*

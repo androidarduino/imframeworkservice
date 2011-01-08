@@ -3,10 +3,14 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = exam1
-DEPENDPATH += .
-INCLUDEPATH += .
+TARGET = messenger
+DEPENDPATH += . ../..
+INCLUDEPATH += . ../..
+
+INCLUDEPATH += . ../../../xmpp/src
+LIBS += -L../../../xmpp/lib -lqxmpp
+QT += network xml 
 
 # Input
-HEADERS += exam1.h
-SOURCES += main.cpp
+HEADERS += messenger.h interface.h adapter.h improtocols.h ../../../irc/irc.h
+SOURCES += messenger.cpp main.cpp interface.cpp service.cpp adapter.cpp ../../../irc/irc.cpp
