@@ -157,4 +157,25 @@ class XMPPIMClient: public IMClient
         void gotXmppMessage(const QXmppMessage& message);
 };
 
+class IMServiceTester: public QObject
+{
+    Q_OBJECT
+    public:
+        IMServiceTester()
+        {
+            service.start();
+        }
+    public slots:
+        void gotMsg(QString from, QString message, long answerTo, IMClient* client)
+        {
+            Q_UNUSED(answerTo);
+            Q_UNUSED(client);
+            service.sendMsg(from, "", message);
+        }
+    private:
+    IMService service;
+};
+
+
+
 #endif
