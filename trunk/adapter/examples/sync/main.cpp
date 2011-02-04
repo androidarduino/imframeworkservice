@@ -33,7 +33,6 @@ void SyncTextBox::textUpdated()
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
-    SyncTextBox box;
-    box.syncTo(argv[1]);
+    SyncTextBox box1, box2;
     return app.exec();
 }
