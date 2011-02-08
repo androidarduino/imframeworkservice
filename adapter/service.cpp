@@ -26,6 +26,7 @@ IMService::IMService()
         a.port=accounts.value(s.arg("port")).toString();
         a.groups=accounts.value(s.arg("group")).toString();
         a.memo=accounts.value(s.arg("memo")).toString();
+        a.candos=accounts.value(s.arg("candos")).toString();
         qDebug()<<a.type<<a.userName<<a.password<<a.server<<a.port<<a.groups<<a.memo;
         //add them to the list
         d_accounts<<a;

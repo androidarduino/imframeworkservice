@@ -9,6 +9,7 @@ IMClient::IMClient(IMAccount& account)
     d_port=account.port;
     d_groups=account.groups;
     d_memo=account.memo;
+    d_canDos=account.candos.split(",");
     connect(this, SIGNAL(connected()), this, SLOT(update()));
     connect(this, SIGNAL(disconnected()), this, SLOT(offline()));
     available=false;
@@ -35,11 +36,6 @@ void IMClient::update()
     available=true;
     onlineBuddies=getPresence();
     emit updated();
-}
-
-bool IMClient::canDo(QString )
-{
-    return false;//for each concrete class, provide according abilities
 }
 
 IRCIMClient::IRCIMClient(IMAccount& account):IMClient(account)
@@ -82,6 +78,10 @@ void XMPPIMClient::gotXmppMessage(const QXmppMessage& message)
     emit(gotMsg(message.from(), message.body()));
 }
 
+bool IMClient::canDo(QString ability)
+{
+    return(d_canDos.contains(ability));
+}
 
 IRCIMClient::~IRCIMClient()
 {

@@ -16,7 +16,7 @@ class IMClient;
 class IMAccount//helper class to store one IM account
 {
     public:
-        QString accountName, type, userName, password, server, port, groups, memo;
+        QString accountName, type, userName, password, server, port, groups, memo, candos;
 };
 
 /*
@@ -69,7 +69,7 @@ class IMClient: public QObject
     Q_OBJECT
     public:
         IMClient(IMAccount& account);//constructor
-        bool canDo(QString serviceType);//query whether the client has the ability to do something
+        virtual bool canDo(QString serviceType);//query whether the client has the ability to do something
         virtual void login()=0;//login to account
         virtual void logout()=0;//logout from account
         virtual void sendMsg(QString target, QString message)=0;//send a message to "target"
@@ -85,6 +85,7 @@ class IMClient: public QObject
         void updated();
     protected:
         QString d_accountName, d_userName, d_password, d_server, d_port, d_groups, d_memo;
+        QStringList d_canDos;
     private slots:
         void offline();
     public:
