@@ -11,10 +11,9 @@
 #include <string>
 /*
     This example is to demonstrate how to use the Synchronizable class.
-    In this example, we implemented simple text box, and synchronize it to a remove text box
+    In this example, we implemented simple text box, and synchronize it to a remote text box
    */
 class SyncTextBox
-: public SyncAble
 {
     Q_OBJECT
     public:
@@ -27,5 +26,6 @@ class SyncTextBox
         void textUpdated();//connect this to the text typed signal and update the text
     private:
         QTextEdit d_edit;
+        Syncable d_sync;
 };
 #endif
