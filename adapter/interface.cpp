@@ -34,7 +34,8 @@ void Messenger::gotMsg(QString from, QString dest, QString msg, long long replyT
     qDebug()<<"messenger got message"<<from<<dest<<msg<<replyTo;
     Q_UNUSED(dest);
     //TODO: check whether it is for this app
-    emit get(from, msg, replyTo);
+    //TODO: here convert qstring to qvariant
+    emit get(msg, from, replyTo);
 }
 
 void Messenger::subscribe(QString receiver)
@@ -44,12 +45,13 @@ void Messenger::subscribe(QString receiver)
 
 long long Messenger::send(QVariant msg, QString receiver)
 {
-    qDebug()<<"messenger sending :"<<receiver<<msg;
+    QString m=QString(msg.typeName())+":"+msg.toString();
+    qDebug()<<"messenger sending :"<<receiver<<m;
     if(receiver=="")
     {
-        return d_service->sendMsg(d_subscribers, d_resourceType, msg.toString());
+        return d_service->sendMsg(d_subscribers, d_resourceType, m);
     }
-    return d_service->sendMsg(receiver, d_resourceType, msg.toString());
+    return d_service->sendMsg(receiver, d_resourceType, m);
 }
 
 long long Messenger::send(QVariant msg, QStringList receiver)
@@ -58,6 +60,13 @@ long long Messenger::send(QVariant msg, QStringList receiver)
     if(!receiver.empty())
         return d_service->sendMsg(receiver, d_resourceType, msg.toString());
     return d_service->sendMsg(d_subscribers, d_resourceType, msg.toString());
+}
+
+void Messenger::sendPlainMsg(QString msg, QString receiver)
+{
+    Q_UNUSED(msg);
+    Q_UNUSED(receiver);
+    //TODO: wait for the service to implement the according functions
 }
 
 Presence::Presence()
@@ -70,7 +79,7 @@ QString Presence::getPresence(QString buddy)
     return d_service->presence(buddy);
 }
 
-void monitor(QString buddy, bool subscribe)
+void Presence::monitor(QString buddy, bool subscribe)
 {
     Q_UNUSED(buddy);
     Q_UNUSED(subscribe);
@@ -81,5 +90,14 @@ QStringList Presence::allOnline()
 {
     return d_service->friends();
 }
+
+Synchronizor::Synchronizor(QStringList syncWith)
+{
+    if(syncWith.empty())
+        return;
+    subscribe(syncWith);
+}
+
+
 
 }

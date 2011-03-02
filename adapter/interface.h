@@ -53,8 +53,9 @@ class Messenger:public IMInterface
         void subscribe(QString receiver);//link to a group of people, by default the msg will be sent to the group of people
         long long send(QVariant msg, QString receiver="");//send msg to a single receiver
         long long send(QVariant msg, QStringList receiver);//send msg to a group of people
+        void sendPlainMsg(QString msg, QString receiver="");//send a plain message without prefixes
     signals:
-        void get(QString msg, QString from, long long replyTo);
+        void get(QVariant msg, QString from, long long replyTo);//emited when got a message from someone
     private slots:
         void gotMsg(QString from, QString dest, QString msg, long long replyTo);
     protected:
@@ -65,17 +66,17 @@ class Synchronizor:public IMInterface
 /*
     subscribe to a buddy or a group
     auto or manual update to synchronize
-    broadcast changes to subscribers
+    broadcast updates to subscribers
 */
 {
     Q_OBJECT
     public:
-        Synchronizor();//constructor
-        void subscribe(QStringList syncWith);//subscribe to a group of people
-        void pull(QStringList fromSrc=QStringList());//get update from subscriptions
-        void push(QStringList toDest=QStringList());//push chagne to subscriptions
+        Synchronizor(QStringList syncWith=QStringList());//constructor
+        void pushFull(QVariant data, QStringList toDest=QStringList());//push full data to all subscribers
     signals:
-        void updated();//notify there is a change
+        void updateFull(QVariant data);//notify there is an update
+    public:
+        QStringList subscribers;//exposing this variable will save 4 subscribing and unsubscribing apis
 };
 
 class Query:public IMInterface
