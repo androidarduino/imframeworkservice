@@ -20,6 +20,10 @@ class IMInterface: public QObject
     protected:
         static IMService* d_service;
         QString d_resourceType;
+    protected slots:
+        virtual void gotMsg(QString from, QString dest, QString msg, long long replyTo);
+    public:
+        QStringList subscribers;
 };
 
 class Presence:public IMInterface
@@ -38,6 +42,8 @@ class Presence:public IMInterface
     signals:
         void presenceChanged(QString buddy, QString status);//emit when monitored buddy status change, or new buddy comes online
         void updated();//when there is a general change
+    protected slots:
+        virtual void gotMsg(QString from, QString dest, QString msg, long long replyTo){}//we are not processing messages in presence
 };
 
 class Messenger:public IMInterface
@@ -49,17 +55,14 @@ class Messenger:public IMInterface
 {
     Q_OBJECT
     public:
-        Messenger(QString type="");//constructor
-        void subscribe(QString receiver);//link to a group of people, by default the msg will be sent to the group of people
+        Messenger(QString type);//constructor
         long long send(QVariant msg, QString receiver="");//send msg to a single receiver
         long long send(QVariant msg, QStringList receiver);//send msg to a group of people
         void sendPlainMsg(QString msg, QString receiver="");//send a plain message without prefixes
+    protected slots:
+        void gotMsg(QString from, QString dest, QString msg, long long replyTo)//process incoming msg
     signals:
         void get(QVariant msg, QString from, long long replyTo);//emited when got a message from someone
-    private slots:
-        void gotMsg(QString from, QString dest, QString msg, long long replyTo);
-    protected:
-        QStringList d_subscribers;
 };
 
 class Synchronizor:public IMInterface
@@ -75,8 +78,8 @@ class Synchronizor:public IMInterface
         void pushFull(QVariant data, QStringList toDest=QStringList());//push full data to all subscribers
     signals:
         void updateFull(QVariant data);//notify there is an update
-    public:
-        QStringList subscribers;//exposing this variable will save 4 subscribing and unsubscribing apis
+    protected slots:
+        void gotMsg(QString from, QString dest, QString msg, long long replyTo)//process incoming msg
 };
 
 class Query:public IMInterface
@@ -88,10 +91,11 @@ class Query:public IMInterface
     Q_OBJECT
     public:
         Query();
-        void subscribe(QStringList servers);//query to a group of servers
         long long ask(QVariant query, QString preferableFormat);//send a query to all servers
     signals:
         void reply(QVariant result, long long answerTo, QString fromServer);//emit when got reply from servers
+    protected slots:
+        void gotMsg(QString from, QString dest, QString msg, long long replyTo)//process incoming msg
 };
 }
 

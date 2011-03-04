@@ -133,7 +133,7 @@ void XMPPIMClient::logout()
 }
 
 void IRCIMClient::sendMsg(QString target, QString message)
-{    
+{
     int pos=target.indexOf("@");
     if(pos!=-1)
         target=target.left(pos);
