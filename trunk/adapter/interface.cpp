@@ -11,6 +11,7 @@ IMInterface::IMInterface(QString type)
         d_service=new IMService();
         d_service->start();
     }
+    connect(d_service, SIGNAL(gotMsg(QString, QString, QString, long long)), this, SLOT(gotMsg(QString, QString, QString, long long)));
 }
 
 void IMInterface::setResourceType(QString type)
@@ -98,6 +99,32 @@ Synchronizor::Synchronizor(QStringList syncWith)
     subscribe(syncWith);
 }
 
+void Synchronizor::gotMsg(QString from, QString dest, QString msg, long long replyTo)
+{
+    //TODO: check whether it is for this application
+    //TODO: extract the synchronization information, and emit updateFull() signal
+}
 
+void pushFull(QVariant data, QStringList toDest)
+{
+    //push current data to the destinations
+}
+
+Query::Query(QString server)
+{
+    //construct a query
+}
+
+long long ask(QVariant query, QString preferableFormat)
+{
+    //issue a query to the server
+}
+
+void Query::gotMsg(QString from, QString dest, QString msg, long long replyTo)
+{
+    //process incoming messages
+    //TODO: check whether it is for this application
+    //TODO: extract query results
+}
 
 }
