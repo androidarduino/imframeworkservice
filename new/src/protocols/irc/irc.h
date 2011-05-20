@@ -4,62 +4,6 @@
 #include <QTcpSocket>
 #include <QStringList>
 
-/*class IRCReplies
-{
-
-welcome message:
-    ":(.+) 001 (.+) :(.*)"
-:irc.troll.no 001 vrcats :Welcome to the Internet Relay Network vrcats!~1@172.30.136.110
-
-motd reply:
-    ":(.+) 372 (.+) :(.*)"
-//:irc.troll.no 375 vrcats :- irc.troll.no Message of the Day -
-//:irc.troll.no 372 vrcats :- 5/6/2007 18:18
-//:irc.troll.no 376 vrcats :End of MOTD command.
-
-notification message:
-    ":(.+) NOTICE (.+) :(.*)"
-//:irc.troll.no NOTICE vrcats :Server is currently in split-mode.
-
-list reply:
-    ":(.+) 322 (.+) (#.+) (.+) :(.*)"
-//:irc.troll.no 322 vrcats #quassel 1 :
-//:irc.troll.no 322 vrcats #yber 11 :daily irc meeting @ 14 Finnish time, Monday irc meeting @ 11 Finnish time
-//:irc.troll.no 323 vrcats :End of LIST
-
-names reply:
-    ":(.+) 353 (.*) ([+=@]) (#.+) :(.*)"
-//:irc.troll.no 353 vrcats = #chinese :vrcats chayin_ julia_w7 ling lqi Jing jiang z35liu chayin
-//:irc.troll.no 366 vrcats #chinese :End of NAMES list.
-
-receive message:
-    ":(.+)!~(.+) PRIVMSG (.+) :(.+)"
-//:vrcats!~1@172.30.136.110 PRIVMSG vrcats :private message
-//:z35liu!~z35liu@172.30.136.110 PRIVMSG #chinese :testing testing
-
-pingpong message:
-    "PING :(.*)"
-//PING :irc.troll.no
-//PONG :irc.troll.no
-
-away reply:
-    ":(.+) 306 (.+) :(.*)"
-//:irc.troll.no 306 vrcats :You have been marked as being away
-
-invitation:
-    ":(.+)!~(.+) INVITE (.+) :(#.+)"
-//:z35liu!~z35liu@172.30.136.110 INVITE vrcats :#chinese
-
-invite reply:
-    ":(.+) 341 (.+) (.+) (#.+)"
-//:irc.troll.no 341 vrcats z35liu #vrcats
-
-join message:
-    ":(.+)!~(.+) JOIN :(#.+)"
-//:z35liu!~z35liu@172.30.136.110 JOIN :#vrcats
-
-};
-*/
 namespace irc
 {
 
