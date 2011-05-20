@@ -1,0 +1,117 @@
+\hypertarget{classSwitchBoardSession}{
+\section{SwitchBoardSession Class Reference}
+\label{classSwitchBoardSession}\index{SwitchBoardSession@{SwitchBoardSession}}
+}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classSwitchBoardSession_ac75df6142c80d4bfb174e88647aedc8e}{
+void {\bfseries receivedMsg} (QString fromUser, QString fromNick, QString payloadLength, QString payloadBody)}
+\label{classSwitchBoardSession_ac75df6142c80d4bfb174e88647aedc8e}
+
+\item 
+\hypertarget{classSwitchBoardSession_a0dceadd5add55c20c5e7c2f7e50dc643}{
+void {\bfseries leftConversation} (\hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$sb, QString user, QString reason)}
+\label{classSwitchBoardSession_a0dceadd5add55c20c5e7c2f7e50dc643}
+
+\item 
+\hypertarget{classSwitchBoardSession_a96070e15ac93e28979db4b117836b257}{
+void {\bfseries joinConversation} (\hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$sb, QString user, QString reason)}
+\label{classSwitchBoardSession_a96070e15ac93e28979db4b117836b257}
+
+\item 
+\hypertarget{classSwitchBoardSession_a6b97071275dc16e5943683ad891a9f24}{
+void {\bfseries closed} (\hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$me)}
+\label{classSwitchBoardSession_a6b97071275dc16e5943683ad891a9f24}
+
+\item 
+\hypertarget{classSwitchBoardSession_accc8ca9cb1c11b3aa2757f5a42fe9273}{
+void {\bfseries msgReceived} (QString message, QString sender, \hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$session)}
+\label{classSwitchBoardSession_accc8ca9cb1c11b3aa2757f5a42fe9273}
+
+\item 
+\hypertarget{classSwitchBoardSession_a5e905afb24ad7932e8bdd024ee452f16}{
+void {\bfseries rawMsgReceived} (QString message, QString sender, \hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$session)}
+\label{classSwitchBoardSession_a5e905afb24ad7932e8bdd024ee452f16}
+
+\item 
+\hypertarget{classSwitchBoardSession_a31c5d704ce939c36a5f5466e33d971c6}{
+void {\bfseries userTyping} (QString user)}
+\label{classSwitchBoardSession_a31c5d704ce939c36a5f5466e33d971c6}
+
+\item 
+\hypertarget{classSwitchBoardSession_a7b540933b18c17204f18e8b227402351}{
+void {\bfseries sessionTyping} (\hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$sb)}
+\label{classSwitchBoardSession_a7b540933b18c17204f18e8b227402351}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classSwitchBoardSession_aa54467cc9f5d064a69811c3a4154b16c}{
+{\bfseries SwitchBoardSession} (QStringList oldHistory, QString username, QString invitationCmd)}
+\label{classSwitchBoardSession_aa54467cc9f5d064a69811c3a4154b16c}
+
+\item 
+\hypertarget{classSwitchBoardSession_a534b510235d697ceafada3974dcfa857}{
+{\bfseries SwitchBoardSession} (\hyperlink{classMsnSession}{MsnSession} $\ast$loginSession, QStringList receivers)}
+\label{classSwitchBoardSession_a534b510235d697ceafada3974dcfa857}
+
+\item 
+\hypertarget{classSwitchBoardSession_a7f73fbeb8b9b45d2772afeb6b3cb5b73}{
+bool {\bfseries inviteToThisSession} (QString email)}
+\label{classSwitchBoardSession_a7f73fbeb8b9b45d2772afeb6b3cb5b73}
+
+\item 
+\hypertarget{classSwitchBoardSession_a9ca703d0ab2ec0dcae5a8470956a87cb}{
+void {\bfseries sendMessage} (QString receiver, QString message)}
+\label{classSwitchBoardSession_a9ca703d0ab2ec0dcae5a8470956a87cb}
+
+\item 
+\hypertarget{classSwitchBoardSession_a9c1425df82566eafe57309c7d3e47093}{
+bool {\bfseries talkingTo} (QString email)}
+\label{classSwitchBoardSession_a9c1425df82566eafe57309c7d3e47093}
+
+\item 
+\hypertarget{classSwitchBoardSession_a719f587f8b2513b230b2b84949a5e040}{
+QString {\bfseries getHistory} (int lineCount=10)}
+\label{classSwitchBoardSession_a719f587f8b2513b230b2b84949a5e040}
+
+\item 
+\hypertarget{classSwitchBoardSession_a6ef53d9017746e9a30161577c6323bf6}{
+QString {\bfseries getParticipants} (int desiredLength, \hyperlink{classMsn}{Msn} $\ast$msn)}
+\label{classSwitchBoardSession_a6ef53d9017746e9a30161577c6323bf6}
+
+\item 
+\hypertarget{classSwitchBoardSession_afc5f702d461af16fb670ddea68552f21}{
+void {\bfseries reConnect} ()}
+\label{classSwitchBoardSession_afc5f702d461af16fb670ddea68552f21}
+
+\item 
+\hypertarget{classSwitchBoardSession_a865139408af38ed43cee1a572d5749fc}{
+QStringList {\bfseries allParticipants} ()}
+\label{classSwitchBoardSession_a865139408af38ed43cee1a572d5749fc}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classSwitchBoardSession_ad0b0421ed84df42ab33488a00ee752a8}{
+static QString {\bfseries toShort} (QString input, int length)}
+\label{classSwitchBoardSession_ad0b0421ed84df42ab33488a00ee752a8}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classSwitchBoardSession_ae3af3477e30a0b1c93424fb397a2f653}{
+QStringList {\bfseries m\_\-history}}
+\label{classSwitchBoardSession_ae3af3477e30a0b1c93424fb397a2f653}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+protocols/msn/switchboard.h\item 
+protocols/msn/switchboard.cpp\end{DoxyCompactItemize}

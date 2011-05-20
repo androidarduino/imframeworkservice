@@ -1,0 +1,69 @@
+\hypertarget{classMsnSession}{
+\section{MsnSession Class Reference}
+\label{classMsnSession}\index{MsnSession@{MsnSession}}
+}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMsnSession_a5abea6a694eb03afe3b4a6fac8af884b}{
+void {\bfseries incomingMsg} (QString answer)}
+\label{classMsnSession_a5abea6a694eb03afe3b4a6fac8af884b}
+
+\item 
+\hypertarget{classMsnSession_ad60cd76fc8b3cadeb622888ec34f01e4}{
+void {\bfseries disconnected} ()}
+\label{classMsnSession_ad60cd76fc8b3cadeb622888ec34f01e4}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMsnSession_a30e08ba72966421aadad02e09d7df5f1}{
+{\bfseries MsnSession} (QString server, int port)}
+\label{classMsnSession_a30e08ba72966421aadad02e09d7df5f1}
+
+\item 
+\hypertarget{classMsnSession_ac0df2e2acb33aba75c8c4870812574bf}{
+{\bfseries MsnSession} (QString serverAndPort)}
+\label{classMsnSession_ac0df2e2acb33aba75c8c4870812574bf}
+
+\item 
+\hypertarget{classMsnSession_a1bdac5fcf73924a3c81d3e34ac5fe7b8}{
+int {\bfseries sendCommand} (const char $\ast$cmd, QString p1=\char`\"{}\char`\"{}, QString p2=\char`\"{}\char`\"{}, QString p3=\char`\"{}\char`\"{}, QString p4=\char`\"{}\char`\"{})}
+\label{classMsnSession_a1bdac5fcf73924a3c81d3e34ac5fe7b8}
+
+\item 
+\hypertarget{classMsnSession_aa6f156e3c5a7dbc76e735b1a6bceca97}{
+QString {\bfseries sendAndWait} (const char $\ast$cmd, QString p1=\char`\"{}\char`\"{}, QString p2=\char`\"{}\char`\"{}, QString p3=\char`\"{}\char`\"{}, QString p4=\char`\"{}\char`\"{})}
+\label{classMsnSession_aa6f156e3c5a7dbc76e735b1a6bceca97}
+
+\item 
+\hypertarget{classMsnSession_aa3562f72464aa050480b74bb7083a98b}{
+QString {\bfseries getAnswer} (int cmdIndex, int timeOut=2000)}
+\label{classMsnSession_aa3562f72464aa050480b74bb7083a98b}
+
+\item 
+\hypertarget{classMsnSession_a82a9d08f3a777c698c45d44130c03ebe}{
+QString {\bfseries findReg} (QString regExp, QString findIn, int whichText)}
+\label{classMsnSession_a82a9d08f3a777c698c45d44130c03ebe}
+
+\item 
+\hypertarget{classMsnSession_a7aa744964796a46be39f673ceb396871}{
+int {\bfseries state} ()}
+\label{classMsnSession_a7aa744964796a46be39f673ceb396871}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMsnSession_a80b2bf50002a8852bd6526244e237a6c}{
+QString {\bfseries mspAuth}}
+\label{classMsnSession_a80b2bf50002a8852bd6526244e237a6c}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+protocols/msn/msnsession.h\item 
+protocols/msn/msnsession.cpp\end{DoxyCompactItemize}

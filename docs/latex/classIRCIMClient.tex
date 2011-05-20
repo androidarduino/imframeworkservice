@@ -1,0 +1,73 @@
+\hypertarget{classIRCIMClient}{
+\section{IRCIMClient Class Reference}
+\label{classIRCIMClient}\index{IRCIMClient@{IRCIMClient}}
+}
+Inheritance diagram for IRCIMClient:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2cm]{classIRCIMClient}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classIRCIMClient_a727c2876a18e56ae354bbdf97d7680ed}{
+void {\bfseries connected} ()}
+\label{classIRCIMClient_a727c2876a18e56ae354bbdf97d7680ed}
+
+\item 
+\hypertarget{classIRCIMClient_a0ccbc2d9556b490b74be7d4b54a94448}{
+void {\bfseries disconnected} ()}
+\label{classIRCIMClient_a0ccbc2d9556b490b74be7d4b54a94448}
+
+\item 
+\hypertarget{classIRCIMClient_a6d5ebb2b5acc008cabcb94fb100e0b60}{
+void {\bfseries gotMsg} (QString from, QString message)}
+\label{classIRCIMClient_a6d5ebb2b5acc008cabcb94fb100e0b60}
+
+\item 
+\hypertarget{classIRCIMClient_a5e87342f449aa6d428318efdb4eb300f}{
+void {\bfseries error} (QString errorMsg)}
+\label{classIRCIMClient_a5e87342f449aa6d428318efdb4eb300f}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classIRCIMClient_a5205a3ac78186c358f5783e2e258a85c}{
+{\bfseries IRCIMClient} (\hyperlink{classIMAccount}{IMAccount} \&account)}
+\label{classIRCIMClient_a5205a3ac78186c358f5783e2e258a85c}
+
+\item 
+\hypertarget{classIRCIMClient_a4e9046dc26fa3b9a52f098a9910c3ed4}{
+void {\bfseries sendMsg} (QString target, QString message)}
+\label{classIRCIMClient_a4e9046dc26fa3b9a52f098a9910c3ed4}
+
+\item 
+\hypertarget{classIRCIMClient_a9e2ffb96be85534373fb4748d46b99b7}{
+QStringList {\bfseries getPresence} ()}
+\label{classIRCIMClient_a9e2ffb96be85534373fb4748d46b99b7}
+
+\item 
+\hypertarget{classIRCIMClient_aaaa2b995bb752501a68c303b2af5c719}{
+void {\bfseries login} ()}
+\label{classIRCIMClient_aaaa2b995bb752501a68c303b2af5c719}
+
+\item 
+\hypertarget{classIRCIMClient_af6ee63c7d521693111736c344c9472d8}{
+void {\bfseries logout} ()}
+\label{classIRCIMClient_af6ee63c7d521693111736c344c9472d8}
+
+\item 
+\hypertarget{classIRCIMClient_a3a3059e4f284db277fc4d0092cca3b91}{
+bool {\bfseries hasUser} (QString user)}
+\label{classIRCIMClient_a3a3059e4f284db277fc4d0092cca3b91}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+adapter/adapter.h\item 
+adapter/adapter.cpp\item 
+adapter/examples/msg/moc\_\-adapter.cpp\end{DoxyCompactItemize}
