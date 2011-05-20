@@ -1,0 +1,152 @@
+\hypertarget{classIMClient}{
+\section{IMClient Class Reference}
+\label{classIMClient}\index{IMClient@{IMClient}}
+}
+Inheritance diagram for IMClient:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2cm]{classIMClient}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classIMClient_a5cb299419096c59ccef91f9dd0ba6331}{
+void {\bfseries update} ()}
+\label{classIMClient_a5cb299419096c59ccef91f9dd0ba6331}
+
+\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classIMClient_ace3cf2c98aabf8ddb3e520999fec4d33}{
+void {\bfseries connected} ()}
+\label{classIMClient_ace3cf2c98aabf8ddb3e520999fec4d33}
+
+\item 
+\hypertarget{classIMClient_accf2c37275ce59315beed0d2686034c2}{
+void {\bfseries disconnected} ()}
+\label{classIMClient_accf2c37275ce59315beed0d2686034c2}
+
+\item 
+\hypertarget{classIMClient_a0b67d9ebc4be827aac031e813550c058}{
+void {\bfseries gotMsg} (QString from, QString message)}
+\label{classIMClient_a0b67d9ebc4be827aac031e813550c058}
+
+\item 
+\hypertarget{classIMClient_a897dd85750829af5f0dc7dbfb0e9670d}{
+void {\bfseries error} (QString errorMsg)}
+\label{classIMClient_a897dd85750829af5f0dc7dbfb0e9670d}
+
+\item 
+\hypertarget{classIMClient_abe10b1bd73bbdc72e401bf0b1ff33b31}{
+void {\bfseries updated} ()}
+\label{classIMClient_abe10b1bd73bbdc72e401bf0b1ff33b31}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classIMClient_aee8f4aeb842ed4abb2d9622d539aa59a}{
+{\bfseries IMClient} (\hyperlink{classIMAccount}{IMAccount} \&account)}
+\label{classIMClient_aee8f4aeb842ed4abb2d9622d539aa59a}
+
+\item 
+\hypertarget{classIMClient_ae28370aa8886d1834f02e8a273b3113d}{
+virtual bool {\bfseries canDo} (QString serviceType)}
+\label{classIMClient_ae28370aa8886d1834f02e8a273b3113d}
+
+\item 
+\hypertarget{classIMClient_a7a8f24f0c4d34b7f1f0aa4b74d9a3ea1}{
+virtual void {\bfseries login} ()=0}
+\label{classIMClient_a7a8f24f0c4d34b7f1f0aa4b74d9a3ea1}
+
+\item 
+\hypertarget{classIMClient_a3b10fc13a5712f3eac8693f16e81683d}{
+virtual void {\bfseries logout} ()=0}
+\label{classIMClient_a3b10fc13a5712f3eac8693f16e81683d}
+
+\item 
+\hypertarget{classIMClient_a56f41af0d0b434c9564104aaca012331}{
+virtual void {\bfseries sendMsg} (QString target, QString message)=0}
+\label{classIMClient_a56f41af0d0b434c9564104aaca012331}
+
+\item 
+\hypertarget{classIMClient_a67646bbcbb2c2434f90e5624f05f75d7}{
+virtual QStringList {\bfseries getPresence} ()=0}
+\label{classIMClient_a67646bbcbb2c2434f90e5624f05f75d7}
+
+\item 
+\hypertarget{classIMClient_a1be30f768a0a31e1bafad4915d5f7ac9}{
+QString {\bfseries name} ()}
+\label{classIMClient_a1be30f768a0a31e1bafad4915d5f7ac9}
+
+\item 
+\hypertarget{classIMClient_a73a6b8019fbc05baa39af0bea299cee8}{
+virtual bool {\bfseries hasUser} (QString user)}
+\label{classIMClient_a73a6b8019fbc05baa39af0bea299cee8}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classIMClient_acd536379ac9deeb0b064e2577f10e1da}{
+QStringList {\bfseries onlineBuddies}}
+\label{classIMClient_acd536379ac9deeb0b064e2577f10e1da}
+
+\item 
+\hypertarget{classIMClient_a8bbc41e311653db1693d6a2d784aa4aa}{
+bool {\bfseries available}}
+\label{classIMClient_a8bbc41e311653db1693d6a2d784aa4aa}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classIMClient_ab37acf43e530eb2b1b08aac0c612d40f}{
+QString {\bfseries d\_\-accountName}}
+\label{classIMClient_ab37acf43e530eb2b1b08aac0c612d40f}
+
+\item 
+\hypertarget{classIMClient_a76ea05c466f863597e7becf7da0704f1}{
+QString {\bfseries d\_\-userName}}
+\label{classIMClient_a76ea05c466f863597e7becf7da0704f1}
+
+\item 
+\hypertarget{classIMClient_ad159062c1294eb3dad03fd64132ca991}{
+QString {\bfseries d\_\-password}}
+\label{classIMClient_ad159062c1294eb3dad03fd64132ca991}
+
+\item 
+\hypertarget{classIMClient_adce305eb1e03f58104960451476a26d7}{
+QString {\bfseries d\_\-server}}
+\label{classIMClient_adce305eb1e03f58104960451476a26d7}
+
+\item 
+\hypertarget{classIMClient_a4f807c21153728b60db53a05b36dd987}{
+QString {\bfseries d\_\-port}}
+\label{classIMClient_a4f807c21153728b60db53a05b36dd987}
+
+\item 
+\hypertarget{classIMClient_af859902b6ff51d784455d7c3a1b360b9}{
+QString {\bfseries d\_\-groups}}
+\label{classIMClient_af859902b6ff51d784455d7c3a1b360b9}
+
+\item 
+\hypertarget{classIMClient_a8fba519da9024ec5bbebee8819fbabb1}{
+QString {\bfseries d\_\-memo}}
+\label{classIMClient_a8fba519da9024ec5bbebee8819fbabb1}
+
+\item 
+\hypertarget{classIMClient_a5b09a04ecba698ecdf1529f7f755ade2}{
+QStringList {\bfseries d\_\-canDos}}
+\label{classIMClient_a5b09a04ecba698ecdf1529f7f755ade2}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+adapter/adapter.h\item 
+adapter/adapter.cpp\item 
+adapter/examples/msg/moc\_\-adapter.cpp\end{DoxyCompactItemize}

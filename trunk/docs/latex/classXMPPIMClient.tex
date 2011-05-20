@@ -1,0 +1,68 @@
+\hypertarget{classXMPPIMClient}{
+\section{XMPPIMClient Class Reference}
+\label{classXMPPIMClient}\index{XMPPIMClient@{XMPPIMClient}}
+}
+Inheritance diagram for XMPPIMClient:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2cm]{classXMPPIMClient}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classXMPPIMClient_a374a5a7a31bfbb09cd6d3bd86c0b506e}{
+void {\bfseries connected} ()}
+\label{classXMPPIMClient_a374a5a7a31bfbb09cd6d3bd86c0b506e}
+
+\item 
+\hypertarget{classXMPPIMClient_a5499b021b2c9140775335583346ba53f}{
+void {\bfseries disconnected} ()}
+\label{classXMPPIMClient_a5499b021b2c9140775335583346ba53f}
+
+\item 
+\hypertarget{classXMPPIMClient_a566e19792d539ca5e45d0436ca8321c6}{
+void {\bfseries gotMsg} (QString from, QString message)}
+\label{classXMPPIMClient_a566e19792d539ca5e45d0436ca8321c6}
+
+\item 
+\hypertarget{classXMPPIMClient_af8f0aa177ce72d26718a67457ae2139b}{
+void {\bfseries error} (QString errorMsg)}
+\label{classXMPPIMClient_af8f0aa177ce72d26718a67457ae2139b}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classXMPPIMClient_a8b42298615c65362800b338eaa01566d}{
+{\bfseries XMPPIMClient} (\hyperlink{classIMAccount}{IMAccount} \&account)}
+\label{classXMPPIMClient_a8b42298615c65362800b338eaa01566d}
+
+\item 
+\hypertarget{classXMPPIMClient_aa84fff629e311842be3461d3f9dcad18}{
+void {\bfseries sendMsg} (QString target, QString message)}
+\label{classXMPPIMClient_aa84fff629e311842be3461d3f9dcad18}
+
+\item 
+\hypertarget{classXMPPIMClient_a2dec1bfd485a5e1ee691ad4a11bf5b77}{
+QStringList {\bfseries getPresence} ()}
+\label{classXMPPIMClient_a2dec1bfd485a5e1ee691ad4a11bf5b77}
+
+\item 
+\hypertarget{classXMPPIMClient_a95bc16bff71222c54758c66c828db124}{
+void {\bfseries login} ()}
+\label{classXMPPIMClient_a95bc16bff71222c54758c66c828db124}
+
+\item 
+\hypertarget{classXMPPIMClient_af517015c407413a984bdec34a589ae23}{
+void {\bfseries logout} ()}
+\label{classXMPPIMClient_af517015c407413a984bdec34a589ae23}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+adapter/adapter.h\item 
+adapter/adapter.cpp\item 
+adapter/examples/msg/moc\_\-adapter.cpp\end{DoxyCompactItemize}

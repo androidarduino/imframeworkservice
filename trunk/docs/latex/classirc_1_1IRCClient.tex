@@ -1,0 +1,151 @@
+\hypertarget{classirc_1_1IRCClient}{
+\section{irc::IRCClient Class Reference}
+\label{classirc_1_1IRCClient}\index{irc::IRCClient@{irc::IRCClient}}
+}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classirc_1_1IRCClient_a9e5b75e20a192457f4cdf819b294a8c3}{
+void {\bfseries message} (QString from, QString fromURI, QString receiver, QString msg)}
+\label{classirc_1_1IRCClient_a9e5b75e20a192457f4cdf819b294a8c3}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_afe82b1dfb3e89b99a3113be1a1e03e09}{
+void {\bfseries notification} (QString msg)}
+\label{classirc_1_1IRCClient_afe82b1dfb3e89b99a3113be1a1e03e09}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a6eb42da585b279e552ed39841b7ae39c}{
+void {\bfseries invitation} (QString from, QString toChannel)}
+\label{classirc_1_1IRCClient_a6eb42da585b279e552ed39841b7ae39c}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a5ab1f6de72ef1092bbdbfd92e5c5847a}{
+void {\bfseries connected} ()}
+\label{classirc_1_1IRCClient_a5ab1f6de72ef1092bbdbfd92e5c5847a}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a404b289697f4d575269c43a809a70f2c}{
+void {\bfseries ping} (QString \&ping)}
+\label{classirc_1_1IRCClient_a404b289697f4d575269c43a809a70f2c}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_ab3e54b5591cc81602ca89dfc974cb0d3}{
+void {\bfseries join} (QString username, QString channel, QString uri)}
+\label{classirc_1_1IRCClient_ab3e54b5591cc81602ca89dfc974cb0d3}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a8943fcd0e9d6a66312dfdea2aa16a48b}{
+void {\bfseries disconnected} ()}
+\label{classirc_1_1IRCClient_a8943fcd0e9d6a66312dfdea2aa16a48b}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_adbc620ce9496313739ff917e896d3bc3}{
+void {\bfseries updated} ()}
+\label{classirc_1_1IRCClient_adbc620ce9496313739ff917e896d3bc3}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classirc_1_1IRCClient_a657fc7a3d450d15df12828f28b12626f}{
+{\bfseries IRCClient} (QString server, int port)}
+\label{classirc_1_1IRCClient_a657fc7a3d450d15df12828f28b12626f}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a85ea31317f832f3a453c66a9baff6e62}{
+void {\bfseries connect} (QString \&server, int port)}
+\label{classirc_1_1IRCClient_a85ea31317f832f3a453c66a9baff6e62}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a7d685ca805db36a04005d72faa24c827}{
+void {\bfseries connect} ()}
+\label{classirc_1_1IRCClient_a7d685ca805db36a04005d72faa24c827}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_aace478ff723efea8919a800ad3980008}{
+QStringList {\bfseries channels} ()}
+\label{classirc_1_1IRCClient_aace478ff723efea8919a800ad3980008}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a705a73d30fd2b74c1d38199d0c36becb}{
+QStringList {\bfseries users} (QString channel=\char`\"{}\char`\"{})}
+\label{classirc_1_1IRCClient_a705a73d30fd2b74c1d38199d0c36becb}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a6d59b38c685e683f2ebee71f7b238a3d}{
+void {\bfseries join} (QString channel)}
+\label{classirc_1_1IRCClient_a6d59b38c685e683f2ebee71f7b238a3d}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a350d2c7a665b498c384f58a214e8c8e6}{
+void {\bfseries send} (QString channelOrUser, QString msg)}
+\label{classirc_1_1IRCClient_a350d2c7a665b498c384f58a214e8c8e6}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a3538774cd3ca8629b792102a1308c8dd}{
+void {\bfseries away} (QString autoReplyMessage)}
+\label{classirc_1_1IRCClient_a3538774cd3ca8629b792102a1308c8dd}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_ae34f5ce7f42610f39b455a4e6722f79a}{
+void {\bfseries disconnect} ()}
+\label{classirc_1_1IRCClient_ae34f5ce7f42610f39b455a4e6722f79a}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a6950489f557bd264ecb5c51ea76d7cb2}{
+bool {\bfseries isConnected} ()}
+\label{classirc_1_1IRCClient_a6950489f557bd264ecb5c51ea76d7cb2}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classirc_1_1IRCClient_a0e48484194aed3ae8b71ae49b001552e}{
+bool {\bfseries d\_\-autoReconnect}}
+\label{classirc_1_1IRCClient_a0e48484194aed3ae8b71ae49b001552e}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a347fd4e47335739ca35cece548dc5377}{
+QString {\bfseries d\_\-userName}}
+\label{classirc_1_1IRCClient_a347fd4e47335739ca35cece548dc5377}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a63806888226610ad474fe3f56c7ab718}{
+QString {\bfseries d\_\-realName}}
+\label{classirc_1_1IRCClient_a63806888226610ad474fe3f56c7ab718}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_aa9084124feae86658692271fc5e957ee}{
+QString {\bfseries d\_\-password}}
+\label{classirc_1_1IRCClient_aa9084124feae86658692271fc5e957ee}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a97881754ce72351d57cc5550281c15bf}{
+int {\bfseries d\_\-userMode}}
+\label{classirc_1_1IRCClient_a97881754ce72351d57cc5550281c15bf}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_ad157785b39186b34b76c3ebcc324d79a}{
+QString {\bfseries d\_\-status}}
+\label{classirc_1_1IRCClient_ad157785b39186b34b76c3ebcc324d79a}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a4d523656cd657949cc66c02fc7164b54}{
+QList$<$ \hyperlink{classirc_1_1IRCChannel}{IRCChannel} $\ast$ $>$ {\bfseries d\_\-channels}}
+\label{classirc_1_1IRCClient_a4d523656cd657949cc66c02fc7164b54}
+
+\item 
+\hypertarget{classirc_1_1IRCClient_a797303797e53ecb9e31760e3e37e0af2}{
+QStringList {\bfseries d\_\-motd}}
+\label{classirc_1_1IRCClient_a797303797e53ecb9e31760e3e37e0af2}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+protocols/irc/irc.h\item 
+adapter/examples/msg/moc\_\-irc.cpp\item 
+protocols/irc/irc.cpp\item 
+protocols/irc/moc\_\-irc.cpp\end{DoxyCompactItemize}

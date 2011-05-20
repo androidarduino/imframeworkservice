@@ -1,0 +1,167 @@
+\hypertarget{classMsn}{
+\section{Msn Class Reference}
+\label{classMsn}\index{Msn@{Msn}}
+}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMsn_ae5b3b36d57ac78ee3f1fab34c93a55cc}{
+bool {\bfseries loginMsn} ()}
+\label{classMsn_ae5b3b36d57ac78ee3f1fab34c93a55cc}
+
+\item 
+\hypertarget{classMsn_ae2204eac2373c0a0064d683e9a75b2a1}{
+void {\bfseries removeSB} (\hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$session)}
+\label{classMsn_ae2204eac2373c0a0064d683e9a75b2a1}
+
+\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMsn_aba018794aa94476d447765c836c6c69d}{
+void {\bfseries msgReceived} (QString message, QString sender, \hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$session)}
+\label{classMsn_aba018794aa94476d447765c836c6c69d}
+
+\item 
+\hypertarget{classMsn_ae53ae3b871d26efefb840ea42e8c90a1}{
+void {\bfseries rawMsgReceived} (QString message, QString sender, \hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$session)}
+\label{classMsn_ae53ae3b871d26efefb840ea42e8c90a1}
+
+\item 
+\hypertarget{classMsn_a8b6cb40cb5b089087fca2143f46bf512}{
+void {\bfseries invitedToSession} (\hyperlink{classMsnContact}{MsnContact} invitor, \hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$session)}
+\label{classMsn_a8b6cb40cb5b089087fca2143f46bf512}
+
+\item 
+\hypertarget{classMsn_a5980c33d1c9d5f41b7b7a9b355ed966a}{
+void {\bfseries contactOnline} (\hyperlink{classMsnContact}{MsnContact} contact)}
+\label{classMsn_a5980c33d1c9d5f41b7b7a9b355ed966a}
+
+\item 
+\hypertarget{classMsn_aa8425b196e9f19493a1413a924883d25}{
+void {\bfseries contactOffline} (\hyperlink{classMsnContact}{MsnContact} contact)}
+\label{classMsn_aa8425b196e9f19493a1413a924883d25}
+
+\item 
+\hypertarget{classMsn_a5473c5582f65220fae3f068aed91332e}{
+void {\bfseries contactStatusChanged} (\hyperlink{classMsnContact}{MsnContact} contact, QString status)}
+\label{classMsn_a5473c5582f65220fae3f068aed91332e}
+
+\item 
+\hypertarget{classMsn_aed7345010e54e133b6f8c74ae5aaaa98}{
+void {\bfseries beingAddedBy} (\hyperlink{classMsnContact}{MsnContact} contact)}
+\label{classMsn_aed7345010e54e133b6f8c74ae5aaaa98}
+
+\item 
+\hypertarget{classMsn_a0b7ff4e1ea5ba0ed522dbaffc681c928}{
+void {\bfseries userJoinSession} (\hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$sb, QString email)}
+\label{classMsn_a0b7ff4e1ea5ba0ed522dbaffc681c928}
+
+\item 
+\hypertarget{classMsn_a9a2568f2b5308fad5bbdfcbb97c55c5a}{
+void {\bfseries userLeftSession} (\hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$sb, QString email)}
+\label{classMsn_a9a2568f2b5308fad5bbdfcbb97c55c5a}
+
+\item 
+\hypertarget{classMsn_af2b3d9a81e0b2b5b8e25e7492e17deb1}{
+void {\bfseries loginFinish} ()}
+\label{classMsn_af2b3d9a81e0b2b5b8e25e7492e17deb1}
+
+\item 
+\hypertarget{classMsn_a8a40e2fbfd9778cfad9ea90518378b7f}{
+void {\bfseries syncSession} ()}
+\label{classMsn_a8a40e2fbfd9778cfad9ea90518378b7f}
+
+\item 
+\hypertarget{classMsn_adb9fe086f63745ccde55ee68bb4ac8f7}{
+void {\bfseries contactListChanged} ()}
+\label{classMsn_adb9fe086f63745ccde55ee68bb4ac8f7}
+
+\item 
+\hypertarget{classMsn_a5170af24615e113721c74f411f8a26bd}{
+void {\bfseries userTyping} (QString email)}
+\label{classMsn_a5170af24615e113721c74f411f8a26bd}
+
+\item 
+\hypertarget{classMsn_a7666637d86bb1ded43677d2d6659218b}{
+void {\bfseries sessionTyping} (\hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$sb)}
+\label{classMsn_a7666637d86bb1ded43677d2d6659218b}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMsn_aae02bad6846b3aff0753a57d04046ca4}{
+void {\bfseries setUsernamePassword} (QString username, QString password)}
+\label{classMsn_aae02bad6846b3aff0753a57d04046ca4}
+
+\item 
+\hypertarget{classMsn_a721ff6d8bbec8fec1ea1f57cbf0ab2d0}{
+void {\bfseries setStatus} (QString status)}
+\label{classMsn_a721ff6d8bbec8fec1ea1f57cbf0ab2d0}
+
+\item 
+\hypertarget{classMsn_a20f729ae9af9b6a0635233793290da82}{
+void {\bfseries sendMsg} (QString receiver, QString message)}
+\label{classMsn_a20f729ae9af9b6a0635233793290da82}
+
+\item 
+\hypertarget{classMsn_ae6bad5afb2a66233a86e3e24c944c5d9}{
+void {\bfseries addContact} (QString contact, QString group)}
+\label{classMsn_ae6bad5afb2a66233a86e3e24c944c5d9}
+
+\item 
+\hypertarget{classMsn_a98ba30441700908d47ba797396d510cc}{
+void {\bfseries removeContact} (QString contact)}
+\label{classMsn_a98ba30441700908d47ba797396d510cc}
+
+\item 
+\hypertarget{classMsn_aa9d0b35905dd05487873e3232b91f98d}{
+void {\bfseries blockContact} (QString contact)}
+\label{classMsn_aa9d0b35905dd05487873e3232b91f98d}
+
+\item 
+\hypertarget{classMsn_a32813babfc06cfd8bbaaa1c7efa77acc}{
+void {\bfseries unblockContact} (QString contact)}
+\label{classMsn_a32813babfc06cfd8bbaaa1c7efa77acc}
+
+\item 
+\hypertarget{classMsn_a802bf36e77f75e53e29a5cf4e9b2a5c6}{
+QMap$<$ QString, QString $>$ {\bfseries getProfile} (\hyperlink{classMsnContact}{MsnContact} contact)}
+\label{classMsn_a802bf36e77f75e53e29a5cf4e9b2a5c6}
+
+\item 
+\hypertarget{classMsn_ab13250da6eae22c6a489cefadad474c5}{
+QList$<$ \hyperlink{classMsnContact}{MsnContact} $\ast$ $>$ {\bfseries getContacts} (QString status)}
+\label{classMsn_ab13250da6eae22c6a489cefadad474c5}
+
+\item 
+\hypertarget{classMsn_a07015e42deec5bf5c2d8666e6e43ccd0}{
+QList$<$ QString $>$ {\bfseries getContactsEmails} (QString status)}
+\label{classMsn_a07015e42deec5bf5c2d8666e6e43ccd0}
+
+\item 
+\hypertarget{classMsn_a12913a2f65c8d7eb15179712aaef5c2d}{
+\hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$ {\bfseries requestSBSession} (QString receiver)}
+\label{classMsn_a12913a2f65c8d7eb15179712aaef5c2d}
+
+\item 
+\hypertarget{classMsn_a7e3bba3d88bb937b2c18daf59a939a38}{
+\hyperlink{classMsnContact}{MsnContact} $\ast$ {\bfseries findContact} (QString type, QString value)}
+\label{classMsn_a7e3bba3d88bb937b2c18daf59a939a38}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMsn_a0802edd087139a66586fbdfdf1087c9f}{
+QList$<$ \hyperlink{classSwitchBoardSession}{SwitchBoardSession} $\ast$ $>$ {\bfseries m\_\-sessions}}
+\label{classMsn_a0802edd087139a66586fbdfdf1087c9f}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+protocols/msn/msn.h\item 
+protocols/msn/msn.cpp\end{DoxyCompactItemize}
