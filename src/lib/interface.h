@@ -1,7 +1,9 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
-#include "adapter.h"
+#include <QStringList>
+#include <QDebug>
+#include <QVariant>
 /*
     In this file a set of interface classes were defined.
     These interface classes provide developer the ability of communicating to other parties easily and freely.
@@ -18,7 +20,6 @@ class IMInterface: public QObject
         void setResourceType(QString type);//constructor
         virtual ~IMInterface();//destructor
     protected:
-        static IMService* d_service;
         QString d_resourceType;
     protected slots:
         virtual void gotMsg(QString from, QString dest, QString msg, long long replyTo);
@@ -60,7 +61,7 @@ class Messenger:public IMInterface
         long long send(QVariant msg, QStringList receiver);//send msg to a group of people
         void sendPlainMsg(QString msg, QString receiver="");//send a plain message without prefixes
     protected slots:
-        void gotMsg(QString from, QString dest, QString msg, long long replyTo)//process incoming msg
+        void gotMsg(QString from, QString dest, QString msg, long long replyTo);//process incoming msg
     signals:
         void get(QVariant msg, QString from, long long replyTo);//emited when got a message from someone
 };
@@ -79,7 +80,7 @@ class Synchronizor:public IMInterface
     signals:
         void updateFull(QVariant data);//notify there is an update
     protected slots:
-        void gotMsg(QString from, QString dest, QString msg, long long replyTo)//process incoming msg
+        void gotMsg(QString from, QString dest, QString msg, long long replyTo);//process incoming msg
 };
 
 class Query:public IMInterface
@@ -95,7 +96,7 @@ class Query:public IMInterface
     signals:
         void reply(QVariant result, long long answerTo, QString fromServer);//emit when got reply from servers
     protected slots:
-        void gotMsg(QString from, QString dest, QString msg, long long replyTo)//process incoming msg
+        void gotMsg(QString from, QString dest, QString msg, long long replyTo);//process incoming msg
 };
 }
 
