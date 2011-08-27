@@ -2,7 +2,7 @@ include(../imf.pri)
 
 TEMPLATE = subdirs
 
-SUBDIRS = protocols
+SUBDIRS = protocols adapter tests
 
 CONFIG += ordered
 
