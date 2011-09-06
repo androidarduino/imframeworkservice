@@ -23,6 +23,19 @@ class Msg
 
 };
 
+class IMProtocol:public QObject
+{
+	Q_OBJECT
+	public:
+		IMProtocol();
+		~IMProtocol();
+	public signals:
+		void msgArrived(Msg& msg);
+	public slots:
+		void sendMsg(Msg& msg);
+		void login();
+};
+
 class IMClient:public QLocalSocket
 {
     Q_OBJECT
