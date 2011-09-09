@@ -25,9 +25,21 @@ class TestServer: public QObject
     Q_OBJECT
 
     private slots:
+        void initTestCase();
         void testListening();
         void testRegistering();
+        void cleanupTestCase();
 };
+
+void TestServer::initTestCase()
+{
+
+}
+
+void TestServer::cleanupTestCase()
+{
+
+}
 
 void TestServer::testListening()
 {
@@ -44,7 +56,7 @@ int main(int argc, char** argv)
     TestServer server;
     QTest::qExec(&msg);
     QTest::qExec(&server);
-    return app.exec();
+    return 0;
 }
 
 #include "servertests.moc"
