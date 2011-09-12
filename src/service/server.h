@@ -5,6 +5,8 @@
 #include <QLocalSocket>
 #include <QStringList>
 #include <QMap>
+#include <QByteArray>
+#include <QRegExp>
 #include "improtocol.h"
 
 class Msg
@@ -16,7 +18,7 @@ class Msg
 
    */
     public:
-        Msg(QByteArray msg);
+        Msg(QByteArray& msg);
         QString& operator [](QString& name);
     private:
         QMap<QString, QString> items;
@@ -74,4 +76,3 @@ class IMService: public IMServerManager
 };
 
 #endif
-
