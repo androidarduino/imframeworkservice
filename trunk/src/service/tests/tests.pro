@@ -3,10 +3,12 @@
 ######################################################################
 
 CONFIG += qtestlib
+QT += network
 TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
-INCLUDEPATH += .
+INCLUDEPATH += . ..
 
 # Input
-SOURCES += servertests.cpp
+HEADERS += ../server.h
+SOURCES += servertests.cpp ../server.cpp ../msg.cpp
