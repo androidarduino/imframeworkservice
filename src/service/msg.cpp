@@ -1,25 +1,36 @@
 #include "server.h"
 
-Msg::Msg(QByteArray& msg)
+Msg::Msg(QByteArray msg)
 {
     //<msg a=a1 b=b1 c=c1>msgbody</msg>
     QRegExp rxMain("\\s*<\\s*msg\\s+([^>]*)>([^<]*)<\\s*/msg\\s*>\\s*");
-    QRegExp rxParameters("\\s*(\\w*)=(\\w*)\\s*");
+    QRegExp rxParameters("(\\w*)=(\\w*)");
     if(rxMain.indexIn(QString(msg))==-1)
+	{
+		qDebug()<<"no message found";
         return;
+	}
     QString body=rxMain.cap(2);
+	items["body"]=body;
     QString parameters=rxMain.cap(1);
+	qDebug()<<"parameters: "<<parameters;
     int pos=0;
-    while(pos=rxParameters.indexIn(parameters)==-1)
+    while((pos=rxParameters.indexIn(parameters, pos))!=-1)
     {
-        QString name=rx.cap(1);
-        QString value=rx.cap(2);
+        QString name=rxParameters.cap(1);
+        QString value=rxParameters.cap(2);
         items[name]=value;
-        pos+=rxParameters.matchedLength();
+        pos += rxParameters.matchedLength();
+		//qDebug()<<"found a parameter:"<<pos<<name<<value<<rxParameters.matchedLength()<<parameters;
     }
 }
 
-QString& operator [](QString& name)
+void Msg::print()
+{
+	qDebug()<<"MSG: "<<items;
+}
+
+QString Msg::operator [](QString name)
 {
     return items[name];
 }

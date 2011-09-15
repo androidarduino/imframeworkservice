@@ -7,7 +7,8 @@
 #include <QMap>
 #include <QByteArray>
 #include <QRegExp>
-#include "improtocol.h"
+#include <QDebug>
+//#include "improtocol.h"
 
 class Msg
 {
@@ -15,14 +16,13 @@ class Msg
     service to client message protocol:
     "<msg protocol=irc1 app=messagingclient threadId=1>this is a message</msg>"
     "<msg protocol=IMServer app=registerService name=messagingclient status=online></msg>
-
    */
     public:
-        Msg(QByteArray& msg);
-        QString& operator [](QString& name);
+        Msg(QByteArray msg);
+        QString operator [](QString name);
+		void print();
     private:
         QMap<QString, QString> items;
-
 };
 
 class IMProtocol:public QObject
@@ -31,20 +31,22 @@ class IMProtocol:public QObject
 	public:
 		IMProtocol();
 		~IMProtocol();
-	public signals:
+		QString d_name;
+	signals:
 		void msgArrived(Msg& msg);
 	public slots:
 		void sendMsg(Msg& msg);
 		void login();
 };
 
-class IMClient:public QLocalSocket
+class IMClient:public QObject
 {
     Q_OBJECT
     public:
-        IMClient(){}
+        IMClient(QLocalSocket* socket);
         ~IMClient(){}
         QString name;
+		QLocalSocket* d_socket;
 };
 
 class IMServerManager:public QObject
@@ -56,6 +58,7 @@ class IMServerManager:public QObject
     protected:
         void processClientRequest(IMClient* client, Msg& msg);
         void registerClient(QString appName, IMClient* client);
+};
 
 class IMService: public IMServerManager
 {
