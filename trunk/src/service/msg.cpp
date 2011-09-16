@@ -5,7 +5,8 @@ Msg::Msg(QByteArray msg)
     //<msg a=a1 b=b1 c=c1>msgbody</msg>
     QRegExp rxMain("\\s*<\\s*msg\\s+([^>]*)>([^<]*)<\\s*/msg\\s*>\\s*");
     QRegExp rxParameters("(\\w*)=(\\w*)");
-    if(rxMain.indexIn(QString(msg))==-1)
+    d_string=QString(msg);
+    if(rxMain.indexIn(d_string)==-1)
 	{
 		qDebug()<<"no message found";
         return;

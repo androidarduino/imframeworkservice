@@ -21,7 +21,7 @@ void IRCClient::msgArrived()
         data=QString(d_socket.readLine(5000));
         qDebug()<<"<<"<<data;
         //dispatch commands
-        gotPing(data); 
+        gotPing(data);
         gotMsg(data);
         gotChannelList(data);
         gotUserNames(data);
@@ -125,7 +125,7 @@ void IRCClient::gotUserNames(QString& msg)
         qDebug()<<"adding user to channel: "<<users<<channel<<newChannel->d_users;
         foreach(IRCChannel* c, d_channels)
             qDebug()<<c->d_name<<c->d_users;
-    } 
+    }
     qDebug()<<"--- got user list, updating channel users ";
     emit updated();
    return;
@@ -185,7 +185,7 @@ void IRCClient::gotJoin(QString& msg)
         d_channels<<channel;
         channel->d_users<<rx.cap(1);
         qDebug()<<"adding user to channel: "<<rx.cap(1)<<channel->d_name;
-    } 
+    }
     emit(join(rx.cap(1), rx.cap(3), rx.cap(2)));
     emit updated();
     qDebug()<<"--- got join notification, emitting join signal ";

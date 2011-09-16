@@ -3,9 +3,7 @@
 #include <QThread>
 #include <QTcpSocket>
 #include <QStringList>
-
-namespace irc
-{
+#include "../../service/protocolinterface.h"
 
 class IRCChannel
 {
@@ -68,5 +66,24 @@ class IRCClient: public QObject
         QStringList d_motd;
 };
 
-}
+class IRCProtocol: public IMProtocol
+{
+    Q_OBJECT
+    Q_INTERFACES(IMProtocol)
+    public:
+        IRCProtocol();
+        ~IRCProtocol();
+    signals:
+        void msgArrived(QString msg);
+    public slots:
+        void sendMsg(QString msg);
+        void login();
+    private:
+        IRCClient* d_client;
+        QString username, password;
+        QStringList groups;
+    private slots:
+        void gotMsg(QString from, QString fromUri, QString receiver, QString msg);
+};
+
 #endif
