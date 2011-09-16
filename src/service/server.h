@@ -8,7 +8,11 @@
 #include <QByteArray>
 #include <QRegExp>
 #include <QDebug>
-//#include "improtocol.h"
+#include "protocolinterface.h"
+
+/*
+    Abstract of messages transfering between server and client/protocol, convert a message string to data structure, and back
+   */
 
 class Msg
 {
@@ -20,24 +24,15 @@ class Msg
     public:
         Msg(QByteArray msg);
         QString operator [](QString name);
-		void print();
+	void print();
+        QString d_string;
     private:
         QMap<QString, QString> items;
 };
 
-class IMProtocol:public QObject
-{
-	Q_OBJECT
-	public:
-		IMProtocol();
-		~IMProtocol();
-		QString d_name;
-	signals:
-		void msgArrived(Msg& msg);
-	public slots:
-		void sendMsg(Msg& msg);
-		void login();
-};
+/*
+   Abstract of the client delegation, talk to the client program on behalf of the server.
+   */
 
 class IMClient:public QObject
 {
@@ -46,8 +41,12 @@ class IMClient:public QObject
         IMClient(QLocalSocket* socket);
         ~IMClient(){}
         QString name;
-		QLocalSocket* d_socket;
+	QLocalSocket* d_socket;
 };
+
+/*
+   Base class of the server, process some server sepecific matters, like register/unregister clients, etc.
+    */
 
 class IMServerManager:public QObject
 {
@@ -59,6 +58,10 @@ class IMServerManager:public QObject
         void processClientRequest(IMClient* client, Msg& msg);
         void registerClient(QString appName, IMClient* client);
 };
+
+/*
+   Main part of the server
+   */
 
 class IMService: public IMServerManager
 {

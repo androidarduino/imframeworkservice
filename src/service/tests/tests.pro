@@ -3,6 +3,7 @@
 ######################################################################
 
 CONFIG += qtestlib
+CONFIG -= qtgui
 QT += network
 TEMPLATE = app
 TARGET = 

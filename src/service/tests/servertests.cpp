@@ -1,5 +1,5 @@
 #include <QtTest/QtTest>
-#include <QApplication>
+#include <QCoreApplication>
 #include <QStringList>
 #include "../server.h"
 
@@ -70,11 +70,15 @@ void TestServer::testListening()
 
 void TestServer::testRegistering()
 {
+    //create a server object
+    //create a client object
+    //send a sample register message from client
+    //verify that the client is named
 }
 
 int main(int argc, char** argv)
 {
-    QApplication app(argc, argv);
+    QCoreApplication app(argc, argv);
     TestMsg msg;
     TestServer server;
     QTest::qExec(&msg);

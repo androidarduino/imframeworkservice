@@ -13,7 +13,7 @@ IMService::~IMService()
 
 IMClient::IMClient(QLocalSocket* socket)
 {
-	d_socket=socket;
+    d_socket=socket;
 }
 
 void IMService::newConnection()
@@ -26,13 +26,13 @@ void IMService::newConnection()
 bool IMService::startProtocol(QString& name)
 {
     //load the protocol plugin and start it
-	return true;
+    return true;
 }
 
 bool IMService::stopProtocol(QString& name)
 {
     //unload the plugin
-	return true;
+    return true;
 }
 
 void IMService::protocolMsg()
@@ -78,6 +78,8 @@ IMServerManager::~IMServerManager()
 
 void IMServerManager::processClientRequest(IMClient* client, Msg& msg)
 {
+    //sample register message:
+    //<msg protocol=IMFServer command=registerClient clientName=chessgame>please register me as chess client</msg>
     if(msg["command"]=="registerClient")
         registerClient(msg["clientName"], client);
     //TODO: more commands
@@ -88,22 +90,3 @@ void IMServerManager::registerClient(QString name, IMClient* client)
     client->name=name;
 }
 
-IMProtocol::IMProtocol()
-{
-
-}
-
-IMProtocol::~IMProtocol()
-{
-
-}
-
-void IMProtocol::sendMsg(Msg& msg)
-{
-
-}
-
-void IMProtocol::login()
-{
-
-}
