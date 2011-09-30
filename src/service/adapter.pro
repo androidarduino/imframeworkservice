@@ -16,7 +16,7 @@ CONFIG += console
 HEADERS += adapter.h \
            improtocols.h \
            ../irc/irc.h \
-    interface.h
+    	   interface.h
 SOURCES += main.cpp \
            adapter.cpp \
            ../irc/irc.cpp \

@@ -25,21 +25,26 @@ void IMService::newConnection()
 
 bool IMService::startProtocol(QString& name)
 {
-    //load the protocol plugin and start it
-    return true;
+    //TODO: load the protocol plugin and start it
+    //connect it to protocolMsg();
+	return true;
 }
 
 bool IMService::stopProtocol(QString& name)
 {
-    //unload the plugin
+    //TODO: unload the plugin
     return true;
 }
 
-void IMService::protocolMsg()
+void IMService::protocolMsg(Msg& msg)
 {
-    //read the msg
+	QString target=msg["app"];
     //find the client to send to
-    //send to the client
+	foreach(IMClient* c, clients)
+	{
+		if(c->name==target)
+			c->d_socket->write(Msg.d_string.toUtf8());
+	}
 }
 
 void IMService::clientMsg()

@@ -9,26 +9,7 @@
 #include <QRegExp>
 #include <QDebug>
 #include "protocolinterface.h"
-
-/*
-    Abstract of messages transfering between server and client/protocol, convert a message string to data structure, and back
-   */
-
-class Msg
-{
- /*
-    service to client message protocol:
-    "<msg protocol=irc1 app=messagingclient threadId=1>this is a message</msg>"
-    "<msg protocol=IMServer app=registerService name=messagingclient status=online></msg>
-   */
-    public:
-        Msg(QByteArray msg);
-        QString operator [](QString name);
-	void print();
-        QString d_string;
-    private:
-        QMap<QString, QString> items;
-};
+#include "../msg.h"
 
 /*
    Abstract of the client delegation, talk to the client program on behalf of the server.
@@ -41,7 +22,7 @@ class IMClient:public QObject
         IMClient(QLocalSocket* socket);
         ~IMClient(){}
         QString name;
-	QLocalSocket* d_socket;
+		QLocalSocket* d_socket;
 };
 
 /*
@@ -78,7 +59,7 @@ class IMService: public IMServerManager
     private slots:
         void newConnection();
         void clientMsg();
-        void protocolMsg();
+        void protocolMsg(Msg& msg);
 };
 
 #endif
