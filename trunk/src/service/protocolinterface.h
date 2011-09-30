@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QList>
+#include "../msg.h"
 
 /*
     Abstract of the protocols, used to load/unload the protocol instances, pass it to the server, and send messages for server.
