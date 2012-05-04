@@ -20,30 +20,25 @@ void IMService::newConnection()
 {
     IMClient* nc=new IMClient(d_server.nextPendingConnection());
     connect(nc, SIGNAL(readyRead()), this, SLOT(clientMsg()));
-    clients<<nc;
+    d_clients<<nc;
 }
 
-bool IMService::startProtocol(QString& name)
+bool IMService::controlProtocol(QString& , QString& )
 {
-    //TODO: load the protocol plugin and start it
-    //connect it to protocolMsg();
+    //TODO:
+        //available commands:
+        // enable, disable, etc.
 	return true;
-}
-
-bool IMService::stopProtocol(QString& name)
-{
-    //TODO: unload the plugin
-    return true;
 }
 
 void IMService::protocolMsg(Msg& msg)
 {
 	QString target=msg["app"];
     //find the client to send to
-	foreach(IMClient* c, clients)
+	foreach(IMClient* c, d_clients)
 	{
 		if(c->name==target)
-			c->d_socket->write(Msg.d_string.toUtf8());
+			c->d_socket->write(msg.d_string.toUtf8());
 	}
 }
 
@@ -61,9 +56,10 @@ void IMService::clientMsg()
     }
     if(msg["protocol"]!="")
     {
-        foreach(IMProtocol* p, protocols)
+/*        foreach(IMProtocol* p, protocols)
             if(p->d_name==msg["protocol"])
                 p->sendMsg(msg);
+*/
     }
     else
     {
@@ -95,3 +91,23 @@ void IMServerManager::registerClient(QString name, IMClient* client)
     client->name=name;
 }
 
+bool IMServerManager::available()
+{
+    return true;
+}
+QList<Msg> IMServerManager::onlineBuddies()
+{
+    return QList<Msg>();
+}
+QString& IMServerManager::operator [](QString propertyName)
+{
+    QString& ret=*(new QString());
+    return ret;
+}
+void IMServerManager::sendMsg(Msg& msg)
+{
+}
+
+void IMServerManager::login()
+{
+}

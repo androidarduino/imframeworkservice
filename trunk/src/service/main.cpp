@@ -1,11 +1,9 @@
 #include <QApplication>
-#include "interface.h"
+#include "server.h"
 
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
-//    IMService service;
-//    service.start();
-    IMFramework::Messenger messenger("test");
+    IMService service;
     return app.exec();
 }
