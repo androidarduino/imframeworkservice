@@ -18,9 +18,11 @@ IMClient::IMClient(QLocalSocket* socket)
 
 void IMService::newConnection()
 {
+    qDebug()<<"new incoming connection";
     IMClient* nc=new IMClient(d_server.nextPendingConnection());
-    connect(nc, SIGNAL(readyRead()), this, SLOT(clientMsg()));
+    connect(nc->d_socket, SIGNAL(readyRead()), this, SLOT(clientMsg()));
     d_clients<<nc;
+    qDebug()<<"new connection established";
 }
 
 bool IMService::controlProtocol(QString& , QString& )
@@ -49,6 +51,8 @@ void IMService::clientMsg()
     if(!s->d_socket->canReadLine())
         return;
     Msg msg(s->d_socket->readLine());
+    qDebug()<<"got a client message";
+    msg.print();
     //find the protocol and send
     if(msg["protocol"]=="IMFServer")//requests to server
     {
@@ -60,10 +64,13 @@ void IMService::clientMsg()
             if(p->d_name==msg["protocol"])
                 p->sendMsg(msg);
 */
+        qDebug()<<"sending message on behalf of client";
     }
     else
     {
+        qDebug()<<"sending message on behalf of client";
         //TODO: select the most suitable protocol to send mssg
+
     }
 }
 
@@ -81,6 +88,8 @@ void IMServerManager::processClientRequest(IMClient* client, Msg& msg)
 {
     //sample register message:
     //<msg protocol=IMFServer command=registerClient clientName=chessgame>please register me as chess client</msg>
+    qDebug()<<"got client request";
+    msg.print();
     if(msg["command"]=="registerClient")
         registerClient(msg["clientName"], client);
     //TODO: more commands

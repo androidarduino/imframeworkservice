@@ -21,3 +21,17 @@ User can be identified by an universal ID in the following format:
 			www.msn.com:0/somebody@hotmail.com			irc.freenode.org:6667/somebody@freenode.com		gtalk.google.com:4242/somebody@gmail.com
 			www.ftp.com:21/somebody@gmail.com			www.http.com:80/somebody@abc.com				www.ssh.com:22/whatever@ssh.com
 			pop_smtp.somemail.com:110/mail@abc.com		docs.google.com:0/abc@gmail.com					evernote.com:0/abc@evernote.com	
+
+End user usage:
+
+    imf["abc@abc.com"]<<"test message";//test message will be send to corresponding app on the other side
+
+    IMContact& liu=imf["abc@abc.com"];
+    liu<<"<msg app=testapp1>test message</msg>";
+
+    IMContact& facebook=imf["facebook"];//get my facebook account if available
+    Msg msg("<msg type=picture album=abc1 location=home ></msg>");
+    msg<<QPicture("picture1.jpg");
+    facebook<<msg;
+
+    imf["weather"]<<"what is the weather for Beijing tomorrow?";
