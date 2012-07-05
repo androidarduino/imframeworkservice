@@ -1,4 +1,4 @@
-#include "server.h"
+#include "msg.h"
 
 Msg::Msg(QByteArray msg)
 {

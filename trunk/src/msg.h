@@ -1,3 +1,6 @@
+#ifndef MSG_H
+#define MSG_H
+
 #include <QString>
 #include <QByteArray>
 #include <QRegExp>
@@ -16,6 +19,7 @@ class Msg
     "<msg protocol=IMServer app=registerService name=messagingclient status=online></msg>
    */
     public:
+        Msg(){}
         Msg(QByteArray msg);
         QString operator [](QString name);
 	void print();
@@ -24,4 +28,4 @@ class Msg
         QMap<QString, QString> items;
 };
 
-
+#endif
