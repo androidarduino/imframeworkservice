@@ -7,6 +7,6 @@ int main(int argc, char** argv)
     MyIM im;
     im.show();
     im.connectServer();
-    qDebug()<<im.d_socket.errorString();
+    //qDebug()<<im.d_socket.errorString();
     return app.exec();
 }

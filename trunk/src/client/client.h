@@ -21,6 +21,8 @@ class MyIM: public QWidget
         void    stateChanged ( QLocalSocket::LocalSocketState){qDebug()<<d_socket.state();}
     public:
         QLocalSocket d_socket;
+    protected:
+        void mousePressEvent ( QMouseEvent * event ){sendMsg("test message");qDebug()<<"test msg sent";}
 };
 
 #endif

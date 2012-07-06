@@ -4,16 +4,19 @@ IMService::IMService()
 {
     connect(&d_server, SIGNAL(newConnection()), this, SLOT(newConnection()));
     d_server.listen("IMFService");
+    qDebug()<<"listen successful";
 }
 
 IMService::~IMService()
 {
     d_server.close();
+    qDebug()<<"server closed";
 }
 
 IMClient::IMClient(QLocalSocket* socket)
 {
     d_socket=socket;
+    qDebug()<<"imclient created, socket bind";
 }
 
 void IMService::newConnection()
@@ -22,6 +25,7 @@ void IMService::newConnection()
     IMClient* nc=new IMClient(d_server.nextPendingConnection());
     connect(nc->d_socket, SIGNAL(readyRead()), this, SLOT(clientMsg()));
     d_clients<<nc;
+    qDebug()<<nc->d_socket;
     qDebug()<<"new connection established";
 }
 
@@ -36,6 +40,7 @@ bool IMService::controlProtocol(QString& , QString& )
 void IMService::protocolMsg(Msg& msg)
 {
 	QString target=msg["app"];
+        qDebug()<<"protocol msg received";
     //find the client to send to
 	foreach(IMClient* c, d_clients)
 	{
@@ -47,16 +52,24 @@ void IMService::protocolMsg(Msg& msg)
 void IMService::clientMsg()
 {
     //read the msg
-    IMClient* s=(IMClient*)sender();
-    if(!s->d_socket->canReadLine())
+    qDebug()<<"got message from client: ";
+    QLocalSocket* s=(QLocalSocket*)sender();
+    qDebug()<<s->canReadLine();
+    if(!s->canReadLine())
         return;
-    Msg msg(s->d_socket->readLine());
+    Msg msg(s->readLine());
     qDebug()<<"got a client message";
     msg.print();
+    IMClient* senderClient=0;
+    foreach(IMClient* c, d_clients)
+        if(c->d_socket==s)
+            senderClient=c;
+    if(senderClient==0)
+        qDebug()<<"serious error occured";
     //find the protocol and send
     if(msg["protocol"]=="IMFServer")//requests to server
     {
-        processClientRequest(s, msg);
+        processClientRequest(senderClient, msg);
     }
     if(msg["protocol"]!="")
     {
@@ -76,11 +89,12 @@ void IMService::clientMsg()
 
 IMServerManager::IMServerManager()
 {
-
+    qDebug()<<"server manager created";
 }
 
 IMServerManager::~IMServerManager()
 {
+    qDebug()<<"server manager destructed";
 
 }
 
@@ -98,6 +112,7 @@ void IMServerManager::processClientRequest(IMClient* client, Msg& msg)
 void IMServerManager::registerClient(QString name, IMClient* client)
 {
     client->name=name;
+    qDebug()<<"client registered by manager";
 }
 
 bool IMServerManager::available()
