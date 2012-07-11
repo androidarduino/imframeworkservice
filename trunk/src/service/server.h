@@ -9,6 +9,8 @@
 #include <QDebug>
 #include <QtPlugin>
 #include <QPluginLoader>
+#include <QDir>
+#include <QCoreApplication>
 #include "protocolinterface.h"
 #include "../msg.h"
 
@@ -28,10 +30,10 @@ class IMClient:public QObject
 /*
    Base class of the server, process some server sepecific matters, like register/unregister clients, etc.
     */
-class IMServerManager:public QObject, public IMProtocol
+class IMServerManager:public QObject//, public IMProtocol
 {
     Q_OBJECT
-    Q_INTERFACES(IMProtocol)
+    //Q_INTERFACES(IMProtocol)
     public:
         IMServerManager();
         ~IMServerManager();
@@ -60,13 +62,12 @@ class IMService: public IMServerManager
     private:
         QLocalServer d_server;
         QList<IMClient*> d_clients;
-        QPluginLoader d_loader;
-        void loadPlugins();
+        QList<IMProtocol*> d_protocols;
+        bool loadPlugins();
     private slots:
         void newConnection();
         void clientMsg();
         void protocolMsg(Msg& msg);
 };
-
 
 #endif

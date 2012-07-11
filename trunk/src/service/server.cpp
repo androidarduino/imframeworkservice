@@ -5,6 +5,15 @@ IMService::IMService()
     connect(&d_server, SIGNAL(newConnection()), this, SLOT(newConnection()));
     d_server.listen("IMFService");
     qDebug()<<"listen successful";
+    loadPlugins();
+    qDebug()<<d_protocols.count();
+    foreach(IMProtocol* p, d_protocols)
+    {
+        qDebug()<<p;
+        p->login();
+        qDebug()<<p->available();
+        qDebug()<<p->test();
+    }
 }
 
 IMService::~IMService()
@@ -123,15 +132,43 @@ QList<Msg> IMServerManager::onlineBuddies()
 {
     return QList<Msg>();
 }
-QString& IMServerManager::operator [](QString propertyName)
+QString& IMServerManager::operator [](QString )
 {
     QString& ret=*(new QString());
     return ret;
 }
-void IMServerManager::sendMsg(Msg& msg)
+void IMServerManager::sendMsg(Msg& )
 {
 }
 
 void IMServerManager::login()
 {
+}
+
+bool IMService::loadPlugins()
+{
+     QDir pluginsDir(QCoreApplication::applicationDirPath());
+#if defined(Q_OS_WIN)
+     if (pluginsDir.dirName().toLower() == "debug" || pluginsDir.dirName().toLower() == "release")
+         pluginsDir.cdUp();
+#elif defined(Q_OS_MAC)
+     if (pluginsDir.dirName() == "MacOS") {
+         pluginsDir.cdUp();
+         pluginsDir.cdUp();
+         pluginsDir.cdUp();
+     }
+#endif
+     pluginsDir.cd("protocolplugins");
+     foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
+         QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
+         QObject *plugin = pluginLoader.instance();
+         if (plugin) {
+             d_protocols << qobject_cast<IMProtocol*>(plugin);
+             qDebug()<<qobject_cast<IMProtocol*>(plugin);
+             qDebug()<<"protocol plugin loaded";
+             return true;
+         }
+     }
+     qDebug()<<"protocol plugin not found";
+     return false;
 }
