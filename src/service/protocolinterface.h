@@ -26,6 +26,7 @@ class IMProtocol
     public:
         virtual void sendMsg(Msg& msg)=0;
         virtual void login()=0;
+        virtual QString test()=0;
     private:
         Msg d_properties;
 };
