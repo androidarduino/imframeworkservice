@@ -4,6 +4,7 @@
 #include "../protocolinterface.h"
 #include <QDebug>
 #include <QString>
+#include <QByteArray>
 
 class IMIRCPlugin: public QObject, public IMProtocol
 {

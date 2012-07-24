@@ -159,8 +159,12 @@ bool IMService::loadPlugins()
      }
 #endif
      pluginsDir.cd("protocolplugins");
-     foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
+     foreach (QString fileName, pluginsDir.entryList(QDir::Files)) 
+     {
+	 qDebug()<< fileName;
          QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
+qDebug()<<pluginLoader.load();
+qDebug()<<pluginLoader.isLoaded();
          QObject *plugin = pluginLoader.instance();
          if (plugin) {
              d_protocols << qobject_cast<IMProtocol*>(plugin);
