@@ -7,8 +7,8 @@ CONFIG += plugin
 TARGET = 
 DESTDIR = ../protocolplugins
 DEPENDPATH += .
-INCLUDEPATH += .
+INCLUDEPATH += . ../..
 
 # Input
-HEADERS += ircplugin.h
-SOURCES += ircplugin.cpp
+HEADERS += ircplugin.h ../../msg.h
+SOURCES += ircplugin.cpp ../../msg.cpp

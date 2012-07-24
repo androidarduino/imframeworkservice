@@ -6,10 +6,10 @@ CONFIG += qtestlib
 CONFIG -= qtgui
 QT += network
 TEMPLATE = app
-TARGET = 
+TARGET = testclient
 DEPENDPATH += .
 INCLUDEPATH += . ..
 
 # Input
-HEADERS += ../server.h
-SOURCES += servertests.cpp ../server.cpp ../msg.cpp
+HEADERS += ../server.h ../../msg.h
+SOURCES += servertests.cpp ../server.cpp ../../msg.cpp
