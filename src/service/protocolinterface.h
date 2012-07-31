@@ -18,11 +18,9 @@ class IMProtocol
         virtual bool available()=0;
         virtual QList<Msg> onlineBuddies()=0;
         virtual QString& operator [](QString propertyName)=0;
-/*
     signals:
         virtual void msgArrived(Msg& msg)=0;
         virtual void statusChanged(QString status)=0;
-*/
     public:
         virtual void sendMsg(Msg& msg)=0;
         virtual void login()=0;

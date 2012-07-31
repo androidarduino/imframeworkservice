@@ -19,6 +19,9 @@ class IMIRCPlugin: public QObject, public IMProtocol
         void sendMsg(Msg&msg){qDebug()<<"IRC protocol is sending: ";}
         void login();
         QString test(){return QString("test successful");}
+    signals:
+        void msgArrived(Msg& msg);
+        void statusChanged(QString status);
 };
 
 #endif
