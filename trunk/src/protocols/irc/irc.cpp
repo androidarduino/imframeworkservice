@@ -1,7 +1,5 @@
 #include "irc.h"
 
-using namespace irc;
-
 IRCClient::IRCClient(QString server, int port)
 {
 //    QObject::connect(&d_socket, SIGNAL(connected()), this, SIGNAL(connected()));

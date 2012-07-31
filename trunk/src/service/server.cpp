@@ -92,7 +92,6 @@ void IMService::clientMsg()
     {
         qDebug()<<"sending message on behalf of client";
         //TODO: select the most suitable protocol to send mssg
-
     }
 }
 

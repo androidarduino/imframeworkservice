@@ -19,8 +19,7 @@ class Msg
     "<msg protocol=IMServer app=registerService name=messagingclient status=online></msg>
    */
     public:
-        Msg(){}
-        Msg(QByteArray msg);
+        Msg(QByteArray msg="");
         QString operator [](QString name);
 	void print();
         QString d_string;

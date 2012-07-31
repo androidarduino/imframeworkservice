@@ -28,6 +28,7 @@ class IRCClient: public QObject
         void away(QString autoReplyMessage);
         void disconnect();
         bool isConnected();
+        void login();
     signals:
         void message(QString from, QString fromURI, QString receiver, QString msg);
         void notification(QString msg);
@@ -39,7 +40,6 @@ class IRCClient: public QObject
         void updated();
     private slots:
         void msgArrived();
-        void login();
     private:
         void gotPing(QString& msg);
         void gotMsg(QString& msg);
@@ -53,11 +53,11 @@ class IRCClient: public QObject
         void pendCommand(QString cmd);
     private:
         QTcpSocket d_socket;
-        QString d_server;
         int d_port;
         QStringList d_commands;
-        bool d_connected;
     public:
+        QString d_server;
+        bool d_connected;
         bool d_autoReconnect;
         QString d_userName, d_realName, d_password;
         int d_userMode;
@@ -66,18 +66,23 @@ class IRCClient: public QObject
         QStringList d_motd;
 };
 
-class IRCProtocol: public IMProtocol
+class IRCPlugin: public QObject, public IMProtocol
 {
     Q_OBJECT
     Q_INTERFACES(IMProtocol)
     public:
-        IRCProtocol();
-        ~IRCProtocol();
+        IRCPlugin();
+        ~IRCPlugin();
+	bool available();
+	QString& operator[](QString ref);
+	QString test(){return QString("test message return");}
     signals:
-        void msgArrived(QString msg);
+        void msgArrived(Msg& msg);
+        void statusChanged(QString status);
     public slots:
-        void sendMsg(QString msg);
+        void sendMsg(Msg&msg);
         void login();
+	QList<Msg> onlineBuddies();
     private:
         IRCClient* d_client;
         QString username, password;
