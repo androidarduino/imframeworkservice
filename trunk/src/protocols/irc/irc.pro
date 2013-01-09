@@ -10,5 +10,5 @@ INCLUDEPATH += .
 QT += network
 
 # Input
-HEADERS += irc.h ../../service/protocolinterface.h ../../msg.h
-SOURCES += irc.cpp ircplugin.cpp ../../msg.cpp
+HEADERS += irc.h ../../service/protocolinterface.h ../../msg.h ircplugin.h
+SOURCES += irc.cpp ircplugin.cpp ../../msg.cpp 
