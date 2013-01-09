@@ -120,7 +120,7 @@ void IMServerManager::processClientRequest(IMClient* client, Msg& msg)
 void IMServerManager::registerClient(QString name, IMClient* client)
 {
     client->name=name;
-    qDebug()<<"client registered by manager";
+    qDebug()<<"client "<<name" registered by manager";
 }
 
 bool IMServerManager::available()
