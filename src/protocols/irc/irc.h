@@ -66,29 +66,45 @@ class IRCClient: public QObject
         QStringList d_motd;
 };
 
+/*
 class IRCPlugin: public QObject, public IMProtocol
 {
     Q_OBJECT
     Q_INTERFACES(IMProtocol)
     public:
+<<<<<<< .mine
+        IRCProtocol(Msg& parameters);
+        ~IRCProtocol();
+=======
         IRCPlugin();
         ~IRCPlugin();
 	bool available();
 	QString& operator[](QString ref);
 	QString test(){return QString("test message return");}
+>>>>>>> .r68
+		bool available();
+		QList<Msg> onlineBuddies();
+		QString& operator[](QString propertyName);
     signals:
+<<<<<<< .mine
+        void msgArrived(Msg& msg);
+		void statusChanged(QString status);
+=======
         void msgArrived(Msg& msg);
         void statusChanged(QString status);
+>>>>>>> .r68
     public slots:
+<<<<<<< .mine
+        void sendMsg(Msg& msg);
+=======
         void sendMsg(Msg&msg);
+>>>>>>> .r68
         void login();
 	QList<Msg> onlineBuddies();
     private:
         IRCClient* d_client;
-        QString username, password;
-        QStringList groups;
     private slots:
         void gotMsg(QString from, QString fromUri, QString receiver, QString msg);
 };
-
+*/
 #endif
