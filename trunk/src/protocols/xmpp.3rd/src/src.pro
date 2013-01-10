@@ -7,7 +7,7 @@ QT += network xml
 CONFIG += staticlib
 
 # To disable the dependency on QtGui, uncomment the following:
-# DEFINES += QXMPP_NO_GUI
+DEFINES += QXMPP_NO_GUI
 
 # To enable support for the Speex codec, uncomment the following:
 # DEFINES += QXMPP_USE_SPEEX
@@ -111,5 +111,6 @@ QMAKE_PKGCONFIG_DESTDIR = $$QXMPP_LIBRARY_DIR/pkgconfig
 # Installation
 headers.files = $$HEADERS
 headers.path = $$[QT_INSTALL_PREFIX]/include/qxmpp
-target.path = $$[QT_INSTALL_PREFIX]/lib
+#target.path = $$[QT_INSTALL_PREFIX]/lib
+target.path = ../../jabber/
 INSTALLS += headers target

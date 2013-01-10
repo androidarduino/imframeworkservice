@@ -14,6 +14,7 @@ class IMProtocol
 {
     public:
         IMProtocol(){}
+        virtual void init(QString)=0;
         virtual ~IMProtocol(){}
         virtual bool available()=0;
         virtual QList<Msg> onlineBuddies()=0;
