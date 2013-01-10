@@ -2,8 +2,17 @@
 
 IMIRCPlugin::IMIRCPlugin()
 {
+}
+void IMIRCPlugin::init(QString parameters)
+{
 //initialize an irc client
-	d_client=new IRCClient("", 0);
+	//example parameters: "irc.freenode.net|6665|user0312|mypassword"
+	QStringList p=parameters.split("|");
+	d_host=p[0];
+	d_port=p[1];
+	d_user=p[2];
+	d_pass=p[3];
+	d_client=new IRCClient(d_host, d_port.toInt());
 	connect(d_client, SIGNAL(message(QString, QString, QString, QString)), this, SLOT(gotMsg(QString, QString, QString, QString))); 
 }
 IMIRCPlugin::~IMIRCPlugin()

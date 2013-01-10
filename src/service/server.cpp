@@ -7,12 +7,6 @@ IMService::IMService()
     qDebug()<<"listen successful";
     loadPlugins();
     qDebug()<<d_protocols.count();
-    foreach(IMProtocol* p, d_protocols)
-    {
-        qDebug()<<p;
-        p->login();
-        qDebug()<<p->available();
-    }
 }
 
 IMService::~IMService()
@@ -145,6 +139,7 @@ void IMServerManager::login()
 
 bool IMService::loadPlugins()
 {
+	//TODO: now it is a file driven plugin loading. We need to load the plugins driven by the config file.
      QDir pluginsDir(QCoreApplication::applicationDirPath());
 #if defined(Q_OS_WIN)
      if (pluginsDir.dirName().toLower() == "debug" || pluginsDir.dirName().toLower() == "release")
@@ -159,16 +154,16 @@ bool IMService::loadPlugins()
      pluginsDir.cd("protocolplugins");
      foreach (QString fileName, pluginsDir.entryList(QDir::Files)) 
      {
-	 qDebug()<< fileName;
+	 qDebug()<< "Found plugin: "<<fileName;
          QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
 qDebug()<<pluginLoader.load();
 qDebug()<<pluginLoader.isLoaded();
          QObject *plugin = pluginLoader.instance();
          if (plugin) {
-             d_protocols << qobject_cast<IMProtocol*>(plugin);
-             qDebug()<<qobject_cast<IMProtocol*>(plugin);
-             qDebug()<<"protocol plugin loaded";
-             return true;
+			 IMProtocol* p=qobject_cast<IMProtocol*>(plugin);
+             d_protocols << p;
+			//TODO: call p->init("configurations");
+             qDebug()<<"protocol plugin loaded for "<<fileName;
          }
      }
      qDebug()<<"protocol plugin not found";
