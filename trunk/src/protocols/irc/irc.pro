@@ -5,10 +5,10 @@ TEMPLATE = lib
 CONFIG += plugin
 TARGET = irc
 DESTDIR = ../../service/protocolplugins/
-DEPENDPATH += .
-INCLUDEPATH += .
+DEPENDPATH += . ../../common
+INCLUDEPATH += . ../../common
 QT += network
 
 # Input
-HEADERS += irc.h ../../service/protocolinterface.h ../../msg.h ircplugin.h
-SOURCES += irc.cpp ircplugin.cpp ../../msg.cpp 
+HEADERS += irc.h protocolinterface.h msg.h ircplugin.h
+SOURCES += irc.cpp ircplugin.cpp msg.cpp 

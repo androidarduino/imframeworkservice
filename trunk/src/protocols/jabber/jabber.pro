@@ -5,11 +5,11 @@ TEMPLATE = lib
 CONFIG += plugin
 TARGET = jabber
 DESTDIR = ../../service/protocolplugins/
-DEPENDPATH += .
-INCLUDEPATH += . ../xmpp.3rd/src
+DEPENDPATH += . ../../common
+INCLUDEPATH += . ../xmpp.3rd/src ../../common
 LIB += libqxmpp.a
 QT += network
 
 # Input
-HEADERS += ../../service/protocolinterface.h ../../msg.h jabberplugin.h
-SOURCES += jabberplugin.cpp ../../msg.cpp 
+HEADERS += protocolinterface.h msg.h jabberplugin.h
+SOURCES += jabberplugin.cpp msg.cpp 

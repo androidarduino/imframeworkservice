@@ -12,7 +12,7 @@
 #include <QDir>
 #include <QCoreApplication>
 #include "protocolinterface.h"
-#include "../msg.h"
+#include "msg.h"
 
 /*
    Abstract of the client delegation, talk to the client program on behalf of the server.

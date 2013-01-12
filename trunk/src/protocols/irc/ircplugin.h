@@ -1,7 +1,7 @@
 #ifndef IRC_PLUGIN_H
 #define IRC_PLUGIN_H
 
-#include "../../service/protocolinterface.h"
+#include "protocolinterface.h"
 #include "irc.h"
 #include <QDebug>
 #include <QString>
@@ -13,7 +13,7 @@ class IMIRCPlugin: public QObject, public IMProtocol
     Q_INTERFACES(IMProtocol);
     public:
         IMIRCPlugin();
-        void init(QString parameters);
+        void init(Msg& config);
         ~IMIRCPlugin();
         bool available();
         QList<Msg> onlineBuddies();

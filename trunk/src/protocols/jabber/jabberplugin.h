@@ -1,7 +1,7 @@
 #ifndef Jabber_PLUGIN_H
 #define Jabber_PLUGIN_H
 
-#include "../../service/protocolinterface.h"
+#include "protocolinterface.h"
 #include <QDebug>
 #include <QString>
 #include <QByteArray>
@@ -14,7 +14,7 @@ class IMJabberPlugin: public QObject, public IMProtocol
     Q_INTERFACES(IMProtocol);
     public:
         IMJabberPlugin();
-		void init(QString);
+		void init(Msg& config);
         ~IMJabberPlugin();
         bool available();
         QList<Msg> onlineBuddies();

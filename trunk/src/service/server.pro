@@ -4,11 +4,12 @@
 
 TEMPLATE = app
 TARGET = 
-DEPENDPATH += .
+DEPENDPATH += . ../common
+INCLUDEPATH += ../common
 QT += network xml 
 
 CONFIG += console
 
 # Input
-HEADERS += server.h protocolinterface.h ../msg.h
-SOURCES += main.cpp server.cpp  ../msg.cpp
+HEADERS += server.h protocolinterface.h msg.h
+SOURCES += main.cpp server.cpp msg.cpp
