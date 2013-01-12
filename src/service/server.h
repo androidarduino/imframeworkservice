@@ -29,7 +29,7 @@ class IMClient:public QObject
 
 /*
    Base class of the server, process some server sepecific matters, like register/unregister clients, etc.
-    */
+*/
 class IMServerManager:public QObject//, public IMProtocol
 {
     Q_OBJECT
@@ -51,7 +51,7 @@ class IMServerManager:public QObject//, public IMProtocol
 
 /*
    Main part of the server
-   */
+*/
 class IMService: public IMServerManager
 {
     Q_OBJECT
