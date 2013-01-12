@@ -7,6 +7,7 @@ TARGET =
 DEPENDPATH += . ../common
 INCLUDEPATH += ../common
 QT += network xml 
+LIBS +=-lqjson
 
 CONFIG += console
 

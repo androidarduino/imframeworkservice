@@ -14,7 +14,9 @@ int main(int argc, char** argv)
 	msg["host"]="jabber.com";
 	msg["port"]="2345";
 	msg["domain"]="abc.com";
-	msg["err"].setValue(nextmsg.toMap());
+	msg.insert("err", nextmsg);
 	qDebug()<<msg.toJson();
+	Msg m("{\"abc\":123, \"bcd\":{\"cde\":234}}");
+	qDebug()<<m.toJson();
 	return app.exec();
 }

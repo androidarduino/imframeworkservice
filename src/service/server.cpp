@@ -41,7 +41,7 @@ bool IMService::controlProtocol(QString& , QString& )
 
 void IMService::protocolMsg(Msg& msg)
 {
-	QString target=msg["app"];
+	QString target=msg["app"].toString();
         qDebug()<<"protocol msg received";
     //find the client to send to
 	foreach(IMClient* c, d_clients)
@@ -106,7 +106,7 @@ void IMServerManager::processClientRequest(IMClient* client, Msg& msg)
     qDebug()<<"got client request";
     msg.print();
     if(msg["command"]=="registerClient")
-        registerClient(msg["clientName"], client);
+        registerClient(msg["clientName"].toString(), client);
     //TODO: more commands
 }
 
@@ -170,5 +170,5 @@ bool IMService::loadPlugins()
      qDebug()<<"protocol plugin not found";
      return false;
 	 */
-	
+	 return true;
 }

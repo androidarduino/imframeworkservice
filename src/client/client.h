@@ -5,7 +5,7 @@
 #include <QLocalSocket>
 #include <QStringList>
 #include <QWidget>
-#include "../msg.h"
+#include "msg.h"
 
 class MyIM: public QWidget
 {
