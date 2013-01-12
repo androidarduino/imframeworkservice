@@ -9,6 +9,7 @@ IRCClient::IRCClient(QString server, int port)
 	d_server=server;
 	d_port=port;
 	d_connected=false;
+	d_listCmdSent=false;
 }
 
 void IRCClient::msgArrived()
@@ -40,6 +41,7 @@ void IRCClient::connect()
 
 void IRCClient::connect(QString& server, int port)
 {
+	qDebug()<<"connecting to "<<server<<port;
 	d_server=server;
 	d_port=port;
 	d_socket.connectToHost(d_server, d_port);
@@ -54,9 +56,8 @@ void IRCClient::sendCommand(QString cmd)
 
 void IRCClient::login()
 {
-	sendCommand(QString("user %1 0 * %2").arg(d_userName).arg(d_realName));
-	sendCommand(QString("nick %1").arg(d_userName));
-	//sendCommand("list");
+	sendCommand(QString("user %1 0 * %2 2").arg(d_userName).arg(d_realName));
+	sendCommand(QString("nick %1").arg(d_nick));
 }
 
 void IRCClient::gotPing(QString& msg)
@@ -153,8 +154,12 @@ void IRCClient::gotMessageOfTheDay(QString& msg)
 	if(!d_motd.contains(rx.cap(3)))
 		d_motd<<rx.cap(3);
 	d_connected=true;
-	emit(connected());
-	qDebug()<<"--- got message of the day, updating ";
+		//emit(connected());
+	if(!d_listCmdSent)
+	{
+		sendCommand("list");
+		d_listCmdSent=true;
+	}
 }
 void IRCClient::gotJoin(QString& msg)
 {
@@ -243,7 +248,7 @@ void IRCClient::disconnect()
 
 void IRCClient::pendCommand(QString command)
 {
-	qDebug()<<"pending command"<<command<<isConnected();
+	//qDebug()<<"pending command"<<command<<isConnected();
 	if(isConnected())
 	{
 		foreach(QString c, d_commands)

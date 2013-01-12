@@ -7,12 +7,13 @@ void IMIRCPlugin::init(Msg& config)
 {
 //initialize an irc client
 	//example parameters: "irc.freenode.net|6665|user0312|mypassword"
-	d_host=config["host"].toString();
-	d_port=config["port"].toString();
-	d_user=config["user"].toString();
-	d_pass=config["pass"].toString();
 	d_client=new IRCClient(d_host, d_port.toInt());
 	connect(d_client, SIGNAL(message(QString, QString, QString, QString)), this, SLOT(gotMsg(QString, QString, QString, QString))); 
+	d_host=config["host"].toString();
+	d_port=config["port"].toString();
+	d_client->d_userName=config["user"].toString();
+	d_client->d_realName=config["realname"].toString();
+	d_client->d_nick=config["nickname"].toString();
 }
 IMIRCPlugin::~IMIRCPlugin()
 {
@@ -46,7 +47,7 @@ void IMIRCPlugin::sendMsg(Msg& msg)
 void IMIRCPlugin::login()
 {
     qDebug()<<"irc logging in...";
-	d_client->login();
+	d_client->connect(d_host, d_port.toInt());
 }
 QList<Msg> IMIRCPlugin::onlineBuddies()
 {
