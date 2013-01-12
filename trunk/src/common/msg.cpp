@@ -31,8 +31,26 @@ void Msg::print()
 	qDebug()<<"MSG: "<<items;
 }
 
-QString Msg::operator [](QString name)
+QString& Msg::operator [](QString name)
 {
     return items[name];
 }
 
+Msg::Msg(QString json)
+{
+
+}
+
+void Msg::fromJson(QString json)
+{
+
+}
+
+QString Msg::toJson()
+{
+	QString ret="{\n";
+	foreach(QString key, items.keys())
+		ret+="\t"+key+":\""+items.value(key)+"\";\n";
+	ret+="}\n";
+	return ret;
+}

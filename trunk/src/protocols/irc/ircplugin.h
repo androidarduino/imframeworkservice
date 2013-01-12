@@ -18,7 +18,7 @@ class IMIRCPlugin: public QObject, public IMProtocol
         bool available();
         QList<Msg> onlineBuddies();
         QString& operator[](QString);
-        void sendMsg(Msg&msg);
+        void sendMsg(Msg& msg);
         void login();
     signals:
         void msgArrived(Msg& msg);

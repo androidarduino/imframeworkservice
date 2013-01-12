@@ -20,7 +20,10 @@ class Msg
    */
     public:
         Msg(QByteArray msg="");
-        QString operator [](QString name);
+		Msg(QString json);
+		void fromJson(QString json);
+        QString& operator [](QString name);
+		QString toJson();
 	void print();
         QString d_string;
     private:
