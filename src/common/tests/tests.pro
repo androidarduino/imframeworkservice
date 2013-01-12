@@ -6,6 +6,8 @@ TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
 INCLUDEPATH += .
+LIBS += -lqjson
+
 
 # Input
 HEADERS += ../msg.h
