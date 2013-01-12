@@ -4,11 +4,12 @@
 
 TEMPLATE = app
 TARGET = 
-DEPENDPATH += .
+DEPENDPATH += . ../common
+INCLUDEPATH += . ../common
 QT += network xml 
-
+LIBS += -lqjson
 CONFIG += console
 
 # Input
-HEADERS += client.h ../msg.h
-SOURCES += main.cpp client.cpp  ../msg.cpp
+HEADERS += client.h msg.h
+SOURCES += main.cpp client.cpp  msg.cpp

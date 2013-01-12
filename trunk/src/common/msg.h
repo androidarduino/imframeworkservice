@@ -22,7 +22,6 @@ class Msg
 	 */
 	public:
 		Msg ();
-		Msg (QByteArray m);
 		Msg (QString json);
 		Msg (const Msg & msg);
 		virtual ~ Msg ();
@@ -32,6 +31,7 @@ class Msg
 		void print ();
 		QString d_string;
 		QVariantMap& toMap(){return items;}
+		void insert(QString, Msg&);
 	private:
 		QVariantMap items;
 };

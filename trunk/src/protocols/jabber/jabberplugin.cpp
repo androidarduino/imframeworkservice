@@ -7,11 +7,11 @@ void IMJabberPlugin::init(Msg& config)
 {
 //initialize a jabber client
 //example parameters: "talk.google.com|5552|test4re3@gmail.com|testpassword|gmail.com"
-	d_host=config["host"];
-	d_port=config["port"];
-	d_user=config["user"];
-	d_pass=config["pass"];
-	d_domain=config["domain"];
+	d_host=config["host"].toString();
+	d_port=config["port"].toString();
+	d_user=config["user"].toString();
+	d_pass=config["pass"].toString();
+	d_domain=config["domain"].toString();
 	d_client=new QXmppClient(this);
 	connect(d_client, SIGNAL(messageReceived(const QXmppMessage&)), this, SLOT(messageReceived(const QXmppMessage&)));
 }
@@ -36,8 +36,8 @@ QString& IMJabberPlugin::operator[](QString ref)
 void IMJabberPlugin::sendMsg(Msg& msg)
 {
 //send message using options in msg
-	QString user=msg["user"];
-	QString message=msg["body"];
+	QString user=msg["user"].toString();
+	QString message=msg["body"].toString();
 	QXmppMessage m(d_user, user, message);
 	d_client->sendPacket(m);
 }

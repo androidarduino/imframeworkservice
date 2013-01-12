@@ -7,10 +7,10 @@ void IMIRCPlugin::init(Msg& config)
 {
 //initialize an irc client
 	//example parameters: "irc.freenode.net|6665|user0312|mypassword"
-	d_host=config["host"];
-	d_port=config["port"];
-	d_user=config["user"];
-	d_pass=config["pass"];
+	d_host=config["host"].toString();
+	d_port=config["port"].toString();
+	d_user=config["user"].toString();
+	d_pass=config["pass"].toString();
 	d_client=new IRCClient(d_host, d_port.toInt());
 	connect(d_client, SIGNAL(message(QString, QString, QString, QString)), this, SLOT(gotMsg(QString, QString, QString, QString))); 
 }
@@ -39,8 +39,8 @@ QString& IMIRCPlugin::operator[](QString ref)
 void IMIRCPlugin::sendMsg(Msg& msg)
 {
 //send message using options in msg
-	QString user=msg["user"];
-	QString message=msg["body"];	
+	QString user=msg["user"].toString();
+	QString message=msg["body"].toString();	
 	d_client->send(user, message);
 }
 void IMIRCPlugin::login()
