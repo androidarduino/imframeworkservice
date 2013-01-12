@@ -3,7 +3,6 @@
 #include <QThread>
 #include <QTcpSocket>
 #include <QStringList>
-#include "../../service/protocolinterface.h"
 
 class IRCChannel
 {

@@ -3,7 +3,7 @@
 
 #include <QString>
 #include <QList>
-#include "../msg.h"
+#include "msg.h"
 #include <QtPlugin>
 
 /*
@@ -14,7 +14,7 @@ class IMProtocol
 {
     public:
         IMProtocol(){}
-        virtual void init(QString)=0;
+        virtual void init(Msg& config)=0;
         virtual ~IMProtocol(){}
         virtual bool available()=0;
         virtual QList<Msg> onlineBuddies()=0;

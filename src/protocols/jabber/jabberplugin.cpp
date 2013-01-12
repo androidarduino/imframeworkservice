@@ -3,16 +3,15 @@
 IMJabberPlugin::IMJabberPlugin()
 {
 }
-void IMJabberPlugin::init(QString parameters)
+void IMJabberPlugin::init(Msg& config)
 {
 //initialize a jabber client
 //example parameters: "talk.google.com|5552|test4re3@gmail.com|testpassword|gmail.com"
-	QStringList p=parameters.split("|");
-	d_host=p[0];
-	d_port=p[1];
-	d_user=p[2];
-	d_pass=p[3];
-	d_domain=p[4];
+	d_host=config["host"];
+	d_port=config["port"];
+	d_user=config["user"];
+	d_pass=config["pass"];
+	d_domain=config["domain"];
 	d_client=new QXmppClient(this);
 	connect(d_client, SIGNAL(messageReceived(const QXmppMessage&)), this, SLOT(messageReceived(const QXmppMessage&)));
 }
@@ -53,6 +52,7 @@ QList<Msg> IMJabberPlugin::onlineBuddies()
 //TODO: d_client->rosterManager()->getAllPresence();
 //returns QMap<QString bareJID, QXmppPresence>
 //loop and find QXmppPresence.type()==QXmppPresence::Available, collect them and return
+	return *(new QList<Msg>);
 }
 
 void IMJabberPlugin::messageReceived(const QXmppMessage& msg)

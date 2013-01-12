@@ -6,6 +6,7 @@ TARGET = server
 DEPENDPATH += .
 QT += network xml 
 CONFIG += console
+INCLUDE += ../common
 # Input
-HEADERS += server.h ../msg.h
-SOURCES += main.cpp server.cpp ../msg.cpp
+HEADERS += server.h msg.h
+SOURCES += main.cpp server.cpp ../common/msg.cpp
