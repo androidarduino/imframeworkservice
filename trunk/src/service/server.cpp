@@ -181,6 +181,13 @@ QObject *plugin = pluginLoader.instance();
 if (plugin) {
 	IMProtocol* p=qobject_cast<IMProtocol*>(plugin);
 	d_protocols << p;
+	Msg config;
+	config["user"]="vrcats@gmail.com";
+	config["pass"]="";
+	config["host"]="irc.freenode.net";
+	config["port"]="6665";
+	config["nickname"]="vrcats";
+	p->init(config);
 p->login();
 }
 return true;

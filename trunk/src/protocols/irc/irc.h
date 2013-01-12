@@ -27,6 +27,7 @@ class IRCClient: public QObject
         void away(QString autoReplyMessage);
         void disconnect();
         bool isConnected();
+	public slots:
         void login();
     signals:
         void message(QString from, QString fromURI, QString receiver, QString msg);
@@ -61,6 +62,8 @@ class IRCClient: public QObject
         QString d_userName, d_realName, d_password;
         int d_userMode;
         QString d_status;
+        QString d_nick;
+        bool d_listCmdSent;
         QList<IRCChannel*> d_channels;
         QStringList d_motd;
 };
