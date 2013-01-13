@@ -175,6 +175,8 @@ QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
 //for each service, create a plugin instance
 //login the instance
 
+
+/* test for irc protocol
 QPluginLoader pluginLoader("protocolplugins/libirc.so");
 pluginLoader.load();
 QObject *plugin = pluginLoader.instance();
@@ -189,6 +191,23 @@ if (plugin) {
 	config["nickname"]="vrcats";
 	p->init(config);
 p->login();
+}
+*/
+QPluginLoader pluginLoader("protocolplugins/libjabber.so");
+qDebug()<<pluginLoader.load();
+QObject *plugin = pluginLoader.instance();
+qDebug()<<pluginLoader.errorString();
+if (plugin) {
+	IMProtocol* p=qobject_cast<IMProtocol*>(plugin);
+	d_protocols << p;
+	Msg config;
+	config["user"]="imftester@jabber.org";
+	config["pass"]="12345678";
+	config["host"]="jabber.org";
+	config["port"]="5222";
+	config["domain"]="jabber.org";
+	p->init(config);
+	p->login();
 }
 return true;
 }

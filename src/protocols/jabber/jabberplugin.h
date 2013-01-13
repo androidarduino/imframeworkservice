@@ -7,6 +7,7 @@
 #include <QByteArray>
 #include <QXmppClient.h>
 #include <QXmppMessage.h>
+#include <QXmppLogger.h>
 
 class IMJabberPlugin: public QObject, public IMProtocol
 {
