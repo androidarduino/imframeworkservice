@@ -2,6 +2,8 @@
 
 IMJabberPlugin::IMJabberPlugin()
 {
+    QXmppLogger::getLogger()->setLoggingType(QXmppLogger::StdoutLogging);
+	qDebug()<<"Jabber plugin created";
 }
 void IMJabberPlugin::init(Msg& config)
 {
@@ -13,6 +15,7 @@ void IMJabberPlugin::init(Msg& config)
 	d_pass=config["pass"].toString();
 	d_domain=config["domain"].toString();
 	d_client=new QXmppClient(this);
+	qDebug()<<"initializing jabber plugin";
 	connect(d_client, SIGNAL(messageReceived(const QXmppMessage&)), this, SLOT(messageReceived(const QXmppMessage&)));
 }
 IMJabberPlugin::~IMJabberPlugin()
