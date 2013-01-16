@@ -73,18 +73,17 @@ void IMService::clientMsg()
 	{
 		processClientRequest(senderClient, msg);
 	}
+	//TODO: find all protocols with the receiver online
+	//if none, choose an offline protocol to send the message
 	if(msg["protocol"]!="")
 	{
-		/*        foreach(IMProtocol* p, protocols)
-				  if(p->d_name==msg["protocol"])
-				  p->sendMsg(msg);
-		 */
+		//if more than one, choose the one with desired protocol
 		qDebug()<<"sending message on behalf of client";
 	}
 	else
 	{
+		//randomly choose a protocol to send, or select the highest ranked protocol
 		qDebug()<<"sending message on behalf of client";
-		//TODO: select the most suitable protocol to send mssg
 	}
 }
 
@@ -122,6 +121,7 @@ bool IMServerManager::available()
 }
 QList<Msg> IMServerManager::onlineBuddies()
 {
+	//TODO: collect online buddies from all plugins and return
 	return QList<Msg>();
 }
 QString& IMServerManager::operator [](QString )
@@ -139,60 +139,24 @@ void IMServerManager::login()
 
 bool IMService::loadPlugins()
 {
-	/*
-	//TODO: now it is a file driven plugin loading. We need to load the plugins driven by the config file.
-	QDir pluginsDir(QCoreApplication::applicationDirPath());
-#if defined(Q_OS_WIN)
-if (pluginsDir.dirName().toLower() == "debug" || pluginsDir.dirName().toLower() == "release")
-pluginsDir.cdUp();
-#elif defined(Q_OS_MAC)
-if (pluginsDir.dirName() == "MacOS") {
-pluginsDir.cdUp();
-pluginsDir.cdUp();
-pluginsDir.cdUp();
-}
-#endif
-pluginsDir.cd("protocolplugins");
-foreach (QString fileName, pluginsDir.entryList(QDir::Files)) 
-{
-qDebug()<< "Found plugin: "<<fileName;
-QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
-	//qDebug()<<pluginLoader.load();
-	//qDebug()<<pluginLoader.isLoaded();
-	QObject *plugin = pluginLoader.instance();
-	if (plugin) {
-	IMProtocol* p=qobject_cast<IMProtocol*>(plugin);
-	d_protocols << p;
-	//TODO: call p->init("configurations");
-	qDebug()<<"protocol plugin loaded for "<<fileName;
-	}
-	}
-	qDebug()<<"protocol plugin not found";
-	return false;
-	 */
-//read configurations
-//extract service
-//for each service, create a plugin instance
-//login the instance
-
 
 /* test for irc protocol
-QPluginLoader pluginLoader("protocolplugins/libirc.so");
-pluginLoader.load();
-QObject *plugin = pluginLoader.instance();
-if (plugin) {
-	IMProtocol* p=qobject_cast<IMProtocol*>(plugin);
-	d_protocols << p;
-	Msg config;
-	config["user"]="vrcats@gmail.com";
-	config["pass"]="";
-	config["host"]="irc.freenode.net";
-	config["port"]="6665";
-	config["nickname"]="vrcats";
-	p->init(config);
-p->login();
-}
-*/
+   QPluginLoader pluginLoader("protocolplugins/libirc.so");
+   pluginLoader.load();
+   QObject *plugin = pluginLoader.instance();
+   if (plugin) {
+   IMProtocol* p=qobject_cast<IMProtocol*>(plugin);
+   d_protocols << p;
+   Msg config;
+   config["user"]="vrcats@gmail.com";
+   config["pass"]="";
+   config["host"]="irc.freenode.net";
+   config["port"]="6665";
+   config["nickname"]="vrcats";
+   p->init(config);
+   p->login();
+   }
+ */
 QPluginLoader pluginLoader("protocolplugins/libjabber.so");
 qDebug()<<pluginLoader.load();
 QObject *plugin = pluginLoader.instance();

@@ -21,7 +21,7 @@ public:
   {
   }
   virtual bool available () = 0;
-  virtual QList < Msg > onlineBuddies () = 0;
+  virtual Msg& onlineBuddies () = 0;
   virtual QString & operator [] (QString propertyName) = 0;
 signals:
   virtual void msgArrived (Msg & msg) = 0;
@@ -29,6 +29,8 @@ signals:
 public:
   virtual void sendMsg (Msg & msg) = 0;
   virtual void login () = 0;
+  virtual bool canDo ( QString& ability ) = 0;
+  virtual bool canSendTo (QString& receiver) = 0;
 private:
   Msg d_properties;
 };

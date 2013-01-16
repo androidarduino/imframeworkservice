@@ -1,0 +1,19 @@
+short term:
+config driven plugin loading for server
+implement online buddies in protocol plugins
+unloadPlugin function, in case plugin hang up or go offline, etc.
+plugin status monitor code
+msg receive and dispatch
+try send/receive message between two imf clients
+add ability method for plugins
+make Msg class unified and pretty in syntax
+
+long term:
+clarify the rpc message format
+implement the rpc machenism of imf clients
+polish the client sdk code
+implement the imf qml plugin
+create a qml container based on the imf server
+make a few simple apps/demos for imf
+compile the container on major desktop platforms
+package for beta release
