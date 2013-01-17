@@ -68,8 +68,8 @@ class IMService: public IMServerManager
 		QList<IMProtocol*> d_protocols;
 		bool loadPlugins();
 		bool unloadPlugins();
-		private slots:
-			void newConnection();
+	private slots:
+		void newConnection();
 		void clientMsg();
 		void protocolMsg(Msg& msg);
 };

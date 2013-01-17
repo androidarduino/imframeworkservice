@@ -175,3 +175,8 @@ if (plugin) {
 }
 return true;
 }
+
+void IMServerManager::pluginMsg(Msg& msg)
+{
+	//TODO
+}

@@ -49,8 +49,9 @@ void IMIRCPlugin::login()
     qDebug()<<"irc logging in...";
 	d_client->connect(d_host, d_port.toInt());
 }
-QList<Msg> IMIRCPlugin::onlineBuddies()
+Msg& IMIRCPlugin::onlineBuddies()
 {
+/*
 //return online users, including channels and online users
 	QList<Msg>& ret=*(new QList<Msg>());
 	foreach(QString c, d_client->channels())
@@ -70,6 +71,9 @@ QList<Msg> IMIRCPlugin::onlineBuddies()
 		ret<<*m;
 	}
 	return ret;
+*/
+//TODO: refactor this function
+	return *(new Msg());
 }
 
 void IMIRCPlugin::gotMsg(QString from, QString fromUri, QString receiver, QString msg)
@@ -82,4 +86,17 @@ void IMIRCPlugin::gotMsg(QString from, QString fromUri, QString receiver, QStrin
 	m["msg"]=msg;
 	emit(msgArrived(m));
 }
+
+bool IMIRCPlugin::canDo(QString& ability)
+{
+	//TODO
+	return false;
+}
+
+bool IMIRCPlugin::canSendTo(QString& receiver)
+{
+	//TODO
+	return false;
+}
+
 Q_EXPORT_PLUGIN2(imircplugin, IMIRCPlugin);

@@ -49,13 +49,13 @@ void IMJabberPlugin::login()
     qDebug()<<"jabber logging in...";
 	d_client->connectToServer(d_host, d_user, d_pass, d_domain, d_port.toInt());
 }
-QList<Msg> IMJabberPlugin::onlineBuddies()
+Msg& IMJabberPlugin::onlineBuddies()
 {
 //return online users, including channels and online users
 //TODO: d_client->rosterManager()->getAllPresence();
 //returns QMap<QString bareJID, QXmppPresence>
 //loop and find QXmppPresence.type()==QXmppPresence::Available, collect them and return
-	return *(new QList<Msg>);
+	return *(new Msg());
 }
 
 void IMJabberPlugin::messageReceived(const QXmppMessage& msg)
@@ -73,4 +73,17 @@ void IMJabberPlugin::gotMsg(QString from, QString fromUri, QString receiver, QSt
 	m["msg"]=msg;
 	emit(msgArrived(m));
 }
+
+bool IMJabberPlugin::canDo(QString& ability)
+{
+	//TODO
+	return false;
+}
+
+bool IMJabberPlugin::canSendTo(QString& receiver)
+{
+	//TODO
+	return false;
+}
+
 Q_EXPORT_PLUGIN2(imjabberplugin, IMJabberPlugin);

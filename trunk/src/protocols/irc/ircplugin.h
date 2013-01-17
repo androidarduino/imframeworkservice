@@ -16,10 +16,12 @@ class IMIRCPlugin: public QObject, public IMProtocol
         void init(Msg& config);
         ~IMIRCPlugin();
         bool available();
-        QList<Msg> onlineBuddies();
+        Msg& onlineBuddies();
         QString& operator[](QString);
         void sendMsg(Msg& msg);
         void login();
+		bool canDo(QString&);
+		bool canSendTo(QString&);
     signals:
         void msgArrived(Msg& msg);
         void statusChanged(QString status);
