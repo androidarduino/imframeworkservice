@@ -2,7 +2,7 @@ include(../../imf.pri)
 
 TEMPLATE = subdirs
 
-SUBDIRS = irc 
+SUBDIRS = irc jabber
 
 CONFIG += ordered
 
