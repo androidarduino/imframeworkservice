@@ -1,4 +1,5 @@
 short term:
+
 config driven plugin loading for server
 implement online buddies in protocol plugins
 unloadPlugin function, in case plugin hang up or go offline, etc.
@@ -9,6 +10,7 @@ add ability method for plugins
 make Msg class unified and pretty in syntax
 
 long term:
+
 clarify the rpc message format
 implement the rpc machenism of imf clients
 polish the client sdk code

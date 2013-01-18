@@ -180,3 +180,13 @@ void IMServerManager::pluginMsg(Msg& msg)
 {
 	//TODO
 }
+
+ConfigLoader::ConfigLoader(QString fileName)
+{
+
+}
+
+Msg& ConfigLoader::nextAccount()
+{
+	return *(new Msg());//TODO
+}
