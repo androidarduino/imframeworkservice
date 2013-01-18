@@ -77,9 +77,11 @@ class IMService: public IMServerManager
 class ConfigLoader: public QObject
 {
 	Q_OBJECT
+	friend class IMService;
 	public:
 		ConfigLoader(QString fileName);
-		Msg& nextAccount();
+	private:
+		Msg* accounts;
 };
 
 #endif
