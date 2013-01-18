@@ -1,0 +1,139 @@
+IMF
+├── bin
+├── docs
+├── examples
+│   ├── examples.pro
+│   ├── msg
+│   │   ├── accounts.ini
+│   │   ├── examples.pro
+│   │   ├── main.cpp
+│   │   ├── messenger.cpp
+│   │   ├── messenger.h
+│   │   └── moc_irc.cpp
+│   ├── query
+│   │   ├── exam3.h
+│   │   ├── examples.pro
+│   │   └── main.cpp
+│   └── sync
+│       ├── exam2.h
+│       ├── examples.pro
+│       └── main.cpp
+├── imf.pri
+├── imf.pro
+├── include
+├── lib
+├── msnp15_sso_qt4.tar.gz
+├── new
+├── qxmpp-0.2.0.tar.gz
+├── src
+│   ├── client
+│   │   ├── client
+│   │   ├── client.cpp
+│   │   ├── client.h
+│   │   ├── client.o
+│   │   ├── client.pro
+│   │   ├── main.cpp
+│   │   ├── main.o
+│   │   ├── Makefile
+│   │   ├── moc_client.cpp
+│   │   ├── moc_client.o
+│   │   └── msg.o
+│   ├── Doxyfile
+│   ├── lib
+│   │   ├── imf.pro
+│   │   ├── interface.cpp
+│   │   └── interface.h
+│   ├── msg.cpp
+│   ├── msg.h
+│   ├── protocols
+│   │   ├── irc
+│   │   │   ├── irc.cpp
+│   │   │   ├── irc.h
+│   │   │   ├── ircplugin.cpp
+│   │   │   ├── irc.pro
+│   │   │   ├── irc.ref
+│   │   │   ├── main.cpp
+│   │   │   └── test.pri
+│   │   ├── msn
+│   │   │   ├── addressbook.xml
+│   │   │   ├── challenge.h
+│   │   │   ├── contactlist.cpp
+│   │   │   ├── contactlist.h
+│   │   │   ├── err.xml
+│   │   │   ├── imchannel.cpp
+│   │   │   ├── imchannel.h
+│   │   │   ├── imdaemon.cpp
+│   │   │   ├── imdaemon.h
+│   │   │   ├── imframeworkservice.pro
+│   │   │   ├── main.cpp
+│   │   │   ├── md5.cpp
+│   │   │   ├── md5.h
+│   │   │   ├── membershiplist.xml
+│   │   │   ├── mime.h
+│   │   │   ├── msnauth.cpp
+│   │   │   ├── msnauth.h
+│   │   │   ├── msncontact.h
+│   │   │   ├── msn.cpp
+│   │   │   ├── msn.h
+│   │   │   ├── msn.qrc
+│   │   │   ├── msnsession.cpp
+│   │   │   ├── msnsession.h
+│   │   │   ├── pics
+│   │   │   │   └── online.png
+│   │   │   ├── result.xml
+│   │   │   ├── settings.ui
+│   │   │   ├── soapold.xml
+│   │   │   ├── soap.xml
+│   │   │   ├── switchboard.cpp
+│   │   │   └── switchboard.h
+│   │   ├── protocols.pro
+│   │   └── xmpp.3rd
+│   │       ├── AUTHORS
+│   │       ├── CHANGELOG
+│   │       ├── doc
+│   │       ├── examples
+│   │       ├── src
+│   │       └── tests
+│   ├── readme.txt
+│   ├── service
+│   │   ├── accounts.ini
+│   │   ├── accounts.ini.example
+│   │   ├── adapter.cpp
+│   │   ├── adapter.h
+│   │   ├── adapter.pro
+│   │   ├── improtocols.h
+│   │   ├── main.cpp
+│   │   ├── main.o
+│   │   ├── Makefile
+│   │   ├── moc_server.cpp
+│   │   ├── moc_server.o
+│   │   ├── msg.o
+│   │   ├── plugins
+│   │   │   ├── ircplugin.cpp
+│   │   │   ├── ircplugin.h
+│   │   │   ├── ircplugin.o
+│   │   │   ├── Makefile
+│   │   │   ├── moc_ircplugin.cpp
+│   │   │   ├── moc_ircplugin.o
+│   │   │   ├── msg.o
+│   │   │   └── plugins.pro
+│   │   ├── protocolinterface.h
+│   │   ├── protocolplugins
+│   │   │   └── libplugins.so
+│   │   ├── server
+│   │   ├── server.cpp
+│   │   ├── server.h
+│   │   ├── server.o
+│   │   ├── server.pro
+│   │   ├── service.cpp
+│   │   └── tests
+│   │       ├── servertests.cpp
+│   │       └── tests.pro
+│   ├── src.pro
+│   └── tests
+│       ├── main.cpp
+│       ├── main.o
+│       ├── Makefile
+│       └── tests.pro
+└── tree.txt
+

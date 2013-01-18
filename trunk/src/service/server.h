@@ -74,4 +74,12 @@ class IMService: public IMServerManager
 		void protocolMsg(Msg& msg);
 };
 
+class ConfigLoader: public QObject
+{
+	Q_OBJECT
+	public:
+		ConfigLoader(QString fileName);
+		Msg& nextAccount();
+};
+
 #endif
