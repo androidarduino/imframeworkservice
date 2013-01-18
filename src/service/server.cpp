@@ -156,7 +156,6 @@ bool IMService::loadPlugins()
    p->init(config);
    p->login();
    }
- */
 QPluginLoader pluginLoader("protocolplugins/libjabber.so");
 qDebug()<<pluginLoader.load();
 QObject *plugin = pluginLoader.instance();
@@ -173,8 +172,27 @@ if (plugin) {
 	p->init(config);
 	p->login();
 }
-return true;
+*/
+
+	ConfigLoader* config=new ConfigLoader("accounts.ini");
+	Msg& accounts=*(config->accounts);
+	foreach(QString key, accounts.keys())
+	{
+		Msg acc(accounts[key].toMap());
+		QPluginLoader pluginLoader("protocolplugins/lib"+acc["protocol"].toString()+".so");
+		qDebug()<<pluginLoader.load();
+		QObject *plugin = pluginLoader.instance();
+		qDebug()<<pluginLoader.errorString();
+		if (plugin) {
+			IMProtocol* p=qobject_cast<IMProtocol*>(plugin);
+			d_protocols << p;
+			p->init(acc);
+			//p->login();
+		}
+	}
+	return true;
 }
+
 
 void IMServerManager::pluginMsg(Msg& msg)
 {
@@ -183,10 +201,10 @@ void IMServerManager::pluginMsg(Msg& msg)
 
 ConfigLoader::ConfigLoader(QString fileName)
 {
-
+	QFile file(fileName);
+	file.open(QIODevice::ReadOnly);
+	QTextStream fs(&file);
+	QString ret=fs.readAll();
+	accounts=new Msg(ret);
 }
 
-Msg& ConfigLoader::nextAccount()
-{
-	return *(new Msg());//TODO
-}
