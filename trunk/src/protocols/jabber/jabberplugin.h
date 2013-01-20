@@ -30,8 +30,8 @@ class IMJabberPlugin: public QObject, public IMProtocol
 	private:
 		QXmppClient* d_client;
 		QString d_user, d_pass, d_host, d_port, d_domain;
-		void messageReceived(const QXmppMessage&);
     private slots:
+		void messageReceived(const QXmppMessage&);
         void gotMsg(QString from, QString fromUri, QString receiver, QString msg);
 };
 

@@ -8,7 +8,7 @@
 #include <QVariantMap>
 #include <qjson/parser.h>
 #include <qjson/serializer.h>
-
+#include <QStringList>
 /*
    Abstract of messages transfering between server and client/protocol, convert a message string to data structure, and back
  */
@@ -24,6 +24,7 @@ class Msg
 		Msg ();
 		Msg (QString json);
 		Msg (const Msg & msg);
+		Msg (QVariantMap i){items=i;}
 		virtual ~ Msg ();
 		void fromJson (QString json);
 		QVariant & operator [] (QString name);
@@ -32,6 +33,7 @@ class Msg
 		QString d_string;
 		QVariantMap& toMap(){return items;}
 		void insert(QString, Msg&);
+		QStringList keys(){return items.keys();}
 	private:
 		QVariantMap items;
 };
