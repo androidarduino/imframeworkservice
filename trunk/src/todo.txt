@@ -1,10 +1,10 @@
 short term:
 
-config driven plugin loading for server
+done: config driven plugin loading for server
 implement online buddies in protocol plugins
 unloadPlugin function, in case plugin hang up or go offline, etc.
 plugin status monitor code
-msg receive and dispatch
+done but not tested: msg receive and dispatch
 try send/receive message between two imf clients
 add ability method for plugins
 make Msg class unified and pretty in syntax

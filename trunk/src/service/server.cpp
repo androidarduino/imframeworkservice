@@ -186,6 +186,7 @@ if (plugin) {
 		if (plugin) {
 			IMProtocol* p=qobject_cast<IMProtocol*>(plugin);
 			d_protocols << p;
+			connect(p->getObject(), SIGNAL(msgArrived(Msg&)), this, SLOT(pluginMsg(Msg&)));
 			p->init(acc);
 			//p->login();
 		}
@@ -193,10 +194,22 @@ if (plugin) {
 	return true;
 }
 
-
-void IMServerManager::pluginMsg(Msg& msg)
+void IMService::pluginMsg(Msg& msg)
 {
-	//TODO
+	//dispatch msg to target
+	QString target=msg["appId"].toString();
+	if(target=="")//if it is a normal message
+		target="Default_Messenger";
+	bool found=false;
+	foreach(IMClient* client, d_clients)
+		if(client->name==target)
+		{
+			found=true;
+			client->d_socket->write(msg.toJson().toUtf8());
+		}
+		if(!found)
+			//TODO: we may need to let the sender know of this problem
+			qDebug()<<"Incorrect appId found: "+target;
 }
 
 ConfigLoader::ConfigLoader(QString fileName)

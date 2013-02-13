@@ -16,6 +16,7 @@ class IMIRCPlugin: public QObject, public IMProtocol
         void init(Msg& config);
         ~IMIRCPlugin();
         bool available();
+        QObject* getObject();
         Msg& onlineBuddies();
         QString& operator[](QString);
         void sendMsg(Msg& msg);

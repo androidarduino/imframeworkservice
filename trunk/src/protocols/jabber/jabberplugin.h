@@ -18,6 +18,7 @@ class IMJabberPlugin: public QObject, public IMProtocol
 		void init(Msg& config);
         ~IMJabberPlugin();
         bool available();
+		QObject* getObject();
         Msg& onlineBuddies();
         QString& operator[](QString);
         void sendMsg(Msg&msg);
