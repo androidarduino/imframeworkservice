@@ -80,6 +80,11 @@ bool IMJabberPlugin::canDo(QString& ability)
 	return false;
 }
 
+QObject* IMJabberPlugin::getObject()
+{
+	return this;
+}
+
 bool IMJabberPlugin::canSendTo(QString& receiver)
 {
 	//TODO

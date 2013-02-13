@@ -47,9 +47,6 @@ class IMServerManager:public QObject//, public IMProtocol
 		public slots:
 			void sendMsg(Msg& msg);
 		void login();//may be unuseful
-		void pluginMsg(Msg& msg);//called when received a msg from plugin
-	protected:
-		void dispatchMsg(Msg& msg);//helper function for pluginMsg();
 };
 
 /*
@@ -62,7 +59,7 @@ class IMService: public IMServerManager
 		IMService();
 		~IMService();
 		bool controlProtocol(QString& name, QString& command);
-	private:
+	protected:
 		QLocalServer d_server;
 		QList<IMClient*> d_clients;
 		QList<IMProtocol*> d_protocols;
@@ -72,6 +69,7 @@ class IMService: public IMServerManager
 		void newConnection();
 		void clientMsg();
 		void protocolMsg(Msg& msg);
+		void pluginMsg(Msg& msg);//called when received a msg from plugin
 };
 
 class ConfigLoader: public QObject

@@ -8,7 +8,7 @@ void IMIRCPlugin::init(Msg& config)
 //initialize an irc client
 	//example parameters: "irc.freenode.net|6665|user0312|mypassword"
 	d_client=new IRCClient(d_host, d_port.toInt());
-	connect(d_client, SIGNAL(message(QString, QString, QString, QString)), this, SLOT(gotMsg(QString, QString, QString, QString))); 
+	this->connect(d_client, SIGNAL(message(QString, QString, QString, QString)), this, SLOT(gotMsg(QString, QString, QString, QString))); 
 	d_host=config["host"].toString();
 	d_port=config["port"].toString();
 	d_client->d_userName=config["user"].toString();
@@ -85,6 +85,11 @@ void IMIRCPlugin::gotMsg(QString from, QString fromUri, QString receiver, QStrin
 	m["receiver"]=receiver;
 	m["msg"]=msg;
 	emit(msgArrived(m));
+}
+
+QObject* IMIRCPlugin::getObject()
+{
+	return this;
 }
 
 bool IMIRCPlugin::canDo(QString& ability)

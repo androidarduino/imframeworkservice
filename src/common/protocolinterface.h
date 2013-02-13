@@ -17,15 +17,13 @@ public:
   {
   }
   virtual void init (Msg & config) = 0;
+  virtual QObject* getObject()=0;
   virtual ~ IMProtocol ()
   {
   }
   virtual bool available () = 0;
   virtual Msg& onlineBuddies () = 0;
   virtual QString & operator [] (QString propertyName) = 0;
-signals:
-  virtual void msgArrived (Msg & msg) = 0;
-  virtual void statusChanged (QString status) = 0;
 public:
   virtual void sendMsg (Msg & msg) = 0;
   virtual void login () = 0;
